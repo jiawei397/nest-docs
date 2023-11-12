@@ -1,12 +1,12 @@
 ---
-title: Nest - A progressive Deno framework
+title: Nest - 一个专业的Deno框架
 hero:
   title: Nest
-  description: A progressive Deno framework
+  description: 一个专业的Deno框架
   actions:
-    - text: Get Started
+    - text: 开始
       link: /documentation
-    - text: View on GitHub
+    - text: GitHub
       link: https://github.com/jiawei397/deno-oak-nest
 features:
   - title: 强大的模块化系统
