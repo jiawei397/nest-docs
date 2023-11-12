@@ -1,8 +1,7 @@
 ---
 group:
   title: 概述
-  order: 2
-order: 0
+order: 2
 ---
 
 # Controllers

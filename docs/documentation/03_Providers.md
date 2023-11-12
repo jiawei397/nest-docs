@@ -1,8 +1,7 @@
 ---
 group:
   title: 概述
-  order: 3
-order: 0
+order: 3
 ---
 
 # Providers
