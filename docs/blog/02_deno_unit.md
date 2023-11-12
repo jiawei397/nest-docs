@@ -47,7 +47,8 @@ Deno.test("Hello Test", () => {
 - assertThrows(fn: () => void, ErrorClass?: Constructor, msgIncludes?: string |
   undefined, msg?: string | undefined): Error
 - assertRejects(fn: () => Promise<unknown>, ErrorClass?: Constructor,
-  msgIncludes?: string | undefined, msg?: string | undefined): Promise<void> :::
+  msgIncludes?: string | undefined, msg?: string | undefined): Promise<void> 
+:::
 
 如果你习惯使用Node.js的Chai库的话，在Deno中也可以通过CDN的方式引用：
 
@@ -383,7 +384,9 @@ Deno.test("square calls multiply and returns results", () => {
 });
 ```
 
-:::info 之所以这样麻烦，是因为multiply不能被直接劫持，而对象可以。 :::
+:::info
+之所以这样麻烦，是因为multiply不能被直接劫持，而对象可以。 
+:::
 
 另一点需要注意的是，例子中调用square后显式执行`multiplySpy.restore()`，从命名上看，它就是恢复为初始状态。
 如果没有这一句，换成以下代码：
@@ -553,7 +556,9 @@ Deno.test("Color test", async (t) => {
 });
 ```
 
-这里的color变量打印出来是这样的： ![image.png](./images/unit-color.png)
+这里的color变量打印出来是这样的：
+
+![image.png](./images/unit-color.png)
 
 但快照文件是这样的：
 
