@@ -1,7 +1,7 @@
 {
-  "name": "nest-docs",
+  "name": "nest",
   "version": "0.0.1",
-  "description": "A static site based on dumi",
+  "description": "deno_nest docs",
   "scripts": {
     "start": "npm run dev",
     "dev": "dumi dev",
