@@ -24,7 +24,7 @@
 它的核心卖点是快，以上是Hono官方罗列的[Deno下的几款框架性能对比](https://hono.dev/concepts/benchmarks#deno)：
 
 | **Framework** | **Version** | **Results** |
-| --- | --- | --- |
+|:---:|:---:|:---:|
 | **Hono** | 3.0.0 | **Requests/sec: 136112** |
 | Fast | 4.0.0-beta.1 | Requests/sec: 103214 |
 | Megalo | 0.3.0 | Requests/sec: 64597 |
