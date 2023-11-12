@@ -5,7 +5,7 @@ hero:
   description: A progressive Deno framework
   actions:
     - text: Get Started
-      link: /docs
+      link: /documentation
     - text: View on GitHub
       link: https://github.com/jiawei397/deno-oak-nest
 features:
