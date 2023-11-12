@@ -11,7 +11,7 @@ order: 6
 
 这些测试通常涵盖各种类型，包括单元测试、端到端（`E2E`）测试、集成测试等。
 
-`Deno`内置了`Deno.test`函数使得无需引入第三方包就可以直接编写单元测试，而内置标准库中也有[std/testing/bdd.ts](https://deno.land/std@0.202.0/testing/bdd.ts)可以编写更复杂的测试用例，具体用法详见这篇《[Deno单元测试：让你的代码更加健壮](https://www.yuque.com/jiqingyun-begup/ewktxz/tffb9vfme5qu23et)》。
+`Deno`内置了`Deno.test`函数使得无需引入第三方包就可以直接编写单元测试，而内置标准库中也有[std/testing/bdd.ts](https://deno.land/std@0.202.0/testing/bdd.ts)可以编写更复杂的测试用例，具体用法详见这篇《[Deno单元测试：让你的代码更加健壮](../blog/02_deno_unit)》。
 
 ## 单元测试
 
