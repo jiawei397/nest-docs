@@ -118,7 +118,7 @@ export class AppModule {}
 :::info
 当使用这种方法为拦截器执行依赖注入时，请注意，无论在哪个模块中使用此构造，拦截器实际上都是全局的。应该在定义拦截器（例如上面的`LoggingInterceptor`）的模块中进行此操作。此外，`useClass`并不是处理自定义提供程序注册的唯一方式。
 
-在《[定义Provider](https://www.yuque.com/jiqingyun-begup/yimxc4/cythiv1zfxpmx8hy)》了解更多信息。
+在《[定义Provider](./11_custom_provider)》了解更多信息。
 :::
 
 ## 修改响应

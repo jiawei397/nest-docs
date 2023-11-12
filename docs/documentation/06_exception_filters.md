@@ -230,7 +230,7 @@ export class AppModule {}
 :::warning
 使用这种方法来为过滤器进行依赖注入时，请注意，无论在哪个模块中使用此构造，过滤器实际上都是全局的。应该在哪里进行这样的操作？选择定义过滤器（例如上面的HttpExceptionFilter）的模块。
 
-另外，useClass并不是处理自定义提供者注册的唯一方式。在《[自定义Provider](https://www.yuque.com/jiqingyun-begup/yimxc4/cythiv1zfxpmx8hy)》了解更多信息。
+另外，useClass并不是处理自定义提供者注册的唯一方式。在《[自定义Provider](./11_custom_provider)》了解更多信息。
 :::
 
 你可以使用这种技术添加任意数量的过滤器；只需将每个过滤器添加到`providers`数组中即可。
