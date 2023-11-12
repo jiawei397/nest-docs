@@ -10,7 +10,12 @@ lastUpdated: 1689648060000
 Deno内置了测试方法——Deno.test，结合断言可以很容易地进行测试。
 
 ```typescript
-import { assert, assertEquals, assertNotEquals, assertStrictEquals} from "https://deno.land/std@0.194.0/testing/asserts.ts";
+import {
+  assert,
+  assertEquals,
+  assertNotEquals,
+  assertStrictEquals,
+} from "https://deno.land/std@0.194.0/testing/asserts.ts";
 
 Deno.test("Hello Test", () => {
   assert("Hello");
@@ -29,16 +34,20 @@ Deno.test("Hello Test", () => {
 - assertExists(actual: unknown, msg?: string): void
 - assertNotEquals(actual: unknown, expected: unknown, msg?: string): void
 - assertStrictEquals(actual: unknown, expected: unknown, msg?: string): void
-- assertAlmostEquals(actual: number, expected: number, epsilon = 1e-7, msg?: string): void
+- assertAlmostEquals(actual: number, expected: number, epsilon = 1e-7, msg?:
+  string): void
 - assertInstanceOf(actual: unknown, expectedType: unknown, msg?: string): void
 - assertStringIncludes(actual: string, expected: string, msg?: string): void
-- assertArrayIncludes(actual: unknown[], expected: unknown[], msg?: string): void
+- assertArrayIncludes(actual: unknown[], expected: unknown[], msg?: string):
+  void
 - assertMatch(actual: string, expected: RegExp, msg?: string): void
 - assertNotMatch(actual: string, expected: RegExp, msg?: string): void
-- assertObjectMatch( actual: Record<PropertyKey, unknown>, expected: Record<PropertyKey, unknown>): void
-- assertThrows(fn: () => void, ErrorClass?: Constructor, msgIncludes?: string | undefined, msg?: string | undefined): Error
-- assertRejects(fn: () => Promise<unknown>, ErrorClass?: Constructor, msgIncludes?: string | undefined, msg?: string | undefined): Promise<void>
-:::
+- assertObjectMatch( actual: Record<PropertyKey, unknown>, expected:
+  Record<PropertyKey, unknown>): void
+- assertThrows(fn: () => void, ErrorClass?: Constructor, msgIncludes?: string |
+  undefined, msg?: string | undefined): Error
+- assertRejects(fn: () => Promise<unknown>, ErrorClass?: Constructor,
+  msgIncludes?: string | undefined, msg?: string | undefined): Promise<void> :::
 
 如果你习惯使用Node.js的Chai库的话，在Deno中也可以通过CDN的方式引用：
 
@@ -84,7 +93,11 @@ Deno.test("we can use chai should style", () => {
 ```typescript
 import { AssertionError } from "https://deno.land/std@0.194.0/testing/asserts.ts";
 
-export function assertPowerOf(actual: number, expected: number, msg?: string): void {
+export function assertPowerOf(
+  actual: number,
+  expected: number,
+  msg?: string,
+): void {
   let received = actual;
   while (received % expected === 0) received = received / expected;
   if (received !== 1) {
@@ -163,7 +176,7 @@ Deno.test({
       "SHA-256",
       new TextEncoder().encode("a".repeat(100000000)),
     );
-  }
+  },
 });
 ```
 
@@ -204,8 +217,7 @@ Deno.test通常有2种写法：
 Deno.test({
   name: "test name",
   fn() {
-    
-  }
+  },
 });
 ```
 
@@ -213,7 +225,6 @@ Deno.test({
 
 ```typescript
 Deno.test("test name", () => {
-    
 });
 ```
 
@@ -221,7 +232,6 @@ Deno.test("test name", () => {
 
 ```typescript
 Deno.test("test name", async () => {
-    
 });
 ```
 
@@ -292,7 +302,7 @@ describe方法也能平铺开，不是很推荐，有兴趣的在[这里](https:
 
 上面的介绍可能绕口些，简单来说，就是对于函数内部逻辑的测试，官方提供了一种方便的测试方案。
 
-### Spying 间谍 
+### Spying 间谍
 
 比如下面有2个函数：
 
@@ -373,16 +383,14 @@ Deno.test("square calls multiply and returns results", () => {
 });
 ```
 
-:::info
-之所以这样麻烦，是因为multiply不能被直接劫持，而对象可以。
-:::
+:::info 之所以这样麻烦，是因为multiply不能被直接劫持，而对象可以。 :::
 
 另一点需要注意的是，例子中调用square后显式执行`multiplySpy.restore()`，从命名上看，它就是恢复为初始状态。
 如果没有这一句，换成以下代码：
 
 ```typescript
 Deno.test("square calls multiply and returns results", () => {
-  const multiplySpy = spy(_internals, 'multiply');
+  const multiplySpy = spy(_internals, "multiply");
   assertEquals(square(5), 25);
   assertSpyCalls(multiplySpy, 1);
 
@@ -394,7 +402,7 @@ Deno.test("square calls multiply and returns results", () => {
 
 multiplySpy的调用记录就还在。
 
-### Stubbing 存根 
+### Stubbing 存根
 
 再看下面的函数，randomInt的返回值是随机的：
 
@@ -455,7 +463,7 @@ Deno.test("randomMultiple uses randomInt to generate random multiples between -1
 });
 ```
 
-### Faking time 假时间 
+### Faking time 假时间
 
 还有种常见的情况是，我们在代码中可能会使用setInterval定时器：
 
@@ -499,7 +507,9 @@ Deno.test("secondInterval calls callback every second and stops after being clea
 
 ## 快照测试
 
-Deno 标准库配备了一个快照模块，使开发人员能够编写测试来比较一个值与参考快照。这个参考快照是原始值的序列化表示，并与测试文件一起存储。快照测试在许多情况下都很有用，因为它可以用非常少的代码来捕获各种错误。它特别有助于在难以精确表达应该断言什么的情况下使用，而不需要大量的代码，或者测试所做的断言预计经常更改的情况下。因此，它特别适用于前端和 CLI 的开发。
+Deno
+标准库配备了一个快照模块，使开发人员能够编写测试来比较一个值与参考快照。这个参考快照是原始值的序列化表示，并与测试文件一起存储。快照测试在许多情况下都很有用，因为它可以用非常少的代码来捕获各种错误。它特别有助于在难以精确表达应该断言什么的情况下使用，而不需要大量的代码，或者测试所做的断言预计经常更改的情况下。因此，它特别适用于前端和
+CLI 的开发。
 
 使用assertSnapshot，与测试目录的文件作对比：
 
@@ -535,9 +545,7 @@ snapshot[`isSnapshotMatch 1`] = `
 上面的样例是个最简单的用例，你可能看不出它的威力。假如你用了Deno的颜色库：
 
 ```typescript
-import {
-  red,
-} from "https://deno.land/std@0.194.0/fmt/colors.ts";
+import { red } from "https://deno.land/std@0.194.0/fmt/colors.ts";
 
 Deno.test("Color test", async (t) => {
   const color = red("Hello, World!");
@@ -545,8 +553,7 @@ Deno.test("Color test", async (t) => {
 });
 ```
 
-这里的color变量打印出来是这样的：
-![image.png](./images/unit-color.png)
+这里的color变量打印出来是这样的： ![image.png](./images/unit-color.png)
 
 但快照文件是这样的：
 
