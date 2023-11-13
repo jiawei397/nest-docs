@@ -92,27 +92,27 @@ async findAll() {
 
 Nest提供了一组从基本`HttpException`继承的标准异常。它们来自于`@nest`包，并且代表了许多常见的HTTP异常。
 
-- BadRequestException
-- BodyParamValidationException（与BadRequestException一样，状态码同为400）
-- UnauthorizedException
-- NotFoundException
-- ForbiddenException
-- NotAcceptableException
-- RequestTimeoutException
-- ConflictException
-- GoneException
-- HttpVersionNotSupportedException
-- PayloadTooLargeException
-- UnsupportedMediaTypeException
-- UnprocessableEntityException
-- InternalServerErrorException
-- NotImplementedException
-- ImATeapotException
-- MethodNotAllowedException
-- BadGatewayException
-- ServiceUnavailableException
-- GatewayTimeoutException
-- PreconditionFailedException
+- `BadRequestException`
+- `BodyParamValidationException`（与 `BadRequestException` 一样，状态码同为 400）
+- `UnauthorizedException`
+- `NotFoundException`
+- `ForbiddenException`
+- `NotAcceptableException`
+- `RequestTimeoutException`
+- `ConflictException`
+- `GoneException`
+- `HttpVersionNotSupportedException`
+- `PayloadTooLargeException`
+- `UnsupportedMediaTypeException`
+- `UnprocessableEntityException`
+- `InternalServerErrorException`
+- `NotImplementedException`
+- `ImATeapotException`
+- `MethodNotAllowedException`
+- `BadGatewayException`
+- `ServiceUnavailableException`
+- `GatewayTimeoutException`
+- `PreconditionFailedException`
 
 所有内置的异常也可以使用选项参数提供错误原因和错误描述：
 

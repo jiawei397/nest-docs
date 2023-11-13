@@ -94,27 +94,27 @@ The obtained response looks like this:
 
 Nest provides a set of standard exceptions that inherit from the base `HttpException`. They come from the `@nestjs` package and represent many common HTTP exceptions.
 
-- BadRequestException
-- BodyParamValidationException (similar to `BadRequestException`, with a status code of 400)
-- UnauthorizedException
-- NotFoundException
-- ForbiddenException
-- NotAcceptableException
-- RequestTimeoutException
-- ConflictException
-- GoneException
-- HttpVersionNotSupportedException
-- PayloadTooLargeException
-- UnsupportedMediaTypeException
-- UnprocessableEntityException
-- InternalServerErrorException
-- NotImplementedException
-- ImATeapotException
-- MethodNotAllowedException
-- BadGatewayException
-- ServiceUnavailableException
-- GatewayTimeoutException
-- PreconditionFailedException
+- `BadRequestException`
+- `BodyParamValidationException` (similar to `BadRequestException`, with a status code of 400)
+- `UnauthorizedException`
+- `NotFoundException`
+- `ForbiddenException`
+- `NotAcceptableException`
+- `RequestTimeoutException`
+- `ConflictException`
+- `GoneException`
+- `HttpVersionNotSupportedException`
+- `PayloadTooLargeException`
+- `UnsupportedMediaTypeException`
+- `UnprocessableEntityException`
+- `InternalServerErrorException`
+- `NotImplementedException`
+- `ImATeapotException`
+- `MethodNotAllowedException`
+- `BadGatewayException`
+- `ServiceUnavailableException`
+- `GatewayTimeoutException`
+- `PreconditionFailedException`
 
 All built-in exceptions can also provide error causes and descriptions using optional parameters:
 
