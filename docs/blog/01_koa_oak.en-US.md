@@ -24,7 +24,7 @@ Now, let's introduce the onion model.
 
 The onion is known for its layered structure, where each layer wraps around the next. However, in this context, we don't focus on its three-dimensional structure but rather imagine cutting the onion and looking at it from a flat perspective, as shown in the following diagram:
 
-![image.png](./images/koa-onion.png)
+![image.png](./images/koa-onion-en.png)
 
 To traverse from the center of the onion, one must first pass through the onion layers to reach the center and then traverse back out through the layers to the surface. The interesting part is that the number of layers penetrated inward must match the number of layers traversed outward. This concept aligns with the **stack list** principle, following the **last in, first out** rule.
 
@@ -32,7 +32,11 @@ Whether it's `Express` or `Koa`, both are built on the concept of middleware. Mi
 
 The onion's layers can be likened to middleware:
 
-:::info The process from the outer layer to the inner layer is a critical keyword: `next()`. If `next()` is not called, the next middleware won't be executed. Conversely, going from the inner layer to the outer layer involves each middleware completing its execution, entering the original higher layer middleware, and continuing until the outermost layer. :::
+:::info 
+The process from the outer layer to the inner layer is a critical keyword: `next()`. If `next()` is not called, the next middleware won't be executed. 
+
+Conversely, going from the inner layer to the outer layer involves each middleware completing its execution, entering the original higher layer middleware, and continuing until the outermost layer.
+:::
 
 In other words, for asynchronous middleware, `Koa` and `Express` may have differences in the execution order of code under certain circumstances.
 
@@ -135,7 +139,7 @@ app.listen(3000);
 console.log("app start : http://localhost:3000");
 ```
 
-#### #### Response Differences
+#### Response Differences
 
 In most cases, the response handling in `koa` and `Express` is not significantly different. The main distinction lies in the syntax; for instance, `koa` uses `ctx.body = xxx`, while `Express` employs methods like `res.send` or `res.json`.
 
@@ -185,9 +189,9 @@ app.listen(3001);
 console.log("server listening at port 3001");
 ```
 
-#### However, an error occurs during the request:
+However, an error occurs during the request:
 
-```javascript
+```bash
 Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 ```
 
@@ -456,5 +460,5 @@ This article has discussed the differences between two mainstream web frameworks
 
 References for this article:
 
-- [浅谈Nodejs框架里的“洋葱模型”](https://blog.csdn.net/qq_43293207/article/details/116331223)
-- [再也不怕面试官问你express和koa的区别了](https://zhuanlan.zhihu.com/p/87079561)
+- [Talking About the 'Onion Model' in Node.js Frameworks](https://blog.csdn.net/qq_43293207/article/details/116331223)
+- [Never Fear the Interviewer Asking About the Differences Between Express and Koa Again](https://zhuanlan.zhihu.com/p/87079561)
