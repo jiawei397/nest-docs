@@ -27,9 +27,9 @@ Therefore, it is more appropriate to install it globally:
 deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest@v3.7.0/cli/import_map.json  -n nest -f https://deno.land/x/deno_nest@v3.1.5/cli/main.ts
 ```
 
-需要注意的是，`-n nest` 表示安装的全局命令的名称是 `nest`，与 Node.js 的 NestJS 命令是一致的，这意味着可能会引起冲突。如果你要同时使用两个命令，建议将其修改为其他名称，比如改为 `-n dest`。
+It's worth noting that `-n nest` indicates that the name of the globally installed command is `nest`, which is consistent with the NestJS command in Node.js. This may lead to conflicts. If you intend to use both commands simultaneously, it's advisable to modify one of them to a different name, such as changing it to `-n dest`.
 
-接着，你就可以使用命令 `nest`，它等同于 `nest new`。
+Afterward, you can use the command `nest`, which is equivalent to `nest new`.
 
 ```bash
 $ nest
