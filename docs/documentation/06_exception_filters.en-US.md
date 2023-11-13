@@ -4,7 +4,7 @@ group:
 order: 6
 ---
 
-# Exception filters
+# Exception Filters
 
 Nest provides a built-in exception layer responsible for handling all unhandled exceptions in the application. When an exception is not handled in the application code, it is caught by this layer, and then the layer automatically sends an appropriate user-friendly response.
 

@@ -4,7 +4,7 @@ group:
 order: 4
 ---
 
-# Modules
+# 模块
 
 模块是一个带有`@Module()`装饰器的类。`@Module()`装饰器提供了 Nest 用来组织应用程序结构的元数据。
 

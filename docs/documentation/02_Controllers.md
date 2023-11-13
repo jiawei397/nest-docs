@@ -4,7 +4,7 @@ group:
 order: 2
 ---
 
-# Controllers
+# 控制器
 
 Controllers（控制器）负责处理传入的请求并向客户端返回响应。
 

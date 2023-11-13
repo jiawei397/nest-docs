@@ -4,7 +4,7 @@ group:
 order: 7
 ---
 
-# Guard
+# 守卫
 
 Guard（守卫）是一个带有`@Injectable()`装饰符的类，它实现 `CanActivate` 接口。
 

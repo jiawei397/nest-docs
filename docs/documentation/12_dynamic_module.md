@@ -62,7 +62,7 @@ export class AuthService {
 
 让我们来分析一下这个过程中发生了什么。`Nest`通过以下方式`UsersService`提供内部`AuthModule`服务：
 
-1. 实例化`UsersModule`，包括传递导入`UsersModule`本身消耗的其他模块，以及传递解决任何依赖关系（请参阅[自定义Provider](./11_custom_provider)）。
+1. 实例化`UsersModule`，包括传递导入`UsersModule`本身消耗的其他模块，以及传递解决任何依赖关系（请在[这里](./11_custom_provider)了解更多信息）。
 2. 实例化`AuthModule`，并使`UsersModule`的导出Providers可用于`AuthModule`中的组件（就像它们已在`AuthModule`中声明一样）。
 3. `UsersService`注入到`AuthService`的实例。
 
@@ -252,7 +252,7 @@ export interface ConfigOptions {
 }
 ```
 
-上节《[自定义Provider](./11_custom_provider)》中，我们提到`useFactory`模式，它帮助我们在`ConfigModule`提供`ConfigService`。请注意下面代码中的`providers`数组：
+在[上节](./11_custom_provider)》中，我们提到`useFactory`模式，它帮助我们在`ConfigModule`提供`ConfigService`。请注意下面代码中的`providers`数组：
 
 ```typescript
 import { DynamicModule, Module } from "@nest";
