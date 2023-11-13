@@ -5,7 +5,7 @@ group:
 order: 3
 ---
 
-# Injection scopes
+# Injection Scopes
 
 For individuals from different programming language backgrounds, it might be surprising to discover that in Nest, almost everything is shared across incoming requests. We have a connection pool to the database, a single service with global state, and so on. Please remember that Deno, like Node.js, does not follow the **request/response** multi-threaded stateless model. Each request is handled by an event loop thread, rather than having a separate thread for each request in a traditional multi-threaded model. Therefore, using a single instance is entirely safe for our application.
 
