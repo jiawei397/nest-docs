@@ -66,7 +66,7 @@
 
 NestJS的功能是非常强大的，Nest只实现了其核心的Web端的核心能力，至于更复杂的微服务、WebSockets、GraphQL等，暂时没有支持的计划。
 
-![差异](./images/yuque_mind.jpeg)
+![差异](./images/nest-feature.jpeg)
 
 :::info
 本文档大部分内容参考[NestJS官方文档](https://docs.nestjs.com/)。

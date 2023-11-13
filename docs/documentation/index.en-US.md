@@ -66,7 +66,7 @@ Currently (as of November 12, 2023), the [test coverage](https://app.codecov.io/
 
 NestJS is a powerful framework, and `Nest` (the `deno_nest` project) has implemented the core capabilities for the web side. However, it currently lacks support for more advanced features such as complex microservices, WebSockets, GraphQL, etc. There are no immediate plans to support these features.
 
-![diff](./images/yuque_mind.jpeg)
+![diff](./images/nest-feature-en.jpeg)
 
 :::info
 The majority of the content in this document is referenced from the [NestJS official documentation](https://docs.nestjs.com/).
