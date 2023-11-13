@@ -45,35 +45,35 @@ export function CORS(options?: boolean | CorsOptions) {}
   
 export interface CorsOptions {
   /**
-   * Configures the `Access-Control-Allow-Origins` CORS header.
+   * 配置 `Access-Control-Allow-Origin` CORS 标头。
    */
   origin?: StaticOrigin | CustomOrigin;
   /**
-   * Configures the Access-Control-Allow-Methods CORS header.
+   * 配置 Access-Control-Allow-Methods CORS 标头。
    */
   methods?: string | string[];
   /**
-   * Configures the Access-Control-Allow-Headers CORS header.
+   * 配置 Access-Control-Allow-Headers CORS 标头。
    */
   allowedHeaders?: string | string[];
   /**
-   * Configures the Access-Control-Expose-Headers CORS header.
+   * 配置 Access-Control-Expose-Headers CORS 标头。
    */
   exposedHeaders?: string | string[];
   /**
-   * Configures the Access-Control-Allow-Credentials CORS header.
+   * 配置 Access-Control-Allow-Credentials CORS 标头。
    */
   credentials?: boolean;
   /**
-   * Configures the Access-Control-Max-Age CORS header.
+   * 配置 Access-Control-Max-Age CORS 标头。
    */
   maxAge?: number;
   /**
-   * Whether to pass the CORS preflight response to the next handler.
+   * 是否将 CORS 预检请求的响应传递给下一个处理程序。
    */
   preflightContinue?: boolean;
   /**
-   * Provides a status code to use for successful OPTIONS requests.
+   * 提供用于成功的 OPTIONS 请求的状态码。
    */
   optionsSuccessStatus?: number;
 }
