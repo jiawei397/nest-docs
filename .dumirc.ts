@@ -25,12 +25,12 @@ export default defineConfig({
       'en-US': [
         {
           title: 'Documentation',
-          link: '/documentation',
+          link: '/en-US/documentation',
         },
         {
           title: 'Blog',
-          link: '/blog/01_koa_oak',
-          activePath: '/blog/',
+          link: '/en-US/blog/01_koa_oak',
+          activePath: '/en-US/blog/',
         },
       ],
     },
