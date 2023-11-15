@@ -84,7 +84,8 @@ The `Request` object represents an HTTP request and has properties for the reque
 | `@Body(key?: string)` | Body of the request object, Nest has built-in parameter validation using `deno_class_validator`. If a key is passed, it represents a specific value; otherwise, the response is an Object. |
 | `@Params(key?: string)` | Parameters in the URL path, such as `id` in `/user/:id`. |
 | `@Query(key?: string)` | Parameters in the URL after the path, i.e., URLSearchParams, such as `id` in `?id=123`. |
-| `@Cookie(key?: string)` | Cookies in the request object. |
+| `@Cookies()` | The `Nest Cookies` Object of the request object. |
+| `@Cookie(name: string)` | Get One `cookie` of the request object. |
 | `@Headers(name?: string)` | Headers in the request object. If no name is passed, it represents the entire Headers. |
 | `@Ip()` | The `x-real-ip` or `x-forwarded-for` header in the request object. |
 | `@Host()` | The `host` header in the request object. |

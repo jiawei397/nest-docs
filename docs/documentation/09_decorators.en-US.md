@@ -25,7 +25,8 @@ Nest provides a set of useful parameter decorators that you can use with HTTP ro
 | `@Body(key?: string)` | The body of the request object. Nest has built-in parameter validation using `deno_class_validator`. If a key is passed, it represents a specific value; otherwise, the response is an object. |
 | `@Params(key?: string)` | Parameters in the URL path, such as `id` in `/user/:id`. |
 | `@Query(key?: string)` | Parameters after the URL, which are URLSearchParams, such as `id` in `?id=123`. |
-| `@Cookie(key?: string)` | Cookies of the request object. |
+| `@Cookies()` | The `Nest Cookies` Object of the request object. |
+| `@Cookie(name: string)` | Get One `cookie` of the request object. |
 | `@Headers(name?: string)` | Headers of the request object. If no name is passed, it refers to all headers. |
 | `@Ip()` | IP address from the `x-real-ip` or `x-forwarded-for` header of the request object. |
 | `@Host()` | Host from the `host` header of the request object. |

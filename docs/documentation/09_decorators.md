@@ -25,13 +25,14 @@ Nest提供了一组有用的参数装饰器，你可以与HTTP路由处理程序
 | `@Body(key?: string)` | 请求对象的Body，Nest内置了使用`deno_class_validator`进行参数校验。如果传递了key，表示是具体某个值，否则响应为Object |
 | `@Params(key?: string)` | URL路径中的参数，如`/user/:id`中的id。 |
 | `@Query(key?: string)` | URL后面的参数，也就是URLSearchParams，如`?id=123`中的id |
-| `@Cookie(key?: string)` | 请求对象的Cookie |
+| `@Cookies()` | 请求对象对应的`Nest`内置的`Cookie`对象 |
+| `@Cookie(name: string)` | 获取某个Cookie值 |
 | `@Headers(name?: string)` | 请求对象的Header，如果不传递name，则是Headers |
 | `@Ip()` | 请求对象Header中`x-real-ip`或`x-forwarded-for` |
 | `@Host()` | 请求对象Header中`host` |
 | `@MethodName()` | 当前请求的方法名，在上例中为`findAll` |
 | `@ControllerName()` | 当前请求的Controller名称，在上例中为`CatsController` |
-| `@Form()` | 当参数为表单或者FormData时，可像Body一样进行参数校验，返回一个Object |
+| `@Form()` | 当参数为表单或者`FormData`时，可像Body一样进行参数校验，返回一个Object |
 
 ## 自定义装饰器
 
