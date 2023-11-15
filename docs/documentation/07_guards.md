@@ -12,7 +12,7 @@ Guard（守卫）是一个带有`@Injectable()`装饰符的类，它实现 `CanA
 
 守卫有一个单一的责任。它们根据运行时存在的特定条件（如权限、角色、ACL等）确定一个给定请求是否将由路由处理程序处理。这通常被称为授权。
 
-在传统的Express、Koa乃至Deno的oak与hono等应用程序中，授权（以及它通常协作的身份验证）通常由中间件处理。
+在`Node.js`的`Express`、`Koa`乃至`Deno`的`oak`与`hono`等应用程序中，授权（以及它通常协作的身份验证）通常由中间件处理。
 中间件对于身份验证来说是一个很好的选择，因为诸如令牌验证和将属性附加到请求对象之类的事情与特定的路由上下文（及其元数据）没有强烈的联系。
 
 但是，中间件本质上是愚蠢的。它不知道在调用`next()`函数后将执行哪个处理程序。守卫的设计，就像异常过滤器和拦截器一样，允许你在**请求/响应**周期的准确时机插入处理逻辑，并以声明性方式实现。这有助于保持代码干净和声明性。
@@ -146,29 +146,6 @@ export class AuthGuard implements CanActivate {
 }
 ```
 
-也可以使用`getMetadataForGuard`这个原始函数来获取roles：
-
-```typescript
-import {
-  type CanActivate,
-  type Context,
-  getMetadataForGuard,
-  Injectable
-} from "@nest";
-
-@Injectable()
-export class AuthGuard implements CanActivate {
-  async canActivate(context: Context): Promise<boolean> {
-    const roles = getMetadataForGuard<string[]>("roles", context);
-    if (!roles) {
-      return true;
-    }
-    const user = context.request.states.user;
-    return matchRoles(roles, user.roles);
-  }
-}
-```
-
 将授权用户附加到请求对象是一种常见做法。因此，在上面的示例代码中，我们假设`context.request.states.user`包含用户实例和允许的角色。一般来说，`Guard`如果需要获取用户信息，则通常会将它注入到`request.states`中，以便后面的步骤可以直接使用用户信息。
 
 ```typescript
@@ -177,7 +154,7 @@ context.request.states.user = userInfo;
 ```
 
 :::info
-后面装饰器的章节会介绍如何优雅地使用这里注入的用户信息。
+后面[装饰器](./09_decorators)的章节会介绍如何优雅地使用这里注入的用户信息。
 :::
 
 ## 守卫失败响应

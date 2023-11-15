@@ -12,7 +12,7 @@ A Guard is a class with the `@Injectable()` decorator that implements the `CanAc
 
 Guards have a single responsibility. They determine whether a given request will be handled by the route handler based on specific conditions (such as permissions, roles, ACL, etc.) present at runtime. This is commonly referred to as authorization.
 
-In traditional Express, Koa, and even in applications like Deno with Oak and Hono, authorization (and its often-collaborating authentication) is typically handled by middleware. Middleware is a good choice for authentication because things like token validation and attaching properties to the request object don't have a strong connection to the specific route context (and its metadata).
+In traditional `Express`, `Koa`, and even in applications like `Deno` with `Oak` and `Hono`, authorization (and its often-collaborating authentication) is typically handled by middleware. Middleware is a good choice for authentication because things like token validation and attaching properties to the request object don't have a strong connection to the specific route context (and its metadata).
 
 However, middleware is inherently unaware. It doesn't know which handler will be executed after calling the `next()` function. The design of Guards, like Exception Filters and Interceptors, allows you to insert processing logic at precise moments in the request/response cycle and implement it in a declarative way. This helps keep the code clean and declarative.
 
@@ -147,29 +147,6 @@ export class AuthGuard implements CanActivate {
 }
 ```
 
-You can also use the `getMetadataForGuard` raw function to get roles:
-
-```typescript
-import {
-  type CanActivate,
-  type Context,
-  getMetadataForGuard,
-  Injectable
-} from "@nest";
-
-@Injectable()
-export class AuthGuard implements CanActivate {
-  async canActivate(context: Context): Promise<boolean> {
-    const roles = getMetadataForGuard<string[]>("roles", context);
-    if (!roles) {
-      return true;
-    }
-    const user = context.request.states.user;
-    return matchRoles(roles, user.roles);
-  }
-}
-```
-
 Attaching the authorized user to the request object is a common practice. Therefore, in the example code above, we assume that `context.request.states.user` contains the user instance and allowed roles. Generally, if a Guard needs to fetch user information, it typically injects it into `request.states` so that subsequent steps can use the user information directly.
 
 ```typescript
@@ -180,7 +157,7 @@ context.request.states.user = userInfo;
 ```
 
 :::info
-Later sections on decorators will explore how to elegantly use the user information injected here.
+Later sections on [decorators](./09_decorators) will explore how to elegantly use the user information injected here.
 :::
 
 ## Guard Failure Response
