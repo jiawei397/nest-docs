@@ -19,20 +19,24 @@ The easiest way to set up a Nest project is to initialize a project using our CL
 deno run --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json https://deno.land/x/deno_nest/cli/main.ts
 ```
 
+:::warning
+For the convenience of writing, all CDN addresses in this document (such as `https://deno.land/x/deno_nest`) do not carry version numbers. Readers must lock the specific version, especially in `importMap`, when using it. This will not be reminded in later text.
+:::
+
 Currently, our CLI functionality, in addition to creating projects, includes a `generate` command to assist in generating different types of files.
 
 Therefore, it is more appropriate to install it globally:
 
 ```bash
-deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json  -n nest -f https://deno.land/x/deno_nest/cli/main.ts
+deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json  -n nests -f https://deno.land/x/deno_nest/cli/main.ts
 ```
 
-It's worth noting that `-n nest` indicates that the name of the globally installed command is `nest`, which is consistent with the NestJS command in Node.js. This may lead to conflicts. If you intend to use both commands simultaneously, it's advisable to modify one of them to a different name, such as changing it to `-n dest`.
+It should be noted that `-n nests` indicates that the name of the installed global command is `nests`, which is to avoid conflicts with the `NestJS` command. However, if you do not plan to use `NestJS`, you can modify it to `-n nest`.
 
-Afterward, you can use the command `nest`, which is equivalent to `nest new`.
+You can then use the command `nests`, which is equivalent to `nests new`.
 
 ```bash
-$ nest
+$ nests
 We will scaffold your app in a few seconds..
 ? What name would you like to use for the new project? (deno_nest_app) › aa
 ? Which platform would you like to download by the new project? › gitee+ssh

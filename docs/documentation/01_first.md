@@ -19,20 +19,24 @@ order: 1
 deno run --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json https://deno.land/x/deno_nest/cli/main.ts
 ```
 
+:::warning
+为行文方便，本文档中所有的CDN地址（比如`https://deno.land/x/deno_nest`）并不携带版本号，读者在具体使用中尤其是在`importMap`中将务必锁定具体版本，后文不再提示。
+:::
+
 目前我们的CLI功能，除了创建项目外，还包含generate命令，可以辅助后续生成不同类型的文件。
 
 所以，更合适的是全局安装：
 
 ```bash
-deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json  -n nest -f https://deno.land/x/deno_nest/cli/main.ts
+deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json  -n nests -f https://deno.land/x/deno_nest/cli/main.ts
 ```
 
-需要注意的是，`-n nest `表示安装的全局命令的名称是`nest`，它与Node.js的NestJS的命令是一致的，这意味着可能会引起冲突，如果你要同时使用两个命令的话，建议将它修改名称，比如改为`-n dest`。
+需要注意的是，`-n nests` 表示安装的全局命令的名称是`nests`，这是为了避免与`NestJS`的命令冲突。当然，如果你并不准备使用`NestJS`，可以将它修改为`-n nest`。
 
-接着就可以使用命令`nest`了，等同于`nest new`。
+接着就可以使用命令`nests`了，等同于`nests new`。
 
 ```bash
-$ nest
+$ nests
 We will scaffold your app in a few seconds..
 ? What name would you like to use for the new project? (deno_nest_app) › aa
 ? Which platform would you like to download by the new project? › gitee+ssh
@@ -98,11 +102,11 @@ app.listen({ port });
 
 ## 平台
 
-Nest旨在成为一个平台无关的框架。平台独立性使得可以创建可重用的逻辑部分，开发人员可以在多种不同类型的应用程序中受益于它们。
+`Nest`旨在成为一个平台无关的框架。平台独立性使得可以创建可重用的逻辑部分，开发人员可以在多种不同类型的应用程序中受益于它们。
 
-从技术上讲，一旦创建了适配器，Nest就能够与任何Deno HTTP框架一起使用。现在支持两个HTTP平台：hono和oak。您可以选择最适合您需求的平台，不过默认推荐使用`hono`，它的性能要更好些。
+从技术上讲，一旦创建了适配器，`Nest`就能够与任何Deno HTTP框架一起使用。现在支持两个HTTP平台：`hono`和`oak`。您可以选择最适合您需求的平台，不过默认推荐使用`hono`，它的性能要更好些。
 
-比如，要切换为oak的话，只需要切换路由：
+比如，要切换为`oak`的话，只需要这样修改：
 
 ```diff
 - import { HonoRouter as Router } from "@nest/hono";

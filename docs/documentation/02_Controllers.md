@@ -35,7 +35,7 @@ export class CatsController {
 ```
 
 :::info
-使用CLI创建Controller，只需执行`nest g`，再选择Controller。
+使用CLI创建Controller，只需执行`nests g`，再选择`Controller`。
 :::
 
 `@Get()`HTTP请求方法装饰器位于`findAll()`方法之前，告诉Nest为特定的HTTP请求端点创建一个处理程序。端点对应于HTTP请求方法（在本例中为GET）和路由路径。

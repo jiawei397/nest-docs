@@ -39,7 +39,7 @@ export class CatsService {
 ```
 
 :::info
-你可以根据CLI创建一个service, 只需要执行 `nest g`，再选择Service。
+你可以根据CLI创建一个service, 只需要执行 `nests g`，再选择`Service`。
 :::
 
 我们的 `CatsService` 是一个具有一个属性和两个方法的基本类。唯一的新特性是它使用`@Injectable()`装饰器。

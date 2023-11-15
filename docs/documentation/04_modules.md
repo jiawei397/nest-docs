@@ -44,7 +44,7 @@ export class CatsModule {}
 ```
 
 :::info
-使用CLI创建模块，只需执行`nest g`，选择Module即可。
+使用CLI创建模块，只需执行`nests g`，选择`Module`即可。
 :::
 
 在上面，我们在`cats.module.ts`文件中定义了`CatsModule`，并将与此模块相关的所有内容移动到`cats`目录中。我们需要做的最后一件事是将此模块导入到根模块（`AppModule`，在`app.module.ts`文件中定义）中。

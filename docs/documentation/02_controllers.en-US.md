@@ -35,7 +35,7 @@ export class CatsController {
 ```
 
 :::info
-To create a controller using the CLI, simply execute `nest g` and then choose `Controller`.
+To create a controller using the CLI, simply execute `nests g` and then choose `Controller`.
 :::
 
 The `@Get()` HTTP request method decorator precedes the `findAll()` method, informing Nest to create a handler for a specific HTTP request endpoint. The endpoint corresponds to the HTTP request method (in this case, GET) and the route path.

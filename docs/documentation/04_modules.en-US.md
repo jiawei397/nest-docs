@@ -44,7 +44,7 @@ export class CatsModule {}
 ```
 
 :::info
-To create a module using the CLI, simply run `nest g` and choose Module.
+To create a module using the CLI, simply run `nests g` and choose `Module`.
 :::
 
 Above, we defined the `CatsModule` in the `cats.module.ts` file and moved all content related to this module into the `cats` directory. The last thing we need to do is to import this module into the root module (`AppModule`, defined in the `app.module.ts` file).

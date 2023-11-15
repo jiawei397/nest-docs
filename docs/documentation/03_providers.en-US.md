@@ -39,7 +39,7 @@ export class CatsService {
 ```
 
 :::info
-You can create a service using the CLI by simply running `nest g` and then selecting Service.
+You can create a service using the CLI by simply running `nests g` and then selecting `Service`.
 :::
 
 Our `CatsService` is a basic class with one property and two methods. The only new feature is that it uses the `@Injectable()` decorator.
