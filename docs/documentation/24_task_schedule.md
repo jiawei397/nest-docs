@@ -14,7 +14,7 @@ order: 4
 ```json
 {
   "imports": {
-    "@nest/schedule": "https://deno.land/x/deno_nest@v3.6.2/modules/schedule/mod.ts"
+    "@nest/schedule": "https://deno.land/x/deno_nest/modules/schedule/mod.ts"
   }
 }
 ```

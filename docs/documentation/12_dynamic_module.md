@@ -299,7 +299,7 @@ export class ConfigModule {
 
 ## 样例代码
 
-以上完整的样例代码可以在[这里](https://deno.land/x/deno_nest@v3.5.2/example/dynamicModule?source)找到。
+以上完整的样例代码可以在[这里](https://deno.land/x/deno_nest/example/dynamicModule?source)找到。
 
 ## 社区准则
 

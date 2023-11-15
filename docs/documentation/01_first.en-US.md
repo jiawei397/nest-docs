@@ -16,7 +16,7 @@ Make sure [Deno](https://deno.com/) is installed on your operating system (versi
 The easiest way to set up a Nest project is to initialize a project using our CLI:
 
 ```bash
-deno run --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest@v3.7.0/cli/import_map.json https://deno.land/x/deno_nest@v3.1.5/cli/main.ts
+deno run --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json https://deno.land/x/deno_nest/cli/main.ts
 ```
 
 Currently, our CLI functionality, in addition to creating projects, includes a `generate` command to assist in generating different types of files.
@@ -24,7 +24,7 @@ Currently, our CLI functionality, in addition to creating projects, includes a `
 Therefore, it is more appropriate to install it globally:
 
 ```bash
-deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest@v3.7.0/cli/import_map.json  -n nest -f https://deno.land/x/deno_nest@v3.1.5/cli/main.ts
+deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json  -n nest -f https://deno.land/x/deno_nest/cli/main.ts
 ```
 
 It's worth noting that `-n nest` indicates that the name of the globally installed command is `nest`, which is consistent with the NestJS command in Node.js. This may lead to conflicts. If you intend to use both commands simultaneously, it's advisable to modify one of them to a different name, such as changing it to `-n dest`.

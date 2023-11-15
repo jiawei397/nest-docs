@@ -14,7 +14,7 @@ order: 5
 ```json
 {
   "imports": {
-    "@nest/mongo": "https://deno.land/x/deno_nest@v3.7.0/modules/mongo/mod.ts",
+    "@nest/mongo": "https://deno.land/x/deno_nest/modules/mongo/mod.ts",
     "deno_mongo_schema": "https://deno.land/x/deno_mongo_schema@v1.0.3/mod.ts"
   }
 }
@@ -153,7 +153,7 @@ export class UserController {
 更多用法建议参看《一起学Deno》中的相关章节：
 [3.2 使用MongoDB重构](https://www.yuque.com/jiqingyun-begup/ewktxz/rwadc6?view=doc_embed)
 
-完整样例在[这里](https://deno.land/x/deno_nest@v3.7.0/modules/mongo/example?source)。
+完整样例在[这里](https://deno.land/x/deno_nest/modules/mongo/example?source)。
 
 ## MySQL
 
@@ -162,7 +162,7 @@ export class UserController {
 ```json
 {
   "imports": {
-    "@nest/mysql": "https://deno.land/x/deno_nest@v3.7.0/modules/mysql/mod.ts",
+    "@nest/mysql": "https://deno.land/x/deno_nest/modules/mysql/mod.ts",
     "mysql": "https://deno.land/x/mysql@v2.11.0/mod.ts"
   }
 }
@@ -255,7 +255,7 @@ export class AppController {
 ```json
 {
   "imports": {
-    "@nest/postgres": "https://deno.land/x/deno_nest@v3.7.0/modules/postgres/mod.ts",
+    "@nest/postgres": "https://deno.land/x/deno_nest/modules/postgres/mod.ts",
     "postgres/": "https://deno.land/x/postgres@v0.17.0/"
   }
 }
@@ -341,7 +341,7 @@ export class AppController {
 ```json
 {
   "imports": {
-    "@nest/redis": "https://deno.land/x/deno_nest@v3.7.0/modules/redis/mod.ts",
+    "@nest/redis": "https://deno.land/x/deno_nest/modules/redis/mod.ts",
     "redis": "https://deno.land/x/redis@v0.29.3/mod.ts"
   }
 }
@@ -395,7 +395,7 @@ export class AppController {
 ```json
 {
   "imports": {
-    "@nest/elasticsearch": "https://deno.land/x/deno_nest@v3.7.0/modules/elasticsearch/mod.ts"
+    "@nest/elasticsearch": "https://deno.land/x/deno_nest/modules/elasticsearch/mod.ts"
   }
 }
 ```

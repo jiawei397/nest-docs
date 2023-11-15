@@ -297,7 +297,7 @@ If you need different configurations in different modules, you can comment out `
 
 ## Example Code
 
-The complete example code above can be found [here](https://deno.land/x/deno_nest@v3.5.2/example/dynamicModule?source).
+The complete example code above can be found [here](https://deno.land/x/deno_nest/example/dynamicModule?source).
 
 ## Community Guidelines
 

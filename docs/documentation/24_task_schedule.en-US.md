@@ -14,7 +14,7 @@ First, add `@nestjs/schedule` to the `importMap`:
 ```json
 {
   "imports": {
-    "@nestjs/schedule": "https://deno.land/x/deno_nest@v3.6.2/modules/schedule/mod.ts"
+    "@nestjs/schedule": "https://deno.land/x/deno_nest/modules/schedule/mod.ts"
   }
 }
 ```

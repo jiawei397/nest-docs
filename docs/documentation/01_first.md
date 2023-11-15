@@ -16,7 +16,7 @@ order: 1
 设置 Nest 项目的最简单方法是使用我们的CLI来初始化一个工程：
 
 ```bash
-deno run --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest@v3.7.0/cli/import_map.json https://deno.land/x/deno_nest@v3.1.5/cli/main.ts
+deno run --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json https://deno.land/x/deno_nest/cli/main.ts
 ```
 
 目前我们的CLI功能，除了创建项目外，还包含generate命令，可以辅助后续生成不同类型的文件。
@@ -24,7 +24,7 @@ deno run --allow-env --allow-run --allow-net --allow-read --allow-write --import
 所以，更合适的是全局安装：
 
 ```bash
-deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest@v3.7.0/cli/import_map.json  -n nest -f https://deno.land/x/deno_nest@v3.1.5/cli/main.ts
+deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json  -n nest -f https://deno.land/x/deno_nest/cli/main.ts
 ```
 
 需要注意的是，`-n nest `表示安装的全局命令的名称是`nest`，它与Node.js的NestJS的命令是一致的，这意味着可能会引起冲突，如果你要同时使用两个命令的话，建议将它修改名称，比如改为`-n dest`。

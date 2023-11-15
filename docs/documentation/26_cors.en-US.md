@@ -14,9 +14,9 @@ First, add the `importMap`:
 ```json
 {
   "imports": {
-    "@nest": "https://deno.land/x/deno_nest@v3.6.2/mod.ts",
-    "@nest/hono": "https://deno.land/x/deno_nest@v3.6.2/modules/hono/mod.ts",
-    "@nest/cors": "https://deno.land/x/deno_nest@v3.6.2/modules/cors/mod.ts",
+    "@nest": "https://deno.land/x/deno_nest/mod.ts",
+    "@nest/hono": "https://deno.land/x/deno_nest/modules/hono/mod.ts",
+    "@nest/cors": "https://deno.land/x/deno_nest/modules/cors/mod.ts",
     "hono/": "https://deno.land/x/hono@v3.9.1/"
   }
 }

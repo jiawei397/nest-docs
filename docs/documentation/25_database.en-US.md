@@ -14,7 +14,7 @@ order: 5
 ```json
 {
   "imports": {
-    "@nest/mongo": "https://deno.land/x/deno_nest@v3.7.0/modules/mongo/mod.ts",
+    "@nest/mongo": "https://deno.land/x/deno_nest/modules/mongo/mod.ts",
     "deno_mongo_schema": "https://deno.land/x/deno_mongo_schema@v1.0.3/mod.ts"
   }
 }
@@ -152,7 +152,7 @@ export class UserController {
 
 For more usage, I recommend checking the relevant chapters in the book [Learning Deno 3.2 Use MongoDB](https://www.yuque.com/jiqingyun-begup/ewktxz/rwadc6?view=doc_embed).
 
-The complete example can be found [here](https://deno.land/x/deno_nest@v3.7.0/modules/mongo/example?source).
+The complete example can be found [here](https://deno.land/x/deno_nest/modules/mongo/example?source).
 
 ## MySQL
 
@@ -161,7 +161,7 @@ Similarly, `Nest` comes with a built-in toolkit for `MySQL`. First, import it in
 ```json
 {
   "imports": {
-    "@nest/mysql": "https://deno.land/x/deno_nest@v3.7.0/modules/mysql/mod.ts",
+    "@nest/mysql": "https://deno.land/x/deno_nest/modules/mysql/mod.ts",
     "mysql": "https://deno.land/x/mysql@v2.11.0/mod.ts"
   }
 }
@@ -254,7 +254,7 @@ Similarly, `Nest` comes with a built-in toolkit for `Postgres`. First, import it
 ```json
 {
   "imports": {
-    "@nest/postgres": "https://deno.land/x/deno_nest@v3.7.0/modules/postgres/mod.ts",
+    "@nest/postgres": "https://deno.land/x/deno_nest/modules/postgres/mod.ts",
     "postgres/": "https://deno.land/x/postgres@v0.17.0/"
   }
 }
@@ -362,7 +362,7 @@ Similarly, `Nest` comes with a built-in toolkit for `Redis`. First, import it in
 ```json
 {
   "imports": {
-    "@nest/redis": "https://deno.land/x/deno_nest@v3.7.0/modules/redis/mod.ts",
+    "@nest/redis": "https://deno.land/x/deno_nest/modules/redis/mod.ts",
     "redis": "https://deno.land/x/redis@v0.29.3/mod.ts"
   }
 }
@@ -435,7 +435,7 @@ Similarly, `Nest` comes with a built-in toolkit for `ElasticSearch`. First, impo
 ```json
 {
   "imports": {
-    "@nest/elasticsearch": "https://deno.land/x/deno_nest@v3.7.0/modules/elasticsearch/mod.ts"
+    "@nest/elasticsearch": "https://deno.land/x/deno_nest/modules/elasticsearch/mod.ts"
   }
 }
 ```
