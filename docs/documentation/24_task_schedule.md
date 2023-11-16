@@ -171,3 +171,7 @@ import { schedulerRegistry } from "@nest/schedule";
 
 schedulerRegistry.clearTimeout("intervalJob");
 ```
+
+## 样例
+
+完整样例在[这里](https://deno.land/x/deno_nest/modules/schedule/example?source)。

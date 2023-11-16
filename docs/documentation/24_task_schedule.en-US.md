@@ -174,3 +174,7 @@ import { schedulerRegistry } from "@nestjs/schedule";
 
 schedulerRegistry.clearTimeout("intervalJob");
 ```
+
+## Example
+
+The complete example can be found [here](https://deno.land/x/deno_nest/modules/schedule/example?source).
