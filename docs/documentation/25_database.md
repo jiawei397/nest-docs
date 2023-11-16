@@ -153,7 +153,9 @@ export class UserController {
 更多用法建议参看《一起学Deno》中的相关章节：
 [3.2 使用MongoDB重构](https://www.yuque.com/jiqingyun-begup/ewktxz/rwadc6?view=doc_embed)
 
+:::info
 完整样例在[这里](https://deno.land/x/deno_nest/modules/mongo/example?source)。
+:::
 
 ## MySQL
 
@@ -248,6 +250,10 @@ export class AppController {
 }
 ```
 
+:::info
+完整样例在[这里](https://deno.land/x/deno_nest/modules/mysql/example?source)。
+:::
+
 ## Postgres
 
 `Nest`同样内置了`Postgres`的工具包，先引入到`importMap`：
@@ -334,6 +340,10 @@ export class AppController {
 }
 ```
 
+:::info
+完整样例在[这里](https://deno.land/x/deno_nest/modules/postgres/example?source)。
+:::
+
 ## Redis
 
 `Nest`同样内置了`Redis`的工具包，先引入到`importMap`：
@@ -388,6 +398,10 @@ export class AppController {
 }
 ```
 
+:::info
+完整样例在[这里](https://deno.land/x/deno_nest/modules/redis/example?source)。
+:::
+
 ## ElasticSearch
 
 `Nest`同样内置了`ElasticSearch`的工具包，先引入到`importMap`：
@@ -436,3 +450,7 @@ export class AppController {
   }
 }
 ```
+
+:::info
+完整样例在[这里](https://deno.land/x/deno_nest/modules/elasticsearch/example?source)。
+:::

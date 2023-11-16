@@ -152,7 +152,9 @@ export class UserController {
 
 For more usage, I recommend checking the relevant chapters in the book [Learning Deno 3.2 Use MongoDB](https://www.yuque.com/jiqingyun-begup/ewktxz/rwadc6?view=doc_embed).
 
+:::info
 The complete example can be found [here](https://deno.land/x/deno_nest/modules/mongo/example?source).
+:::
 
 ## MySQL
 
@@ -246,6 +248,10 @@ export class AppController {
   }
 }
 ```
+
+:::info
+The complete example can be found [here](https://deno.land/x/deno_nest/modules/mysql/example?source).
+:::
 
 ## Postgres
 
@@ -355,6 +361,10 @@ export class AppController {
 }
 ```
 
+:::info
+The complete example can be found [here](https://deno.land/x/deno_nest/modules/postgres/example?source).
+:::
+
 ## Redis
 
 Similarly, `Nest` comes with a built-in toolkit for `Redis`. First, import it into the `importMap`:
@@ -428,6 +438,10 @@ export class AppController {
 }
 ```
 
+:::info
+The complete example can be found [here](https://deno.land/x/deno_nest/modules/redis/example?source).
+:::
+
 ## ElasticSearch
 
 Similarly, `Nest` comes with a built-in toolkit for `ElasticSearch`. First, import it into the `importMap`:
@@ -497,3 +511,7 @@ export class AppController {
   }
 }
 ```
+
+:::info
+The complete example can be found [here](https://deno.land/x/deno_nest/modules/elasticsearch/example?source).
+:::
