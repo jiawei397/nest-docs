@@ -16,7 +16,7 @@ For the sake of convenience in this book, we will refer to `deno_nest` as simply
 
 ## Underlying Engines: Oak and Hono
 
-In terms of underlying engines, `deno_nest` currently supports two frameworks: [Oak](https://deno.land/x/oak@v12.6.1) and [Hono]().
+In terms of underlying engines, `deno_nest` currently supports two frameworks: [Oak](https://deno.land/x/oak@v12.6.1) and [Hono](https://hono.dev/).
 The former is a framework developed by Deno's official developers. As its name suggests, it is based on the classic Node.js framework [Koa](https://koa.bootcss.com/) (which is now supported by Deno). Interested readers can refer to my previous article "[From Koa to Oak](../blog/01_koa_oak)." Unfortunately, its core developer has left the Deno company, and maintenance has been challenging in the past year.
 
 As for Hono, the term means "flame" in Japanese (indicating the developer may be a friend from Japan). It is a small, simple, and extremely fast Edges Web framework. It is suitable for any JavaScript runtime: Cloudflare Workers, Fastly Compute@Edge, Deno, Bun, Vercel, Netlify, Lagon, AWS Lambda, Lambda@Edge, and Node.js.
@@ -58,7 +58,7 @@ However, I chose to support two engines simultaneously to leave room for a poten
 
 Supporting two engines requires a lot of work, and I had to add a significant number of unit tests to ensure code stability.
 
-Currently (as of November 12, 2023), the [test coverage](https://app.codecov.io/gh/jiawei397/deno-oak-nest) has reached 95.58%, covering most code branches. Further improvements will be made in the future:
+Currently (as of November 20, 2023), the [test coverage](https://app.codecov.io/gh/jiawei397/deno-oak-nest) has reached 98.68%, covering most code branches. Further improvements will be made in the future:
 
 ![image.png](./images/unit.png)
 
