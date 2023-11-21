@@ -109,8 +109,8 @@ Technically, once an adapter is created, Nest can work with any Deno HTTP framew
 For example, to switch to `oak`, you only need to change the router:
 
 ```diff
-- import { HonoRouter as Router } from "@nest/hono";
-+ import { OakRouter as Router } from "@nest/oak";
+- import { Router } from "@nest/hono";
++ import { Router } from "@nest/oak";
 ```
 
 ## Running the Program

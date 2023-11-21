@@ -109,8 +109,8 @@ app.listen({ port });
 比如，要切换为`oak`的话，只需要这样修改：
 
 ```diff
-- import { HonoRouter as Router } from "@nest/hono";
-+ import { OakRouter as Router } from "@nest/oak";
+- import { Router } from "@nest/hono";
++ import { Router } from "@nest/oak";
 ```
 
 ## 运行程序
