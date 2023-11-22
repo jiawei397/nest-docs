@@ -515,3 +515,102 @@ export class AppController {
 :::info
 The complete example can be found [here](https://deno.land/x/deno_nest/modules/elasticsearch/example?source).
 :::
+
+## Other databases
+
+As shown in the example above, `Nest` can support any database by using its dynamic module feature. Taking the `Redis` module as an example, the module is named `RedisModule`:
+
+```typescript
+@Module({})
+export class RedisModule {
+  static client: Redis;
+
+  static forRoot(db: RedisConnectOptions): DynamicModule {
+    return {
+      module: RedisModule,
+      providers: [
+        {
+          provide: REDIS_KEY,
+          useFactory: async () => {
+            // ...
+          },
+        },
+      ],
+      exports: [REDIS_KEY],
+      global: true,
+    };
+  }
+
+  static getClient() {
+    return this.client;
+  }
+}
+```
+
+It uses `useFactory` to provide a client connection. Since `REDIS_KEY` needs to be exported to the outside world and to avoid conflicts with other modules, `Nest` requires it to be a `symbol`:
+
+```typescript
+export const REDIS_KEY = Symbol("redis");
+```
+
+After this module is imported, `REDIS_KEY` can be used to inject the client in `Controller` or `Service`:
+
+```typescript
+@Controller("")
+export class AppController {
+  constructor(@Inject(REDIS_KEY) public readonly client: Redis) {
+  }
+  
+  @Get("/")
+  async version() {
+    await this.client.set("version", "1.0.0");
+    return this.client.get("version");
+  }
+}
+```
+
+If you don't want to export the raw client, your module can further encapsulate a `Service`:
+
+```typescript
+@Injectable()
+export class RedisService {
+  constructor(@Inject(REDIS_KEY) public readonly client: Redis) {
+  }
+
+  set(key: string, value: any, seconds?: number) {
+    value = stringify(value);
+    return this.client.set(key, value, seconds ? { ex: seconds } : undefined);
+  }
+
+  async get(key: string) {
+    const data = await this.client.get(key);
+    return jsonParse(data);
+  }
+}
+```
+
+Then add `RedisService` to `providers` and `exports`:
+
+```typescript
+@Module({})
+export class RedisModule {
+  static client: Redis;
+
+  static forRoot(db: RedisConnectOptions): DynamicModule {
+    return {
+      module: RedisModule,
+      providers: [
+        {
+          provide: REDIS_KEY,
+          useFactory: async () => {
+            // ...
+          },
+        },
+        RedisService
+      ],
+      exports: [RedisService],
+      global: true,
+    };
+  }
+}
+```

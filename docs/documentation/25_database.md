@@ -454,3 +454,116 @@ export class AppController {
 :::info
 完整样例在[这里](https://deno.land/x/deno_nest/modules/elasticsearch/example?source)。
 :::
+
+## 其它数据库
+
+参考以上示例，`Nest`就可以支持任何数据库。核心是使用`Nest`提供的动态模块。
+
+以`Redis`模块为例，模块命名为`RedisModule`：
+
+```typescript
+@Module({})
+export class RedisModule {
+  static client: Redis;
+
+  static forRoot(db: RedisConnectOptions): DynamicModule {
+    return {
+      module: RedisModule,
+      providers: [
+        {
+          provide: REDIS_KEY,
+          useFactory: async () => {
+            try {
+              const client = await connect(db);
+              console.info(
+                "connect to redis success",
+                yellow(
+                  `hostname: ${db.hostname}, port: ${db.port}, database: ${db.db}`,
+                ),
+              );
+              this.client = client;
+              return client;
+            } catch (e) {
+              console.error("connect to redis error", red(e.stack));
+            }
+          },
+        },
+      ],
+      exports: [REDIS_KEY],
+      global: true,
+    };
+  }
+
+  static getClient() {
+    return this.client;
+  }
+}
+```
+
+它使用了`useFactory`来提供一个客户端连接。其中`REDIS_KEY`由于要对外导出，为避免与其它模块冲突，`Nest`要求是必须是`symbol`：
+
+```typescript
+export const REDIS_KEY = Symbol("redis");
+```
+
+这样这个模块被引入后，就可以在`Controller`或`Service`中使用`REDIS_KEY`来注入客户端：
+
+```typescript
+@Controller("")
+export class AppController {
+  constructor(@Inject(REDIS_KEY) public readonly client: Redis) {
+  }
+  
+  @Get("/")
+  async version() {
+    await this.client.set("version", "1.0.0");
+    return this.client.get("version");
+  }
+}
+```
+
+如果不想导出原始的客户端，你的模块也可以进一步封装一个`Service`：
+
+```typescript
+@Injectable()
+export class RedisService {
+  constructor(@Inject(REDIS_KEY) public readonly client: Redis) {
+  }
+
+  set(key: string, value: any, seconds?: number) {
+    value = stringify(value);
+    return this.client.set(key, value, seconds ? { ex: seconds } : undefined);
+  }
+
+  async get(key: string) {
+    const data = await this.client.get(key);
+    return jsonParse(data);
+  }
+}
+```
+
+然后将`RedisService`添加到`providers`和`exports`即可：
+
+```typescript
+@Module({})
+export class RedisModule {
+  static client: Redis;
+
+  static forRoot(db: RedisConnectOptions): DynamicModule {
+    return {
+      module: RedisModule,
+      providers: [
+        {
+          provide: REDIS_KEY,
+          useFactory: async () => {
+            // 略
+          },
+        },
+        RedisService
+      ],
+      exports: [RedisService],
+      global: true,
+    };
+  }
+}
+```
