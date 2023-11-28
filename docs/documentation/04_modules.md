@@ -65,13 +65,52 @@ src
 
 ## 共享模块
 
-在Nest中，模块默认为单例，因此你可以毫不费力地在多个模块之间共享任何提供程序的同一实例。
+在`Nest`中，模块默认是单例的，因此你可以轻松地在多个模块之间共享任何提供程序的相同实例。
 
-每个模块都自动成为共享模块。创建后，它可以被任何模块重用，而无需做任何操作。
+![share](./images/modules-share.png)
+
+每个模块都会自动成为共享模块。一旦创建，它可以被任何模块重用。假设我们想在几个其他模块之间共享`CatsService`的实例。为了实现这一点，我们首先需要将`CatsService`提供者添加到模块的`exports`数组中，如下所示：
+
+```typescript
+import { Module } from '@nest';
+import { CatsController } from './cats.controller.ts';
+import { CatsService } from './cats.service.ts';
+
+@Module({
+  controllers: [CatsController],
+  providers: [CatsService],
+  exports: [CatsService]
+})
+export class CatsModule {}
+```
+
+现在，任何导入`CatsModule`的模块都可以访问`CatsService`，并且与导入它的所有其他模块共享同一个实例。
 
 ## 全局模块
 
-如果你必须在每个地方都导入相同的模块集合，那可能会变得乏味。与Angular一样，providers是在全局范围内注册的。一旦定义，它们就可以在任何地方使用。
+如果你必须在每个地方都导入相同的模块集合，那可能会变得乏味。与`Nest`不同，`Angular`的`Providers`是在全局范围内注册的。一旦定义，它们就可以在任何地方使用。但是，`Nest`将`providers`封装在模块范围内。除非首先导入封装模块，否则无法在其他地方使用模块的`provider`。
+
+当你希望提供一组`providers`，这些`providers`应该可以随时随地使用（例如，`helpers`、数据库连接等）时，使用`@Global`装饰器使模块成为全局的。
+
+```typescript
+import { Module, Global } from '@nest';
+import { CatsController } from './cats.controller.ts';
+import { CatsService } from './cats.service.ts';
+
+@Global()
+@Module({
+  controllers: [CatsController],
+  providers: [CatsService],
+  exports: [CatsService],
+})
+export class CatsModule {}
+```
+
+`@Global()`装饰器使模块成为全局作用域。全局模块应该只注册一次，通常由根模块或核心模块注册。在上面的示例中，`CatsService`提供程序将无处不在，希望注入该服务的模块将不需要在其`imports`数组中导入`CatsModule`。
+
+:::info
+将所有内容都设为全局并不是一个好的设计决策。全局模块可用于减少必要的样板代码量。imports数组通常是使模块的API对消费者可用的首选方法。
+:::
 
 ## 动态模块
 

@@ -66,13 +66,52 @@ src
 
 ## Shared Modules
 
-In Nest, modules are singleton by default, allowing you to effortlessly share the same instance of any provider across multiple modules.
+In `Nest`, modules are singleton by default, so you can easily share the same instance of any provider between multiple modules.
 
-Every module automatically becomes a shared module. Once created, it can be reused by any module without any additional steps.
+![share](./images/modules-share.png)
+
+Each module automatically becomes a shared module. Once created, it can be reused by any other module. Suppose we want to share the instance of `CatsService` between several other modules. To achieve this, we first need to add the `CatsService` provider to the `exports` array of the module, as shown below:
+
+```typescript
+import { Module } from '@nest';
+import { CatsController } from './cats.controller.ts';
+import { CatsService } from './cats.service.ts';
+
+@Module({
+  controllers: [CatsController],
+  providers: [CatsService],
+  exports: [CatsService]
+})
+export class CatsModule {}
+```
+
+Now, any module that imports `CatsModule` can access the `CatsService` and share the same instance with all other modules that import it.
 
 ## Global Modules
 
-If you have to import the same set of modules everywhere, it might become tedious. Similar to Angular, providers are registered globally. Once defined, they can be used anywhere.
+It can become tedious if you have to import the same set of modules everywhere. Unlike `Angular`, where `Providers` are registered globally, `Nest` encapsulates providers within the module scope. They cannot be used elsewhere unless the encapsulating module is imported first.
+
+When you want to provide a set of providers that should be available anywhere and anytime (e.g., helpers, database connections), use the `@Global` decorator to make the module global.
+
+```typescript
+import { Module, Global } from '@nest';
+import { CatsController } from './cats.controller.ts';
+import { CatsService } from './cats.service.ts';
+
+@Global()
+@Module({
+  controllers: [CatsController],
+  providers: [CatsService],
+  exports: [CatsService],
+})
+export class CatsModule {}
+```
+
+The `@Global()` decorator makes the module global in scope. Global modules should be registered only once, typically by the root module or core module. In the example above, the `CatsService` provider will be available everywhere, and modules that wish to inject this service will not need to import `CatsModule` in their `imports` array.
+
+:::info
+Making everything global is not a good design decision. Global modules can be used to reduce the amount of boilerplate code required. The `imports` array is usually the preferred way to make a module's API available to consumers.
+:::
 
 ## Dynamic Modules
 
