@@ -17,7 +17,7 @@ In traditional `Express`, `Koa`, and even in applications like `Deno` with `Oak`
 However, middleware is inherently unaware. It doesn't know which handler will be executed after calling the `next()` function. The design of Guards, like Exception Filters and Interceptors, allows you to insert processing logic at precise moments in the request/response cycle and implement it in a declarative way. This helps keep the code clean and declarative.
 
 :::info
-Guards execute after all middleware but before any interceptors (see the next chapter, [Interceptors](./08_interceptors)).
+Guards execute after all middleware but before any interceptors (see the next chapter, [Interceptors](./08_interceptors.en-US.md)).
 :::
 
 ## Authorization Guard
@@ -87,7 +87,7 @@ export class AppModule {}
 :::warning
 When using this approach for dependency injection of Guards, be aware that, no matter where you use this construction, the Guard is essentially global.
 
-Also, `useClass` is not the only way to handle custom provider registration. Learn more in the [Custom Provider](./11_custom_provider) section.
+Also, `useClass` is not the only way to handle custom provider registration. Learn more in the [Custom Provider](./11_custom_provider.en-US.md) section.
 :::
 
 ## Assigning Roles to Handlers
@@ -157,7 +157,7 @@ context.request.states.user = userInfo;
 ```
 
 :::info
-Later sections on [decorators](./09_decorators) will explore how to elegantly use the user information injected here.
+Later sections on [decorators](./09_decorators.en-US.md) will explore how to elegantly use the user information injected here.
 :::
 
 ## Guard Failure Response

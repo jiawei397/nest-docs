@@ -100,7 +100,7 @@ await t.step("middleware with app.get", async (it) => {
 
 ## 使用原生中间件
 
-`Hono`与`oak`都有非常完善的中间件体系。详见《[Middleware](./05_middleware)》。
+`Hono`与`oak`都有非常完善的中间件体系。详见《[Middleware](./05_middleware.md)》。
 
 ## 使用原生Context
 

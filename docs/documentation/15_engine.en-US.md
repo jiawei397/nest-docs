@@ -100,7 +100,7 @@ In summary, `app.get` is only suitable for simple interface responses. In the ab
 
 ## Using Native Middleware
 
-Both `Hono` and `oak` have very comprehensive middleware systems. See [Middleware](./05_middleware) for more details.
+Both `Hono` and `oak` have very comprehensive middleware systems. See [Middleware](./05_middleware.en-US.md) for more details.
 
 ## Using Native Context
 

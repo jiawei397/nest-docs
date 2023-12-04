@@ -11,7 +11,7 @@ Automated testing is considered an essential part of any serious software develo
 
 These tests typically cover various types, including unit tests, end-to-end (`E2E`) tests, integration tests, and more.
 
-`Deno` has built-in support for testing with the `Deno.test` function, allowing you to write unit tests without the need for third-party packages. The standard library also includes [std/testing/bdd.ts](https://deno.land/std@0.202.0/testing/bdd.ts) for writing more complex test cases. For detailed usage, refer to the article "[Deno Unit Testing: Making Your Code More Robust](../blog/02_deno_unit)."
+`Deno` has built-in support for testing with the `Deno.test` function, allowing you to write unit tests without the need for third-party packages. The standard library also includes [std/testing/bdd.ts](https://deno.land/std@0.202.0/testing/bdd.ts) for writing more complex test cases. For detailed usage, refer to the article "[Deno Unit Testing: Making Your Code More Robust](../blog/02_deno_unit.en-US.md)."
 
 ## Unit Testing
 
@@ -86,7 +86,7 @@ For services like `CatsService` that do not have injected dependencies, you can 
 
 ### TRANSIENT Testing
 
-In the section on "[Injection Scopes](./13_scope)," we mentioned that, in addition to singleton, another scope is `TRANSIENT`, whose scope is not globally unique but creates a new instance for each constructor function. This is useful in logging services where we need to know the parent class's name.
+In the section on "[Injection Scopes](./13_scope.en-US.md)," we mentioned that, in addition to singleton, another scope is `TRANSIENT`, whose scope is not globally unique but creates a new instance for each constructor function. This is useful in logging services where we need to know the parent class's name.
 
 Taking this `service` as an example:
 

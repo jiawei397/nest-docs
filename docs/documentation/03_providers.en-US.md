@@ -94,7 +94,7 @@ constructor(private catsService: CatsService) {}
 
 Providers typically have a lifecycle, known as `Scope`, that is synchronized with the application's lifecycle. When bootstrapping the application, each dependency must be resolved, leading to the instantiation of each provider. Similarly, when the application is shutting down, each provider will be destroyed.
 
-However, there are also ways to make your providers have a request-scoped lifetime. You can learn more about these techniques [here](./13_scope).
+However, there are also ways to make your providers have a request-scoped lifetime. You can learn more about these techniques [here](./13_scope.en-US.md).
 
 ## Provider Injection
 

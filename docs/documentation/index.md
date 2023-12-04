@@ -17,7 +17,7 @@
 ## 底层引擎：oak与hono
 
 底层引擎方面，`deno_nest`目前支持两种框架，一个是[oak](https://deno.land/x/oak@v12.6.1)，一个是[hono](https://hono.dev/)。
-前者是Deno官方开发者开发的一款框架，从命名上可知它是参考了Node.js的经典框架[koa](https://koa.bootcss.com/)（目前已经被Deno支持），有兴趣的读者可以参看我之前的文章《[从koa到oak](../blog/01_koa_oak)》。遗憾的是其核心开发者已经离开了Deno公司，近一年来维护上已经捉襟见肘。
+前者是Deno官方开发者开发的一款框架，从命名上可知它是参考了Node.js的经典框架[koa](https://koa.bootcss.com/)（目前已经被Deno支持），有兴趣的读者可以参看我之前的文章《[从koa到oak](../blog/01_koa_oak.md)》。遗憾的是其核心开发者已经离开了Deno公司，近一年来维护上已经捉襟见肘。
 
 而hono在日语中是火焰的意思（所以开发者应该是日本友人），是一个小型、简单且超快的 Edges Web 框架。它适用于任何 JavaScript 运行时：Cloudflare Workers、Fastly Compute@Edge、Deno、Bun、Vercel、Netlify、Lagon、AWS Lambda、Lambda@Edge 和 Node.js。
 

@@ -120,7 +120,7 @@ export class AppModule {}
 :::info
 When using this approach for dependency injection of interceptors, be aware that, no matter where you use this construction, the interceptor is essentially global. It should be done in the module defining the interceptor (like the `LoggingInterceptor` above). Also, `useClass` is not the only way to handle custom provider registration.
 
-Learn more in the [Custom Provider](./11_custom_provider) section.
+Learn more in the [Custom Provider](./11_custom_provider.en-US.md) section.
 :::
 
 ## Modifying Response

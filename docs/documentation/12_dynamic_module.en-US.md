@@ -62,7 +62,7 @@ We'll call this **static module binding**. Nest connects the modules together, a
 
 Let's analyze what happens during this process. Nest provides `UsersService` to the internal services of `AuthModule` in the following way:
 
-1. Instantiate `UsersModule`, including passing any other modules that `UsersModule` consumes, and resolving any dependencies (see [Custom Provider](./11_custom_provider)).
+1. Instantiate `UsersModule`, including passing any other modules that `UsersModule` consumes, and resolving any dependencies (see [Custom Provider](./11_custom_provider.en-US.md)).
 2. Instantiate `AuthModule` and make the providers exported by `UsersModule` available to components within `AuthModule` (as if they were already declared in `AuthModule`).
 3. Inject `UsersService` into the instance of `AuthService`.
 
@@ -250,7 +250,7 @@ export interface ConfigOptions {
 }
 ```
 
-In the previous "[Custom Provider](./11_custom_provider)" section, we mentioned the `useFactory` pattern, which helps us provide the `ConfigService` in the `ConfigModule`. Please pay attention to the `providers` array in the code below:
+In the previous "[Custom Provider](./11_custom_provider.en-US.md)" section, we mentioned the `useFactory` pattern, which helps us provide the `ConfigService` in the `ConfigModule`. Please pay attention to the `providers` array in the code below:
 
 ```typescript
 import { DynamicModule, Module } from "@nest";

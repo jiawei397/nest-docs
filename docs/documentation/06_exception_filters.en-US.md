@@ -232,7 +232,7 @@ export class AppModule {}
 :::warning
 When using this approach for dependency injection of filters, be aware that, no matter where you use this construction, the filter is essentially global. Where should you perform such operations? Choose the module where the filter (e.g., `HttpExceptionFilter` in the example above) is defined.
 
-Also, `useClass` is not the only way to handle custom provider registration. Learn more in the [Custom Provider](./11_custom_provider) section.
+Also, `useClass` is not the only way to handle custom provider registration. Learn more in the [Custom Provider](./11_custom_provider.en-US.md) section.
 :::
 
 You can use this technique to add any number of filters; just add each filter to the `providers` array.
