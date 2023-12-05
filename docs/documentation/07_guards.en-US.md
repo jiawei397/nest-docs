@@ -150,9 +150,7 @@ export class AuthGuard implements CanActivate {
 Attaching the authorized user to the request object is a common practice. Therefore, in the example code above, we assume that `context.request.states.user` contains the user instance and allowed roles. Generally, if a Guard needs to fetch user information, it typically injects it into `request.states` so that subsequent steps can use the user information directly.
 
 ```typescript
-const userInfo
-
- = await fetch("https://sso.xxx");
+const userInfo = await fetch("https://sso.example.com");
 context.request.states.user = userInfo;
 ```
 
@@ -177,7 +175,7 @@ This is because, behind the scenes, when a Guard returns false, the framework th
 If you want to return a different error response, you should throw your specific exception. For example:
 
 ```typescript
-throw new UnauthorizedException();
+throw new UnauthorizedException("");
 ```
 
 :::info

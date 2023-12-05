@@ -149,7 +149,7 @@ export class AuthGuard implements CanActivate {
 将授权用户附加到请求对象是一种常见做法。因此，在上面的示例代码中，我们假设`context.request.states.user`包含用户实例和允许的角色。一般来说，`Guard`如果需要获取用户信息，则通常会将它注入到`request.states`中，以便后面的步骤可以直接使用用户信息。
 
 ```typescript
-const userInfo = await fetch("https://sso.xxx");
+const userInfo = await fetch("https://sso.example.com");
 context.request.states.user = userInfo;
 ```
 
@@ -174,7 +174,7 @@ context.request.states.user = userInfo;
 如果你想返回一个不同的错误响应，你应该抛出自己特定的异常。例如：
 
 ```typescript
-throw new UnauthorizedException();
+throw new UnauthorizedException("");
 ```
 
 :::info
