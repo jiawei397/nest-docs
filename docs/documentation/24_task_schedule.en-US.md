@@ -7,14 +7,14 @@ order: 4
 
 # Task Scheduling
 
-Task scheduling allows you to execute arbitrary code (methods/functions) at fixed dates/times, recurring intervals, or specified time intervals. In the Linux world, this is often handled by operating system-level packages like `cron`. For Deno applications, there are several packages that simulate `cron` functionality. Nest provides the `@nestjs/schedule` package, which integrates with [deno_cron](https://deno.land/x/deno_cron@v1.0.0/cron.ts).
+Task scheduling allows you to execute arbitrary code (methods/functions) at fixed dates/times, recurring intervals, or specified time intervals. In the Linux world, this is often handled by operating system-level packages like `cron`. For Deno applications, there are several packages that simulate `cron` functionality. Nest provides the `@nest/schedule` package, which integrates with [deno_cron](https://deno.land/x/deno_cron@v1.0.0/cron.ts).
 
-First, add `@nestjs/schedule` to the `importMap`:
+First, add `@nest/schedule` to the `importMap`:
 
 ```json
 {
   "imports": {
-    "@nestjs/schedule": "https://deno.land/x/deno_nest/modules/schedule/mod.ts"
+    "@nest/schedule": "https://deno.land/x/deno_nest/modules/schedule/mod.ts"
   }
 }
 ```
@@ -23,7 +23,7 @@ To activate job scheduling, import the `ScheduleModule` into the root `AppModule
 
 ```typescript
 import { Module } from '@nest';
-import { ScheduleModule } from '@nestjs/schedule';
+import { ScheduleModule } from '@nest/schedule';
 
 @Module({
   imports: [
@@ -56,7 +56,7 @@ Use the `@Cron()` decorator to declare `cron` jobs before the method definition 
 
 ```typescript
 import { Injectable } from '@nest';
-import { Cron } from '@nestjs/schedule';
+import { Cron } from '@nest/schedule';
 
 @Injectable()
 export class TasksService {
@@ -92,11 +92,11 @@ The `@Cron()` decorator supports all standard `cron` patterns:
 | Month | Yes | 1-12 | / - , * |
 | Day of Week | Yes | 0-6 (0 is Sunday) | / - , * |
 
-The `@nestjs/schedule` package provides a convenient enum containing common `cron` patterns. You can use this enum as follows:
+The `@nest/schedule` package provides a convenient enum containing common `cron` patterns. You can use this enum as follows:
 
 ```typescript
 import { Injectable } from '@nest';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nest/schedule';
 
 @Injectable()
 export class TasksService {
@@ -136,7 +136,7 @@ async intervalJob() {
 You can cancel it at an appropriate time:
 
 ```typescript
-import { schedulerRegistry } from "@nestjs/schedule";
+import { schedulerRegistry } from "@nest/schedule";
 
 schedulerRegistry.clearInterval("intervalJob");
 ```
@@ -170,7 +170,7 @@ async handleTimeout() {
 You can cancel it at an appropriate time:
 
 ```typescript
-import { schedulerRegistry } from "@nestjs/schedule";
+import { schedulerRegistry } from "@nest/schedule";
 
 schedulerRegistry.clearTimeout("intervalJob");
 ```

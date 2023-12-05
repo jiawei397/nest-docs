@@ -72,7 +72,7 @@ export class CatsController {
 ```
 
 :::warning
-The `Request` type needs to be exported from the `@nestjs/core` library, and the `type` keyword should be added to its definition.
+The `Request` type needs to be exported from the `@nest` library, and the `type` keyword should be added to its definition.
 :::
 
 The `Request` object represents an HTTP request and has properties for the request query string, parameters, HTTP headers, and body. In most cases, it is not necessary to manually retrieve these properties. We can use dedicated decorators such as `@Body()` or `@Query()`, which are readily available. The following lists the provided decorators and the common platform-specific objects they represent.
@@ -120,7 +120,7 @@ create(@Res() res: Response) {
 ```
 
 :::warning
-The `Response` type needs to be exported from the `@nestjs/core` library, and the `type` keyword should be added to its definition.
+The `Response` type needs to be exported from the `@nest` library, and the `type` keyword should be added to its definition.
 :::
 
 ## Headers

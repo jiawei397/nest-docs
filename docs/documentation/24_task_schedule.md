@@ -55,7 +55,7 @@ export class UserModule {}
 
 ```typescript
 import { Injectable } from '@nest';
-import { Cron } from '@nestjs/schedule';
+import { Cron } from '@nest/schedule';
 
 @Injectable()
 export class TasksService {
@@ -91,11 +91,11 @@ export class TasksService {
 | Month | Yes | 1-12 | / - , * |
 | Day of Week | Yes | 0-6 (0 is Sunday) | / - , * |
 
-`@nestjs/schedule`包提供了一个方便的枚举，其中包含常用的 cron 模式。您可以按以下方式使用此枚举：
+`@nest/schedule`包提供了一个方便的枚举，其中包含常用的 cron 模式。您可以按以下方式使用此枚举：
 
 ```typescript
 import { Injectable } from '@nest';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nest/schedule';
 
 @Injectable()
 export class TasksService {

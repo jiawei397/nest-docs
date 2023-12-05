@@ -167,7 +167,7 @@ We're ready to move on to the JWT portion of our auth system. Let's review and r
 - Allow users to authenticate with username/password, returning a JWT for use in subsequent calls to protected API endpoints. We're well on our way to meeting this requirement. To complete it, we'll need to write the code that issues a JWT.
 - Create API routes which are protected based on the presence of a valid JWT as a bearer token
   
-We need to include the `@nestjs/jwt` package in the importMap to assist us in handling JWT operations, including the generation and validation of JWT tokens.
+We need to include the `@nest/jwt` package in the importMap to assist us in handling JWT operations, including the generation and validation of JWT tokens.
 
 ```json
 {
