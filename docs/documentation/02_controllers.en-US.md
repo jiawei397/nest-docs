@@ -157,7 +157,7 @@ To redirect the response to a specific URL, you can use the `@Redirect()` decora
 import { Redirect } from "@nest";
 
 @Get("")
-@Redirect('https://nestjs.com', 301)
+@Redirect('https://nests.deno.dev', 301)
 ```
 
 To redirect the response to a specific URL, you can use the `@Redirect()` decorator. `@Redirect()` accepts two parameters, `url` and `statusCode`, the latter being optional and defaulting to 302.
@@ -167,7 +167,7 @@ import { Res, type Response } from "@nest";
 
 @Post("")
 create(@Res() res: Response) {
-  res.headers.set("Location', 'https://nestjs.com');
+  res.headers.set("Location', 'https://nests.deno.dev');
   res.status = 301;
   return 'This action adds a new cat';
 }

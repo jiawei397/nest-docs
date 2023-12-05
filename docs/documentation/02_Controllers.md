@@ -157,7 +157,7 @@ create(@Res() res: Response) {
 import { Redirect } from "@nest";
 
 @Get("")
-@Redirect('https://nestjs.com', 301)
+@Redirect('https://nests.deno.dev', 301)
 ```
 
 或者直接使用`@Res`装饰器修改headers：
@@ -167,7 +167,7 @@ import { Res, type Response } from "@nest";
 
 @Post("")
 create(@Res() res: Response) {
-  res.headers.set("Location', 'https://nestjs.com');
+  res.headers.set("Location', 'https://nests.deno.dev');
   res.status = 301;
   return 'This action adds a new cat';
 }
