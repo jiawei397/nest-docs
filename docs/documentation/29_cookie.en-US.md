@@ -1,5 +1,5 @@
 ---
-group: Tips
+group: Techniques
 order: 9
 ---
 

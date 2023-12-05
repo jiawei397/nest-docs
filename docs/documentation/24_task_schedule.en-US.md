@@ -1,6 +1,6 @@
 ---
 group:
-  title: Tips
+  title: Techniques
   order: 3
 order: 4
 ---
