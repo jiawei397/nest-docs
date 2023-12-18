@@ -1,15 +1,13 @@
 ---
-group:
-  title: Techniques
-  order: 3
-order: 6
+group: 安全
+order: 2
 ---
 
 # CORS
 
-Cross-Origin Resource Sharing (`CORS`) is a mechanism that allows requesting resources from another domain. At its core, Nest provides a generic `@nest/cors` package to assist you in customization.
+跨域资源共享 (`CORS`) 是一种允许从另一个域请求资源的机制。在底层，Nest提供了一个通用的`@nest/cors`包来帮助你进行自定义。
 
-First, add the `importMap`:
+首先添加`importMap`：
 
 ```json
 {
@@ -22,7 +20,7 @@ First, add the `importMap`:
 }
 ```
 
-Start using it:
+开始使用：
 
 ```typescript
 import { NestFactory } from "@nest";
@@ -38,51 +36,51 @@ await app.listen({
 });
 ```
 
-The `CORS` method takes an optional configuration object parameter:
+`CORS`方法采用可选的配置对象参数：
 
 ```typescript
 export function CORS(options?: boolean | CorsOptions) {}
   
 export interface CorsOptions {
   /**
-   * Configures the `Access-Control-Allow-Origins` CORS header.
+   * 配置 `Access-Control-Allow-Origin` CORS 标头。
    */
   origin?: StaticOrigin | CustomOrigin;
   /**
-   * Configures the Access-Control-Allow-Methods CORS header.
+   * 配置 Access-Control-Allow-Methods CORS 标头。
    */
   methods?: string | string[];
   /**
-   * Configures the Access-Control-Allow-Headers CORS header.
+   * 配置 Access-Control-Allow-Headers CORS 标头。
    */
   allowedHeaders?: string | string[];
   /**
-   * Configures the Access-Control-Expose-Headers CORS header.
+   * 配置 Access-Control-Expose-Headers CORS 标头。
    */
   exposedHeaders?: string | string[];
   /**
-   * Configures the Access-Control-Allow-Credentials CORS header.
+   * 配置 Access-Control-Allow-Credentials CORS 标头。
    */
   credentials?: boolean;
   /**
-   * Configures the Access-Control-Max-Age CORS header.
+   * 配置 Access-Control-Max-Age CORS 标头。
    */
   maxAge?: number;
   /**
-   * Whether to pass the CORS preflight response to the next handler.
+   * 是否将 CORS 预检请求的响应传递给下一个处理程序。
    */
   preflightContinue?: boolean;
   /**
-   * Provides a status code to use for successful OPTIONS requests.
+   * 提供用于成功的 OPTIONS 请求的状态码。
    */
   optionsSuccessStatus?: number;
 }
 ```
 
-By default, the `CORS` middleware reads the `Origin` property from the request:
+默认情况下，`CORS`中间件会读取请求中的`Origin`属性：
 ![request](./images/cors_request.png)
 
-And adds it to the response headers:
+将它添加到响应标头中：
 ![response](./images/cors_response.png)
 
-Each of the other options has its own explanation, but they are not overly complicated, so they won't be reiterated here.
+其它选项各有解释，并不复杂，这里就不赘述了。
