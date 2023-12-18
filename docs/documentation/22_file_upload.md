@@ -1,7 +1,5 @@
 ---
-group:
-  title: 技巧
-  order: 3
+group: 技巧
 order: 2
 ---
 

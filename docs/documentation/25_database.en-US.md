@@ -1,7 +1,5 @@
 ---
-group:
-  title: Techniques
-  order: 3
+group: Techniques
 order: 5
 ---
 
