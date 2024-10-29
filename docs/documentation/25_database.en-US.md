@@ -280,34 +280,14 @@ import { AppController } from './app.controller.ts';
 @Module({
   imports: [
     PostgresModule.forRoot({
-      hostname: 'localhost',
-      username: 'your_username',
-      port: 5432,
-      db: 'your_database',
-      poolSize: 5, // connection limit
-      password: 'your_password',
-    }),
-  ],
-  controllers: [AppController],
-})
-export class AppModule {}
-```
-
-Adjust the configuration parameters (`hostname`, `username`, `port`, `db`, `poolSize`, `password`) according to your Postgres database setup. In the `AppController`, you can then use it directly. As with the other examples, it's typically more reasonable to utilize it within a service.
-
-```typescript
-import { Module } from '@nest/core';
-import { PostgresModule } from '@nest/postgres';
-import { AppController } from './app.controller.ts';
-
-@Module({
-  imports: [
-    PostgresModule.forRoot({
-      hostname: 'localhost',
-      port: '5432',
+      hostname: '10.100.30.65',
+      port: 5433,
+      max: 20,
+      debug: true,
       user: 'root',
+      connect_timeout: 5,
       database: 'database', // You must ensure that the database exists, and the program will not automatically create it
-      password: 'yourpassword', // One thing that must be taken into consideration is that passwords contained inside the URL must be properly encoded in order to be passed down to the database. You can achieve that by using the JavaScript API encodeURIComponent and passing your password as an argument.
+      password: 'xxx', // One thing that must be taken into consideration is that passwords contained inside the URL must be properly encoded in order to be passed down to the database. You can achieve that by using the JavaScript API encodeURIComponent and passing your password as an argument.
     }),
   ],
   controllers: [AppController],
@@ -319,16 +299,24 @@ In `AppController`, you can use it directly. However, this is just an example, a
 
 ```typescript
 import { Controller, Get, Inject, Query } from '@nest/core';
-import { Client, POSTGRES_KEY } from '@nest/postgres';
+import { type Sql, POSTGRES_KEY } from '@nest/postgres';
+
+type Company = {
+  id: number;
+  name: string;
+  age: number;
+  address: string;
+  salary: number;
+};
 
 @Controller('')
 export class AppController {
-  constructor(@Inject(POSTGRES_KEY) private readonly client: Client) {}
+  constructor(@Inject(POSTGRES_KEY) private readonly sql: Sql) {}
 
   @Get('/createCompanyTable')
   async createCompanyTable() {
-    await this.client.queryArray(`DROP TABLE IF EXISTS COMPANY`);
-    const result = await this.client.queryObject(`
+    await this.sql`DROP TABLE IF EXISTS COMPANY`;
+    const result = await this.sql`
       CREATE TABLE COMPANY(
         ID INT PRIMARY KEY     NOT NULL,
         NAME           TEXT    NOT NULL,
@@ -336,7 +324,7 @@ export class AppController {
         ADDRESS        CHAR(50),
         SALARY         REAL
     );
-    `);
+    `;
     return result;
   }
 
@@ -345,9 +333,9 @@ export class AppController {
     @Query('username') username: string,
     @Query('id') id: number,
   ) {
-    const result = await this.client.queryObject(
-      `INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES (${id}, '${username}', 32, 'California', 20000.00)`,
-    );
+    console.info('Creating company ' + username, 'with id', id);
+    const result = await this
+      .sql`INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES (${id}, ${username}, 32, 'California', 20000.00)`;
     console.log(result);
     return result;
   }
@@ -355,11 +343,25 @@ export class AppController {
   @Get('/updateCompany')
   async updateCompany(@Query('id') id: number) {
     console.info('Updating company ' + id);
-    const result = await this.client.queryArray(
-      `UPDATE COMPANY SET SALARY = 15000 WHERE ID = ${id}`,
-    );
+    const result = await this
+      .sql`UPDATE COMPANY SET SALARY = 15000 WHERE ID = ${id}`;
     console.log(result);
-    return result.rowCount;
+    return result;
+  }
+
+  @Get('/queryCompany')
+  async queryCompany(@Query('id') id: number) {
+    console.info('Query company ' + id);
+    const result = await this.sql`SELECT * FROM COMPANY WHERE ID = ${id}`;
+    console.log(result);
+    return result;
+  }
+
+  @Get('list')
+  async list() {
+    const result = await this.sql<Company[]>`SELECT * FROM COMPANY`;
+    console.log(result);
+    return result;
   }
 }
 ```
@@ -386,26 +388,6 @@ In the `app.module.ts`, register the `RedisModule`:
 
 ```typescript
 import { Module } from '@nest/core';
-import { RedisModule } from '@nest/redis';
-import { AppController } from './app.controller.ts';
-
-@Module({
-  imports: [
-    RedisModule.forRoot({
-      hostname: 'localhost',
-      port: 6379,
-      password: 'your_password',
-    }),
-  ],
-  controllers: [AppController],
-})
-export class AppModule {}
-```
-
-Adjust the configuration parameters (`hostname`, `port`, `password`) according to your Redis server setup. In the `AppController`, you can then use it directly. As with the other examples, it's typically more reasonable to utilize it within a service.
-
-```typescript
-import { Module } from '@nest/core';
 import { createStore, RedisModule } from '@nest/redis';
 import { CacheModule } from '@nest/cache';
 import { AppController } from './app.controller.ts';
@@ -413,9 +395,12 @@ import { AppController } from './app.controller.ts';
 @Module({
   imports: [
     RedisModule.forRoot({
-      port: 6379,
-      hostname: '192.168.21.176',
-      password: '123456',
+      url: 'redis://default:xxx@10.100.30.65:6379/1',
+    }),
+    CacheModule.register({
+      ttl: 30,
+      store: createStore,
+      isDebug: true,
     }),
   ],
   controllers: [AppController],
@@ -467,29 +452,7 @@ import { AppController } from './app.controller.ts';
 @Module({
   imports: [
     ElasticsearchModule.forRoot({
-      node: 'http://localhost:9200',
-      auth: {
-        username: 'your_username',
-        password: 'your_password',
-      },
-    }),
-  ],
-  controllers: [AppController],
-})
-export class AppModule {}
-```
-
-Adjust the configuration parameters (`node`, `auth`) according to your ElasticSearch server setup. In the `AppController`, you can then use it directly. As with the other examples, it's typically more reasonable to utilize it within a service.
-
-```typescript
-import { Module } from '@nest/core';
-import { ElasticsearchModule } from '@nest/elasticsearch';
-import { AppController } from './app.controller.ts';
-
-@Module({
-  imports: [
-    ElasticsearchModule.forRoot({
-      db: 'http://elastic:369258@192.168.21.176:9200',
+      node: 'http://elastic:369258@192.168.21.176:9200',
     }),
   ],
   controllers: [AppController],
