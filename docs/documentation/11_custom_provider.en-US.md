@@ -18,8 +18,8 @@ Dependency injection is an Inversion of Control (`IoC`) technique where you dele
 First, we define a Provider. The `@Injectable()` decorator marks the `CatsService` class as a Provider.
 
 ```typescript
-import { Injectable } from "@nest";
-import { Cat } from "./cats.interface.ts";
+import { Injectable } from '@nest/core';
+import { Cat } from './cats.interface.ts';
 
 @Injectable()
 export class CatsService {
@@ -35,17 +35,15 @@ Then, we ask `Nest` to inject the provider into our controller class:
 
 ```typescript
 // deno-lint-ignore-file require-await
-import { Controller, Get } from "@nest";
-import { CatsService } from "./cats.service.ts";
-import { Cat } from "./cats.interface.ts";
+import { Controller, Get } from '@nest/core';
+import { CatsService } from './cats.service.ts';
+import { Cat } from './cats.interface.ts';
 
-@Controller("/cats")
+@Controller('/cats')
 export class CatsController {
-  constructor(
-    private catsService: CatsService,
-  ) {}
+  constructor(private catsService: CatsService) {}
 
-  @Get("/")
+  @Get('/')
   async findAll(): Promise<Cat[]> {
     return this.catsService.findAll();
   }
@@ -55,8 +53,8 @@ export class CatsController {
 Finally, we register the Provider with the `Nest IoC` container:
 
 ```typescript
-import { Module } from "@nest";
-import { CatsController } from "./cats/cats.controller.ts";
+import { Module } from '@nest/core';
+import { CatsController } from './cats/cats.controller.ts';
 
 @Module({
   controllers: [CatsController],
@@ -152,12 +150,12 @@ So far, we've been using classes as provider tokens (the `provide` property valu
 Sometimes, we might want to flexibly use strings or symbols as DI tokens. For example:
 
 ```typescript
-import { connection } from "./connection.ts";
+import { connection } from './connection.ts';
 
 @Module({
   providers: [
     {
-      provide: "CONNECTION",
+      provide: 'CONNECTION',
       useValue: connection,
     },
   ],
@@ -176,8 +174,8 @@ We've seen how to use constructor-based injection with class-based tokens. This 
 Let's see how to inject such a provider. We use the `@Inject()` decorator, which takes one parameter—the `token`.
 
 ```typescript
-import { Inject, Injectable } from "@nest";
-import { type Connection } from "../connection.ts";
+import { Inject, Injectable } from '@nest/core';
+import { type Connection } from '../connection.ts';
 
 @Injectable()
 export class CatsRepository {
@@ -199,7 +197,7 @@ The following code implements such a strategy.
 const configServiceProvider = {
   provide: ConfigService,
   useClass:
-    Deno.env.get("DENO_ENV") === 'development'
+    Deno.env.get('DENO_ENV') === 'development'
       ? DevelopmentConfigService
       : ProductionConfigService,
 };
@@ -240,7 +238,7 @@ const connectionProvider = {
   providers: [
     connectionProvider,
     OptionsProvider,
-     // { provide: 'SomeOptionalProvider', useValue: 'anything' },
+    // { provide: 'SomeOptionalProvider', useValue: 'anything' },
   ],
 })
 export class AppModule {}
@@ -277,7 +275,7 @@ While providers typically provide services, they are not limited to this purpose
 const configFactory = {
   provide: 'CONFIG',
   useFactory: () => {
-    return Deno.env.get("DENO_ENV") === 'development' ? devConfig : prodConfig;
+    return Deno.env.get('DENO_ENV') === 'development' ? devConfig : prodConfig;
   },
 };
 

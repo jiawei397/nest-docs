@@ -34,7 +34,7 @@ Replace the default content of the generated files with the following. For our s
 
 ```typescript
 // deno-lint-ignore-file require-await
-import { Injectable } from "@nest";
+import { Injectable } from '@nest/core';
 
 export type User = {
   userId: number;
@@ -47,13 +47,13 @@ export class UsersService {
   private readonly users = [
     {
       userId: 1,
-      username: "john",
-      password: "changeme",
+      username: 'john',
+      password: 'changeme',
     },
     {
       userId: 2,
-      username: "maria",
-      password: "guess",
+      username: 'maria',
+      password: 'guess',
     },
   ];
 
@@ -66,8 +66,8 @@ export class UsersService {
 In the `UsersModule`, the only required change is to add `UsersService` to the exports array in the `@Module` decorator so that it is visible outside of this module (we will soon use it in `AuthService`).
 
 ```typescript
-import { Module } from "@nest";
-import { UsersService } from "./users.service.ts";
+import { Module } from '@nest/core';
+import { UsersService } from './users.service.ts';
 
 @Module({
   providers: [UsersService],
@@ -91,7 +91,7 @@ export class AuthService {
   async signIn(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne(username);
     if (user?.password !== pass) {
-      throw new UnauthorizedException("");
+      throw new UnauthorizedException('');
     }
     const { password, ...result } = user;
     // TODO: Generate a JWT and return it here
@@ -123,19 +123,15 @@ export class AuthModule {}
 With this in place, let's open up the `AuthController` and add a `signIn()` method to it. This method will be called by the client to authenticate a user. It will receive the username and password in the request body, and will return a JWT token if the user is authenticated.
 
 ```typescript
-import {
-  Body,
-  Controller,
-  Post,
-} from "@nest";
-import { AuthService } from "./auth.service.ts";
-import { SignInDto } from "./auth.dto.ts";
+import { Body, Controller, Post } from '@nest/core';
+import { AuthService } from './auth.service.ts';
+import { SignInDto } from './auth.dto.ts';
 
-@Controller("/auth")
+@Controller('/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
-  
-  @Post("login")
+
+  @Post('login')
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
@@ -145,7 +141,7 @@ export class AuthController {
 The `SignInDto` is derived from `auth.dto.ts` and is used to validate parameters.
 
 ```typescript
-import { IsString, MaxLength, MinLength } from "class_validator";
+import { IsString, MaxLength, MinLength } from 'class_validator';
 
 export class SignInDto {
   @MaxLength(20)
@@ -166,7 +162,7 @@ We're ready to move on to the JWT portion of our auth system. Let's review and r
 
 - Allow users to authenticate with username/password, returning a JWT for use in subsequent calls to protected API endpoints. We're well on our way to meeting this requirement. To complete it, we'll need to write the code that issues a JWT.
 - Create API routes which are protected based on the presence of a valid JWT as a bearer token
-  
+
 We need to include the `@nest/jwt` package in the importMap to assist us in handling JWT operations, including the generation and validation of JWT tokens.
 
 ```json
@@ -180,9 +176,9 @@ We need to include the `@nest/jwt` package in the importMap to assist us in hand
 To keep our service modular and clear, we will handle JWT generation in the `authService`. Open the `auth.service.ts` file in the `auth` folder, inject `JwtService`, and update the `signIn` method to generate a JWT token as follows:
 
 ```typescript
-import { Injectable, UnauthorizedException } from "@nest";
-import { UsersService } from "../users/users.service.ts";
-import { JwtService } from "@nest/jwt";
+import { Injectable, UnauthorizedException } from '@nest/core';
+import { UsersService } from '../users/users.service.ts';
+import { JwtService } from '@nest/jwt';
 
 @Injectable()
 export class AuthService {
@@ -194,7 +190,7 @@ export class AuthService {
   async signIn(username: string, pass: string) {
     const user = await this.usersService.findOne(username);
     if (user?.password !== pass) {
-      throw new UnauthorizedException("");
+      throw new UnauthorizedException('');
     }
     const payload = { sub: user.userId.toString(), username: user.username };
     const access_token = await this.jwtService.sign(payload);
@@ -213,7 +209,8 @@ First, create `constants.ts` in the `auth` folder, and add the following code:
 
 ```typescript
 export const jwtConstants = {
-  secret: 'DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE.',
+  secret:
+    'DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE.',
 };
 ```
 
@@ -226,12 +223,12 @@ We'll use this to share our key between the JWT signing and verifying steps.
 Now, open `auth.module.ts` in the auth folder and update it to look like this:
 
 ```typescript
-import { APP_GUARD, Module } from "@nest";
-import { JwtModule } from "@nest/jwt";
+import { APP_GUARD, Module } from '@nest/core';
+import { JwtModule } from '@nest/jwt';
 
-import { AuthController } from "./auth.controller.ts";
-import { UsersModule } from "../users/users.module.ts";
-import { jwtConstants } from "./auth.constants.ts";
+import { AuthController } from './auth.controller.ts';
+import { UsersModule } from '../users/users.module.ts';
+import { jwtConstants } from './auth.constants.ts';
 
 @Module({
   imports: [
@@ -276,8 +273,8 @@ import {
   Injectable,
   type Request,
   UnauthorizedException,
-} from "@nest";
-import { JwtService } from "@nest/jwt";
+} from '@nest/core';
+import { JwtService } from '@nest/jwt';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -287,7 +284,7 @@ export class AuthGuard implements CanActivate {
     const request = context.request;
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      throw new UnauthorizedException("");
+      throw new UnauthorizedException('');
     }
     try {
       const payload = await this.jwtService.verify(token);
@@ -296,15 +293,14 @@ export class AuthGuard implements CanActivate {
       request.states.user = payload;
     } catch (e) {
       console.error(`verify token error:`, e);
-      throw new UnauthorizedException("");
+      throw new UnauthorizedException('');
     }
     return true;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.header("authorization")?.split(" ") ??
-      [];
-    return type === "Bearer" ? token : undefined;
+    const [type, token] = request.header('authorization')?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }
 ```
@@ -322,22 +318,22 @@ import {
   Req,
   type Request,
   UseGuards,
-} from "@nest";
-import { AuthService } from "./auth.service.ts";
-import { SignInDto } from "./auth.dto.ts";
-import { AuthGuard } from "./auth.guard.ts";
+} from '@nest/core';
+import { AuthService } from './auth.service.ts';
+import { SignInDto } from './auth.dto.ts';
+import { AuthGuard } from './auth.guard.ts';
 
-@Controller("/auth")
+@Controller('/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post("login")
+  @Post('login')
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 
   @UseGuards(AuthGuard)
-  @Get("profile")
+  @Get('profile')
   getProfile(@Req() req: Request) {
     return req.states.user;
   }
@@ -388,9 +384,9 @@ With this in place, Nest will automatically bind `AuthGuard` to all endpoints.
 Now we must provide a mechanism for declaring routes as public. For this, we can create a custom decorator using the `SetMetadata` decorator factory function.
 
 ```typescript
-import { SetMetadata } from "@nest";
+import { SetMetadata } from '@nest/core';
 
-export const IS_PUBLIC_KEY = "isPublic";
+export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 ```
 
@@ -416,9 +412,9 @@ import {
   Reflector,
   type Request,
   UnauthorizedException,
-} from "@nest";
-import { JwtService } from "@nest/jwt";
-import { IS_PUBLIC_KEY } from "./auth.decorator.ts";
+} from '@nest/core';
+import { JwtService } from '@nest/jwt';
+import { IS_PUBLIC_KEY } from './auth.decorator.ts';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -433,7 +429,7 @@ export class AuthGuard implements CanActivate {
     const request = context.request;
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      throw new UnauthorizedException("");
+      throw new UnauthorizedException('');
     }
     try {
       const payload = await this.jwtService.verify(token);
@@ -442,15 +438,14 @@ export class AuthGuard implements CanActivate {
       request.states.user = payload;
     } catch (e) {
       console.error(`verify token error:`, e);
-      throw new UnauthorizedException("");
+      throw new UnauthorizedException('');
     }
     return true;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.header("authorization")?.split(" ") ??
-      [];
-    return type === "Bearer" ? token : undefined;
+    const [type, token] = request.header('authorization')?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }
 ```

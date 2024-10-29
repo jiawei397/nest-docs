@@ -21,12 +21,12 @@ Nest 提供了一个内置的异常层，该层负责处理应用程序中所有
 
 ## 抛出异常
 
-`Nest`提供了一个内置的`HttpException`类，从`@nest`包中公开。对于典型的基于`HTTP REST API`的应用程序，在某些错误条件发生时发送标准HTTP响应对象是最佳实践。
+`Nest`提供了一个内置的`HttpException`类，从`@nest`包中公开。对于典型的基于`HTTP REST API`的应用程序，在某些错误条件发生时发送标准 HTTP 响应对象是最佳实践。
 
 例如，在`CatsController`中，我们有一个`findAll()`方法（一个`GET`路由处理程序）。假设这个路由处理程序由于某些原因抛出异常。为了演示这一点，我们将硬编码如下：
 
 ```typescript
-import { ForbiddenException } from "@nest";
+import { ForbiddenException } from "@nest/core";
 
 @Get("/")
 findAll() {
@@ -47,7 +47,7 @@ findAll() {
 
 构造函数`HttpException`采用两个必需参数来确定响应：
 
-- 该`response`参数定义 JSON 响应正文。它可以是string 或 object。
+- 该`response`参数定义 JSON 响应正文。它可以是 string 或 object。
 - 该`status`参数定义[HTTP 状态代码](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)。
 
 默认情况下，JSON 响应正文包含两个属性：
@@ -55,11 +55,11 @@ findAll() {
 - `statusCode`：默认为参数中提供的 HTTP 状态代码
 - `message`：基于 HTTP 错误的简短描述
 
-要仅覆盖 JSON 响应正文的消息部分，请在response参数中提供一个字符串。要覆盖整个 JSON 响应正文，请在response参数中传递一个对象。Nest 将序列化该对象并将其作为 JSON 响应正文返回。
+要仅覆盖 JSON 响应正文的消息部分，请在 response 参数中提供一个字符串。要覆盖整个 JSON 响应正文，请在 response 参数中传递一个对象。Nest 将序列化该对象并将其作为 JSON 响应正文返回。
 
 第二个构造函数参数（`status`）应该是有效的 HTTP 状态代码。最佳实践是直接使用`@nest`导出的标准异常类，比如上面的`ForbiddenException`。
 
-还有第三个构造函数参数（可选，`cause`）可用于提供错误[原因](https://nodejs.org/en/blog/release/v16.9.0/#error-cause)。该cause对象不会序列化到响应对象中，但它可用于日志记录目的，提供有关导致抛出的内部错误的有价值的信息HttpException。
+还有第三个构造函数参数（可选，`cause`）可用于提供错误[原因](https://nodejs.org/en/blog/release/v16.9.0/#error-cause)。该 cause 对象不会序列化到响应对象中，但它可用于日志记录目的，提供有关导致抛出的内部错误的有价值的信息 HttpException。
 
 下面是一个覆盖整个响应正文并提供错误原因的示例：
 
@@ -68,7 +68,7 @@ findAll() {
 async findAll() {
   try {
     await this.service.findAll()
-  } catch (error) { 
+  } catch (error) {
     throw new HttpException({
       status: HttpStatus.FORBIDDEN,
       error: 'This is a custom message',
@@ -88,9 +88,9 @@ async findAll() {
 }
 ```
 
-## 内置的HTTP异常类
+## 内置的 HTTP 异常类
 
-Nest提供了一组从基本`HttpException`继承的标准异常。它们来自于`@nest`包，并且代表了许多常见的HTTP异常。
+Nest 提供了一组从基本`HttpException`继承的标准异常。它们来自于`@nest`包，并且代表了许多常见的 HTTP 异常。
 
 - `BadRequestException`
 - `BodyParamValidationException`（与 `BadRequestException` 一样，状态码同为 400）
@@ -118,9 +118,9 @@ Nest提供了一组从基本`HttpException`继承的标准异常。它们来自�
 
 ```typescript
 throw new BadRequestException(
-  "Something bad happened",
-  "Some error description",
-  new Error("this is error"),
+  'Something bad happened',
+  'Some error description',
+  new Error('this is error'),
 );
 ```
 
@@ -136,12 +136,12 @@ throw new BadRequestException(
 
 ## 异常过滤器
 
-虽然基本的（内置的）异常过滤器（`Exception filters`）可以自动处理许多情况，但你可能希望完全控制异常层。例如，你可能希望添加日志记录或根据某些动态因素使用不同的JSON模式。异常过滤器正是为此目的而设计的。它们允许你控制精确的控制流和发送回客户端的响应内容。
+虽然基本的（内置的）异常过滤器（`Exception filters`）可以自动处理许多情况，但你可能希望完全控制异常层。例如，你可能希望添加日志记录或根据某些动态因素使用不同的 JSON 模式。异常过滤器正是为此目的而设计的。它们允许你控制精确的控制流和发送回客户端的响应内容。
 
 让我们创建一个异常过滤器，负责捕获属于`HttpException`类的异常，并为它们实现自定义的响应逻辑。
 
 ```typescript
-import { Catch, Context, ExceptionFilter, HttpException } from "@nest";
+import { Catch, Context, ExceptionFilter, HttpException } from '@nest/core';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -151,7 +151,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       statusCode: exception.status,
       timestamp: new Date().toISOString(),
       path: context.request.url,
-      type: "HttpExceptionFilter",
+      type: 'HttpExceptionFilter',
       message: exception.message,
     };
   }
@@ -167,7 +167,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 让我们将我们的新`HttpExceptionFilter`绑定到`CatsController`的`create()`方法上。
 
 ```typescript
-import { UseFilters } from "@nest";
+import { UseFilters } from "@nest/core";
 
 @Post('')
 @UseFilters(new HttpExceptionFilter())
@@ -189,12 +189,12 @@ async create(@Body() createCatDto: CreateCatDto) {
 ```
 
 :::info
-尽可能使用类来应用过滤器，而不是实例。这样可以减少内存使用，因为Nest可以在整个模块中轻松重用相同类的实例。
+尽可能使用类来应用过滤器，而不是实例。这样可以减少内存使用，因为 Nest 可以在整个模块中轻松重用相同类的实例。
 :::
 
-在上面的示例中，`HttpExceptionFilter`仅应用于单个`create()`路由处理程序，使其作用于方法范围。异常过滤器可以在不同级别上进行作用域设置：controller的方法范围、controller的全局范围或全局范围。
+在上面的示例中，`HttpExceptionFilter`仅应用于单个`create()`路由处理程序，使其作用于方法范围。异常过滤器可以在不同级别上进行作用域设置：controller 的方法范围、controller 的全局范围或全局范围。
 
-例如，要将过滤器设置为controller范围，你可以执行以下操作：
+例如，要将过滤器设置为 controller 范围，你可以执行以下操作：
 
 ```typescript
 @UseFilters(new HttpExceptionFilter())
@@ -228,9 +228,9 @@ export class AppModule {}
 ```
 
 :::warning
-使用这种方法来为过滤器进行依赖注入时，请注意，无论在哪个模块中使用此构造，过滤器实际上都是全局的。应该在哪里进行这样的操作？选择定义过滤器（例如上面的HttpExceptionFilter）的模块。
+使用这种方法来为过滤器进行依赖注入时，请注意，无论在哪个模块中使用此构造，过滤器实际上都是全局的。应该在哪里进行这样的操作？选择定义过滤器（例如上面的 HttpExceptionFilter）的模块。
 
-另外，useClass并不是处理自定义提供者注册的唯一方式。在《[这里](./11_custom_provider.md)》了解更多信息。
+另外，useClass 并不是处理自定义提供者注册的唯一方式。在《[这里](./11_custom_provider.md)》了解更多信息。
 :::
 
 你可以使用这种技术添加任意数量的过滤器；只需将每个过滤器添加到`providers`数组中即可。
@@ -240,7 +240,7 @@ export class AppModule {}
 为了捕获每一个未处理的异常（无论异常类型如何），请将`@Catch()`装饰器的参数列表留空，例如`@Catch()`。
 
 ```typescript
-import { Catch, Context, ExceptionFilter, HttpException } from "@nest";
+import { Catch, Context, ExceptionFilter, HttpException } from '@nest/core';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -249,7 +249,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       statusCode: (exception as HttpException).status || 500,
       timestamp: new Date().toISOString(),
       path: context.request.url,
-      type: "AllExceptionsFilter",
+      type: 'AllExceptionsFilter',
       error: (exception as Error).message,
     };
   }

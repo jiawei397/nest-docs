@@ -12,29 +12,25 @@ Sometimes, we have a need to respond to a client with a data stream, such as an 
 `Nest` provides a function `getReadableStream` to help you quickly respond with a stream.
 
 ```typescript
-import {
-  Controller,
-  Get,
-  getReadableStream,
-} from "@nest";
+import { Controller, Get, getReadableStream } from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
   /**
    * response an stream, can test by `curl http://localhost:2000/stream`
    */
-  @Get("/stream")
+  @Get('/stream')
   stream() {
     const { body, write, end } = getReadableStream();
     let num = 0;
     const timer = setInterval(() => {
       if (num === 10) {
         clearInterval(timer);
-        console.info("end");
+        console.info('end');
         try {
-          end("Task successfully end");
+          end('Task successfully end');
         } catch (error) {
-          console.error("end", error); // TypeError: The stream controller cannot close or enqueue
+          console.error('end', error); // TypeError: The stream controller cannot close or enqueue
         }
         return;
       }
@@ -44,7 +40,7 @@ export class AppController {
       try {
         write(message);
       } catch (error) {
-        console.error("write", error); // TypeError: The stream controller cannot close or enqueue
+        console.error('write', error); // TypeError: The stream controller cannot close or enqueue
         clearInterval(timer);
       }
     }, 1000);
@@ -81,29 +77,23 @@ Sometimes you may need to provide an interface for downloading files, so you wil
 If you are familiar with the network, you should know that you only need to set the `Content-Type` of the response header to `application/octet-stream`.
 
 ```typescript
-import {
-  Controller,
-  Get,
-  Header,
-  Res,
-  type Response,
-} from "@nest";
+import { Controller, Get, Header, Res, type Response } from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/file")
-  @Header("Content-Type", "application/octet-stream")
-  @Header("Content-Disposition", 'attachment; filename="README.md"')
+  @Get('/file')
+  @Header('Content-Type', 'application/octet-stream')
+  @Header('Content-Disposition', 'attachment; filename="README.md"')
   async file() {
-    const input = await Deno.open("README.md", { read: true });
+    const input = await Deno.open('README.md', { read: true });
     return input.readable;
   }
 
-  @Get("/file2")
+  @Get('/file2')
   async file2(@Res() res: Response) {
-    const input = await Deno.open("README.md", { read: true });
-    res.headers.set("Content-Type", "application/octet-stream");
-    res.headers.set("Content-Disposition", 'attachment; filename="README.md"');
+    const input = await Deno.open('README.md', { read: true });
+    res.headers.set('Content-Type', 'application/octet-stream');
+    res.headers.set('Content-Disposition', 'attachment; filename="README.md"');
     return input.readable;
   }
 }

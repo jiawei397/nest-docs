@@ -63,7 +63,7 @@ export class AuthService {
 让我们来分析一下这个过程中发生了什么。`Nest`通过以下方式`UsersService`提供内部`AuthModule`服务：
 
 1. 实例化`UsersModule`，包括传递导入`UsersModule`本身消耗的其他模块，以及传递解决任何依赖关系（请在[这里](./11_custom_provider.md)了解更多信息）。
-2. 实例化`AuthModule`，并使`UsersModule`的导出Providers可用于`AuthModule`中的组件（就像它们已在`AuthModule`中声明一样）。
+2. 实例化`AuthModule`，并使`UsersModule`的导出 Providers 可用于`AuthModule`中的组件（就像它们已在`AuthModule`中声明一样）。
 3. `UsersService`注入到`AuthService`的实例。
 
 ## 动态模块用例
@@ -72,9 +72,9 @@ export class AuthService {
 
 在`Nest`中，一个很好的例子就是配置模块。许多应用程序通过使用配置模块来外部化配置细节，这样可以轻松地在不同的部署中动态更改应用程序设置。例如，开发人员使用开发数据库，测试/预发布环境使用暂存数据库等。通过将配置参数的管理委托给配置模块，应用程序源代码保持独立于配置参数。
 
-挑战在于配置模块本身是通用的（类似于“插件”），需要由其消费模块进行定制。这就是动态模块的作用。使用动态模块功能，我们可以使配置模块动态化，以便消费模块可以在导入时使用API来控制如何定制配置模块。
+挑战在于配置模块本身是通用的（类似于“插件”），需要由其消费模块进行定制。这就是动态模块的作用。使用动态模块功能，我们可以使配置模块动态化，以便消费模块可以在导入时使用 API 来控制如何定制配置模块。
 
-换句话说，动态模块提供了一个API，用于将一个模块导入到另一个模块中，并在导入时自定义该模块的属性和行为，而不是使用我们迄今为止看到的静态绑定。
+换句话说，动态模块提供了一个 API，用于将一个模块导入到另一个模块中，并在导入时自定义该模块的属性和行为，而不是使用我们迄今为止看到的静态绑定。
 
 ## 配置模块示例
 
@@ -141,7 +141,7 @@ export class AppModule {}
 对于动态模块，模块选项对象的所有属性都是可选的，除了`module`。
 :::
 
-那么静态`register()`方法呢？现在我们可以看到它的工作是返回一个具有`DynamicModule`接口的对象。当我们调用它时，我们实际上是提供一个模块给导入列表，类似于在静态情况下列出模块类名的方式。换句话说，动态模块API只是返回一个模块，但我们不是在`@Module`装饰器中固定属性，而是以编程方式指定它们。
+那么静态`register()`方法呢？现在我们可以看到它的工作是返回一个具有`DynamicModule`接口的对象。当我们调用它时，我们实际上是提供一个模块给导入列表，类似于在静态情况下列出模块类名的方式。换句话说，动态模块 API 只是返回一个模块，但我们不是在`@Module`装饰器中固定属性，而是以编程方式指定它们。
 
 还有一些细节需要补充，以便更好地理解整个过程：
 
@@ -203,28 +203,26 @@ export class ConfigService {
 ```
 
 但是这个`envConfig`与上面的选项对象有关，它应该在`ConfigService`实例化时就构建好，或者被`Nest IoC`容器注入。
-我们在Deno的标准库中找到`std/dotenv`：
+我们在 Deno 的标准库中找到`std/dotenv`：
 
 ```typescript
-import { load } from "https://deno.land/std@0.205.0/dotenv/mod.ts";
+import { load } from 'https://deno.land/std@0.205.0/dotenv/mod.ts';
 
-console.log(await load({export: true})); // { GREETING: "hello world" }
-console.log(Deno.env.get("GREETING")); // hello world
+console.log(await load({ export: true })); // { GREETING: "hello world" }
+console.log(Deno.env.get('GREETING')); // hello world
 ```
 
 它提供的`load`是个异步函数，这就导致我们不能在构造函数中使用（因为这样无法确保完成的时机），所以我们最终的`ConfigService`应该是这样的：
 
 ```typescript
-import { Inject, Injectable } from "@nest";
-import type { EnvConfig } from "./config.interface.ts";
-import { CONFIG_KEY } from "./config.constant.ts";
+import { Inject, Injectable } from '@nest/core';
+import type { EnvConfig } from './config.interface.ts';
+import { CONFIG_KEY } from './config.constant.ts';
 
 @Injectable()
 export class ConfigService {
-  constructor(
-    @Inject(CONFIG_KEY) private readonly envConfig: EnvConfig,
-  ) {
-    console.log("ConfigService.constructor()", envConfig);
+  constructor(@Inject(CONFIG_KEY) private readonly envConfig: EnvConfig) {
+    console.log('ConfigService.constructor()', envConfig);
   }
 
   get(key: string): string {
@@ -236,7 +234,7 @@ export class ConfigService {
 而`config.constant.ts`是这样的：
 
 ```typescript
-export const CONFIG_KEY = Symbol("config");
+export const CONFIG_KEY = Symbol('config');
 ```
 
 `config.interface.ts`包含两个接口：
@@ -255,12 +253,12 @@ export interface ConfigOptions {
 在[上节](./11_custom_provider.md)》中，我们提到`useFactory`模式，它帮助我们在`ConfigModule`提供`ConfigService`。请注意下面代码中的`providers`数组：
 
 ```typescript
-import { DynamicModule, Module } from "@nest";
-import { ConfigService } from "./config.service.ts";
-import { ConfigOptions, EnvConfig } from "./config.interface.ts";
-import { CONFIG_KEY } from "./config.constant.ts";
-import { load } from "std/dotenv/mod.ts";
-import { join } from "std/path/join.ts";
+import { DynamicModule, Module } from '@nest/core';
+import { ConfigService } from './config.service.ts';
+import { ConfigOptions, EnvConfig } from './config.interface.ts';
+import { CONFIG_KEY } from './config.constant.ts';
+import { load } from 'std/dotenv/mod.ts';
+import { join } from 'std/path/join.ts';
 
 @Module({})
 export class ConfigModule {
@@ -272,10 +270,10 @@ export class ConfigModule {
           provide: CONFIG_KEY,
           useFactory: async () => {
             const folder = options.folder;
-            const filePath = `${Deno.env.get("DENO_ENV") || "development"}.env`;
-            return await load({
+            const filePath = `${Deno.env.get('DENO_ENV') || 'development'}.env`;
+            return (await load({
               envPath: join(folder, filePath),
-            }) as EnvConfig;
+            })) as EnvConfig;
           },
         },
         ConfigService,
@@ -287,7 +285,7 @@ export class ConfigModule {
 }
 ```
 
-我们在上面使用了一个基于symbol的注入令牌（`CONFIG_KEY`），它被定义为一个常量在一个单独的文件中，并导入该文件，这是一种最佳实践，尽管你可以使用普通有字符串代替。
+我们在上面使用了一个基于 symbol 的注入令牌（`CONFIG_KEY`），它被定义为一个常量在一个单独的文件中，并导入该文件，这是一种最佳实践，尽管你可以使用普通有字符串代替。
 
 :::warning{title=注意}
 这里的`global`设置为`true`，表示`exports`的内容全局可见，只需要被某个模块`import`一次，其它模块都可以直接使用`ConfigService`，否则仍需被各个模块单独再入一次`ConfigModule`。

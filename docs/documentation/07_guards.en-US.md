@@ -27,7 +27,7 @@ As mentioned, authorization is a good use case for Guards because specific route
 The `RolesGuard` we're about to build assumes an authenticated user (hence a token attached to the request header). It will extract and validate the token, using the extracted information to determine whether the request can proceed.
 
 ```typescript
-import { type CanActivate, type Context, Injectable } from "@nest";
+import { type CanActivate, type Context, Injectable } from '@nest/core';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -42,7 +42,7 @@ Each Guard needs to implement the `CanActivate` interface, and the response resu
 Similar to Exception Filters, Guards can be controller-scoped, method-scoped, or globally scoped. Below, we set up a controller-scoped Guard using the `@UseGuards()` decorator. This decorator can accept a single parameter or a comma-separated list, making it easy to use a declarative set of Guards.
 
 ```typescript
-import { UseGuards } from "@nest";
+import { UseGuards } from '@nest/core';
 
 @Controller('cats')
 @UseGuards(RolesGuard)
@@ -99,11 +99,11 @@ How do we match roles with routes in a flexible and reusable way?
 This is where custom metadata comes into play. Nest provides the built-in `@SetMetadata()` decorator through which custom metadata can be attached to route handlers. For example:
 
 ```typescript
-import { SetMetadata } from "@nest";
+import { SetMetadata } from '@nest/core';
 
-export type Role = "admin" | "normal";
+export type Role = 'admin' | 'normal';
 
-export const Roles = (...roles: Role[]) => SetMetadata("roles", roles);
+export const Roles = (...roles: Role[]) => SetMetadata('roles', roles);
 ```
 
 Now, to use this decorator, we only need to annotate it with our handlers:
@@ -130,14 +130,14 @@ import {
   type Context,
   Injectable,
   Reflector,
-} from "@nest";
+} from '@nest/core';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   async canActivate(context: Context): Promise<boolean> {
-    const roles = this.reflector.get<string[]>("roles", context);
+    const roles = this.reflector.get<string[]>('roles', context);
     if (!roles) {
       return true;
     }
@@ -150,7 +150,7 @@ export class AuthGuard implements CanActivate {
 Attaching the authorized user to the request object is a common practice. Therefore, in the example code above, we assume that `context.request.states.user` contains the user instance and allowed roles. Generally, if a Guard needs to fetch user information, it typically injects it into `request.states` so that subsequent steps can use the user information directly.
 
 ```typescript
-const userInfo = await fetch("https://sso.example.com");
+const userInfo = await fetch('https://sso.example.com');
 context.request.states.user = userInfo;
 ```
 
@@ -175,7 +175,7 @@ This is because, behind the scenes, when a Guard returns false, the framework th
 If you want to return a different error response, you should throw your specific exception. For example:
 
 ```typescript
-throw new UnauthorizedException("");
+throw new UnauthorizedException('');
 ```
 
 :::info

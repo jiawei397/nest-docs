@@ -18,7 +18,7 @@ order: 5
 }
 ```
 
-它内置了常见的API，基本能满足你的需求：
+它内置了常见的 API，基本能满足你的需求：
 
 ![mongodb API](./images/database-mongo-api.jpeg)
 
@@ -27,13 +27,13 @@ order: 5
 首先，在`AppModule`中使用`MongoModule.forRoot`全局注册数据库：
 
 ```typescript
-import { Module } from "@nest";
-import { MongoModule } from "@nest/mongo";
-import { UserModule } from "./user/user.module.ts";
+import { Module } from '@nest/core';
+import { MongoModule } from '@nest/mongo';
+import { UserModule } from './user/user.module.ts';
 
 @Module({
   imports: [
-    MongoModule.forRoot("mongodb://10.100.30.65:27018/test"),
+    MongoModule.forRoot('mongodb://10.100.30.65:27018/test'),
     UserModule,
   ],
   controllers: [],
@@ -44,7 +44,7 @@ export class AppModule {}
 新建`user/user.schema.ts`文件，定义一个`UserSchema`，也就是传统表格中的字段：
 
 ```typescript
-import { BaseSchema, Prop, Schema } from "deno_mongo_schema";
+import { BaseSchema, Prop, Schema } from 'deno_mongo_schema';
 
 @Schema()
 export class User extends BaseSchema {
@@ -69,15 +69,14 @@ export type UserKeys = UserKey[];
 在`UserService`中需要与装饰器`InjectModel`一起使用：
 
 ```typescript
-import { Injectable } from "@nest";
-import { InjectModel, Model } from "deno_mongo_schema";
-import { User } from "./user.schema.ts";
-import { AddUserDto } from "./user.dto.ts";
+import { Injectable } from '@nest/core';
+import { InjectModel, Model } from 'deno_mongo_schema';
+import { User } from './user.schema.ts';
+import { AddUserDto } from './user.dto.ts';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User) private readonly model: Model<User>) {
-  }
+  constructor(@InjectModel(User) private readonly model: Model<User>) {}
 
   async save(createUserDto: AddUserDto): Promise<string> {
     const id = await this.model.insertOne(createUserDto);
@@ -98,14 +97,17 @@ export class UserService {
   }
 
   findByName(name: string) {
-    return this.model.findMany({
-      username: name,
-    }, {
-      projection: {
-        username: 1,
-        email: 1,
+    return this.model.findMany(
+      {
+        username: name,
       },
-    });
+      {
+        projection: {
+          username: 1,
+          email: 1,
+        },
+      },
+    );
   }
 
   findAll() {
@@ -113,11 +115,15 @@ export class UserService {
   }
 
   update(id: string, data: Partial<User>) {
-    return this.model.findByIdAndUpdate(id, {
-      $set: data,
-    }, {
-      new: true,
-    });
+    return this.model.findByIdAndUpdate(
+      id,
+      {
+        $set: data,
+      },
+      {
+        new: true,
+      },
+    );
   }
 
   deleteById(id: string) {
@@ -133,23 +139,30 @@ export class UserService {
 然后在`Controller`中就可以愉快地使用`userService`了：
 
 ```typescript
-import { BadRequestException, Body, Controller, Get, Post, Query } from "@nest";
-import { UserService } from "./user.service.ts";
-import { AddUserDto, SearchUserDto, UpdateUserDto } from "./user.dto.ts";
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+} from '@nest/core';
+import { UserService } from './user.service.ts';
+import { AddUserDto, SearchUserDto, UpdateUserDto } from './user.dto.ts';
 
-@Controller("/user")
+@Controller('/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post("add")
+  @Post('add')
   add(@Body() params: AddUserDto) {
     return this.userService.save(params);
   }
 }
 ```
 
-更多用法建议参看《一起学Deno》中的相关章节：
-[3.2 使用MongoDB重构](https://www.yuque.com/jiqingyun-begup/ewktxz/rwadc6?view=doc_embed)
+更多用法建议参看《一起学 Deno》中的相关章节：
+[3.2 使用 MongoDB 重构](https://www.yuque.com/jiqingyun-begup/ewktxz/rwadc6?view=doc_embed)
 
 :::info
 完整样例在[这里](https://deno.land/x/deno_nest/modules/mongo/example?source)。
@@ -168,24 +181,24 @@ export class UserController {
 }
 ```
 
-由于`@nest/mysql`中只调用了`mysql`客户端的几个核心方法连接数据库，所以在核心方法API不作修改的情况下，客户端的代码是可以直接升级的。
+由于`@nest/mysql`中只调用了`mysql`客户端的几个核心方法连接数据库，所以在核心方法 API 不作修改的情况下，客户端的代码是可以直接升级的。
 
 我们在`app.module.ts`中注册`MysqlModule`：
 
 ```typescript
-import { Module } from "@nest";
-import { MysqlModule } from "@nest/mysql";
-import { AppController } from "./app.controller.ts";
+import { Module } from '@nest/core';
+import { MysqlModule } from '@nest/mysql';
+import { AppController } from './app.controller.ts';
 
 @Module({
   imports: [
     MysqlModule.forRoot({
-      hostname: "localhost",
-      username: "root",
+      hostname: 'localhost',
+      username: 'root',
       port: 3306,
-      db: "test",
+      db: 'test',
       poolSize: 3, // connection limit
-      password: "123456",
+      password: '123456',
     }),
   ],
   controllers: [AppController],
@@ -196,14 +209,14 @@ export class AppModule {}
 在`AppController`中就可以直接使用，当然，这只是个示例，更合理在放在`service`里。
 
 ```typescript
-import { Client, MYSQL_KEY } from "@nest/mysql";
-import { Controller, Get, Inject, Query } from "@nest";
+import { Client, MYSQL_KEY } from '@nest/mysql';
+import { Controller, Get, Inject, Query } from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
   constructor(@Inject(MYSQL_KEY) private readonly client: Client) {}
 
-  @Get("/createUserTable")
+  @Get('/createUserTable')
   async createUserTable() {
     // await this.client.execute(`CREATE DATABASE IF NOT EXISTS wiki`);
     // await this.client.execute(`USE wiki`);
@@ -216,31 +229,25 @@ export class AppController {
           PRIMARY KEY (id)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
     `);
-    return "created";
+    return 'created';
   }
 
-  @Get("/createUser")
-  async createUser(@Query("username") username: string) {
+  @Get('/createUser')
+  async createUser(@Query('username') username: string) {
     const result = await this.client.execute(
       `INSERT INTO users(name) values(?)`,
-      [
-        username,
-      ],
+      [username],
     );
     console.log(result);
     return result;
   }
 
-  @Get("/updateUser")
-  async updateUser(@Query("id") id: number) {
-    console.info("Updating user " + id);
+  @Get('/updateUser')
+  async updateUser(@Query('id') id: number) {
+    console.info('Updating user ' + id);
     const result = await this.client.execute(
       `update users set ?? = ? where id = ?`,
-      [
-        "name",
-        "MYR",
-        id,
-      ],
+      ['name', 'MYR', id],
     );
     console.log(result);
     return result;
@@ -265,23 +272,23 @@ export class AppController {
 }
 ```
 
-由于`@nest/postgres`中只调用了`postgres`客户端的几个核心方法连接数据库，所以在核心方法API不作修改的情况下，客户端的代码是可以直接升级的。
+由于`@nest/postgres`中只调用了`postgres`客户端的几个核心方法连接数据库，所以在核心方法 API 不作修改的情况下，客户端的代码是可以直接升级的。
 
 我们在`app.module.ts`中注册`PostgresModule`：
 
 ```typescript
-import { Module } from "@nest";
-import { PostgresModule } from "@nest/postgres";
-import { AppController } from "./app.controller.ts";
+import { Module } from '@nest/core';
+import { PostgresModule } from '@nest/postgres';
+import { AppController } from './app.controller.ts';
 
 @Module({
   imports: [
     PostgresModule.forRoot({
-      hostname: "localhost",
-      port: "5432",
-      user: "root",
-      database: "database", // You must ensure that the database exists, and the program will not automatically create it
-      password: "yourpassword", // One thing that must be taken into consideration is that passwords contained inside the URL must be properly encoded in order to be passed down to the database. You can achieve that by using the JavaScript API encodeURIComponent and passing your password as an argument.
+      hostname: 'localhost',
+      port: '5432',
+      user: 'root',
+      database: 'database', // You must ensure that the database exists, and the program will not automatically create it
+      password: 'yourpassword', // One thing that must be taken into consideration is that passwords contained inside the URL must be properly encoded in order to be passed down to the database. You can achieve that by using the JavaScript API encodeURIComponent and passing your password as an argument.
     }),
   ],
   controllers: [AppController],
@@ -292,14 +299,14 @@ export class AppModule {}
 在`AppController`中就可以直接使用，当然，这只是个示例，更合理在放在`service`里。
 
 ```typescript
-import { Controller, Get, Inject, Query } from "@nest";
-import { Client, POSTGRES_KEY } from "@nest/postgres";
+import { Controller, Get, Inject, Query } from '@nest/core';
+import { Client, POSTGRES_KEY } from '@nest/postgres';
 
-@Controller("")
+@Controller('')
 export class AppController {
   constructor(@Inject(POSTGRES_KEY) private readonly client: Client) {}
 
-  @Get("/createCompanyTable")
+  @Get('/createCompanyTable')
   async createCompanyTable() {
     await this.client.queryArray(`DROP TABLE IF EXISTS COMPANY`);
     const result = await this.client.queryObject(`
@@ -314,10 +321,10 @@ export class AppController {
     return result;
   }
 
-  @Get("/createCompany")
+  @Get('/createCompany')
   async createCompany(
-    @Query("username") username: string,
-    @Query("id") id: number,
+    @Query('username') username: string,
+    @Query('id') id: number,
   ) {
     const result = await this.client.queryObject(
       `INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES (${id}, '${username}', 32, 'California', 20000.00)`,
@@ -326,9 +333,9 @@ export class AppController {
     return result;
   }
 
-  @Get("/updateCompany")
-  async updateCompany(@Query("id") id: number) {
-    console.info("Updating company " + id);
+  @Get('/updateCompany')
+  async updateCompany(@Query('id') id: number) {
+    console.info('Updating company ' + id);
     const result = await this.client.queryArray(
       `UPDATE COMPANY SET SALARY = 15000 WHERE ID = ${id}`,
     );
@@ -355,22 +362,22 @@ export class AppController {
 }
 ```
 
-由于`@nest/redis`中只调用了`redis`客户端的几个核心方法连接数据库，所以在核心方法API不作修改的情况下，客户端的代码是可以直接升级的。
+由于`@nest/redis`中只调用了`redis`客户端的几个核心方法连接数据库，所以在核心方法 API 不作修改的情况下，客户端的代码是可以直接升级的。
 
 我们在`app.module.ts`中注册`RedisModule`：
 
 ```typescript
-import { Module } from "@nest";
-import { createStore, RedisModule } from "@nest/redis";
-import { CacheModule } from "@nest/cache";
-import { AppController } from "./app.controller.ts";
+import { Module } from '@nest/core';
+import { createStore, RedisModule } from '@nest/redis';
+import { CacheModule } from '@nest/cache';
+import { AppController } from './app.controller.ts';
 
 @Module({
   imports: [
     RedisModule.forRoot({
       port: 6379,
-      hostname: "192.168.21.176",
-      password: "123456",
+      hostname: '192.168.21.176',
+      password: '123456',
     }),
   ],
   controllers: [AppController],
@@ -381,17 +388,17 @@ export class AppModule {}
 在`AppController`中就可以直接使用，当然，这只是个示例，更合理在放在`service`里。
 
 ```typescript
-import { Controller, Get, Inject, UseInterceptors } from "@nest";
-import { CacheInterceptor, SetCacheStore } from "@nest/cache";
-import { type Redis, REDIS_KEY, RedisService } from "@nest/redis";
+import { Controller, Get, Inject, UseInterceptors } from '@nest/core';
+import { CacheInterceptor, SetCacheStore } from '@nest/cache';
+import { type Redis, REDIS_KEY, RedisService } from '@nest/redis';
 
-@Controller("")
+@Controller('')
 export class AppController {
   constructor(private readonly redisService: RedisService) {}
-  @Get("/")
+  @Get('/')
   version() {
-    this.redisService.set("version", "1.0.0");
-    return this.redisService.get("version");
+    this.redisService.set('version', '1.0.0');
+    return this.redisService.get('version');
   }
 }
 ```
@@ -415,14 +422,14 @@ export class AppController {
 我们在`app.module.ts`中注册`ElasticsearchModule`：
 
 ```typescript
-import { Module } from "@nest";
-import { ElasticsearchModule } from "@nest/elasticsearch";
-import { AppController } from "./app.controller.ts";
+import { Module } from '@nest/core';
+import { ElasticsearchModule } from '@nest/elasticsearch';
+import { AppController } from './app.controller.ts';
 
 @Module({
   imports: [
     ElasticsearchModule.forRoot({
-      db: "http://elastic:369258@192.168.21.176:9200",
+      db: 'http://elastic:369258@192.168.21.176:9200',
     }),
   ],
   controllers: [AppController],
@@ -433,17 +440,17 @@ export class AppModule {}
 在`AppController`中就可以直接使用，当然，这只是个示例，更合理在放在`service`里。
 
 ```typescript
-import { assert, Controller, Get } from "@nest";
-import { ElasticsearchService } from "@nest/elasticsearch";
+import { assert, Controller, Get } from '@nest/core';
+import { ElasticsearchService } from '@nest/elasticsearch';
 
-@Controller("")
+@Controller('')
 export class AppController {
   constructor(private readonly elasticSearchService: ElasticsearchService) {}
-  @Get("/")
+  @Get('/')
   getById() {
     return this.elasticSearchService.get({
-      index: "blog",
-      id: "60f69db67cd836379015f256",
+      index: 'blog',
+      id: '60f69db67cd836379015f256',
     });
   }
 }
@@ -474,7 +481,7 @@ export class RedisModule {
             try {
               const client = await connect(db);
               console.info(
-                "connect to redis success",
+                'connect to redis success',
                 yellow(
                   `hostname: ${db.hostname}, port: ${db.port}, database: ${db.db}`,
                 ),
@@ -482,7 +489,7 @@ export class RedisModule {
               this.client = client;
               return client;
             } catch (e) {
-              console.error("connect to redis error", red(e.stack));
+              console.error('connect to redis error', red(e.stack));
             }
           },
         },
@@ -501,21 +508,20 @@ export class RedisModule {
 它使用了`useFactory`来提供一个客户端连接。其中`REDIS_KEY`由于要对外导出，为避免与其它模块冲突，`Nest`要求是必须是`symbol`：
 
 ```typescript
-export const REDIS_KEY = Symbol("redis");
+export const REDIS_KEY = Symbol('redis');
 ```
 
 这样这个模块被引入后，就可以在`Controller`或`Service`中使用`REDIS_KEY`来注入客户端：
 
 ```typescript
-@Controller("")
+@Controller('')
 export class AppController {
-  constructor(@Inject(REDIS_KEY) public readonly client: Redis) {
-  }
-  
-  @Get("/")
+  constructor(@Inject(REDIS_KEY) public readonly client: Redis) {}
+
+  @Get('/')
   async version() {
-    await this.client.set("version", "1.0.0");
-    return this.client.get("version");
+    await this.client.set('version', '1.0.0');
+    return this.client.get('version');
   }
 }
 ```
@@ -525,8 +531,7 @@ export class AppController {
 ```typescript
 @Injectable()
 export class RedisService {
-  constructor(@Inject(REDIS_KEY) public readonly client: Redis) {
-  }
+  constructor(@Inject(REDIS_KEY) public readonly client: Redis) {}
 
   set(key: string, value: any, seconds?: number) {
     value = stringify(value);
@@ -557,7 +562,7 @@ export class RedisModule {
             // 略
           },
         },
-        RedisService
+        RedisService,
       ],
       exports: [RedisService],
       global: true,

@@ -22,13 +22,13 @@ First, we need to add `@nest/ejs` to the `importMap`:
 In `main.ts`, we set the folder path where the ejs files are located:
 
 ```typescript
-import { NestFactory } from "@nest";
-import { Router } from "@nest/hono";
-import { AppModule } from "./app.module.ts";
-import { setBaseViewsDir } from "@nest/ejs";
+import { NestFactory } from '@nest/core';
+import { Router } from '@nest/hono';
+import { AppModule } from './app.module.ts';
+import { setBaseViewsDir } from '@nest/ejs';
 
 const app = await NestFactory.create(AppModule, Router);
-setBaseViewsDir("views");
+setBaseViewsDir('views');
 // setBaseViewsDir("views/");
 ```
 
@@ -51,16 +51,16 @@ Next, we create an `index.ejs` file under `views`, which has a parameter `messag
 Finally, in `app.controller.ts`, we use the `@Render` decorator with the file path of `index.ejs`, ignoring the `.ejs` suffix:
 
 ```typescript
-import { Controller, Get } from "@nest";
-import { Render } from "@nest/ejs";
+import { Controller, Get } from '@nest/core';
+import { Render } from '@nest/ejs';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/")
-  @Render("index")
+  @Get('/')
+  @Render('index')
   hello() {
     return {
-      message: "Hello ejs",
+      message: 'Hello ejs',
     };
   }
 }

@@ -31,14 +31,19 @@ For example, consider an incoming `POST /cats` request. This request will be sen
 Let's look at the first use case, which is logging user interactions (e.g., storing user calls, asynchronously dispatching events, or calculating timestamps). Here's a simple `LoggingInterceptor`:
 
 ```typescript
-import { type Context, Injectable, type NestInterceptor, Next } from "@nest";
+import {
+  type Context,
+  Injectable,
+  type NestInterceptor,
+  Next,
+} from '@nest/core';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
   async intercept(ctx: Context, next: Next) {
-    console.log("LoggingInterceptor", "Before...");
+    console.log('LoggingInterceptor', 'Before...');
     await next();
-    console.log("LoggingInterceptor", `After...`);
+    console.log('LoggingInterceptor', `After...`);
   }
 }
 ```
@@ -77,7 +82,7 @@ If we want to limit the scope of the interceptor to a single method, we can appl
 ```typescript
 export class CatsController {
   @UseInterceptors(LoggingInterceptor)
-  @Get("/")
+  @Get('/')
   hello() {}
 }
 ```
@@ -103,8 +108,8 @@ A globally scoped interceptor will be used throughout the entire application, ap
 To address this issue, you can use the following structure to set up interceptors directly from any module:
 
 ```typescript
-import { APP_INTERCEPTOR, Module } from "@nest";
-import { LoggingInterceptor } from "./interceptor.ts";
+import { APP_INTERCEPTOR, Module } from '@nest/core';
+import { LoggingInterceptor } from './interceptor.ts';
 
 @Module({
   providers: [
@@ -128,17 +133,22 @@ Learn more in the [Custom Provider](./11_custom_provider.en-US.md) section.
 In the above example, we only printed simple messages before and after the execution of the route handler. However, interceptors can also easily modify the response result:
 
 ```typescript
-import { type Context, Injectable, type NestInterceptor, Next } from "@nest";
+import {
+  type Context,
+  Injectable,
+  type NestInterceptor,
+  Next,
+} from '@nest/core';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
   async intercept(ctx: Context, next: Next) {
-    console.log("LoggingInterceptor", "Before...");
+    console.log('LoggingInterceptor', 'Before...');
     const start = Date.now();
     await next();
-    console.log("LoggingInterceptor", `After...`);
+    console.log('LoggingInterceptor', `After...`);
     const ms = Date.now() - start;
-    ctx.response.headers.set("X-Response-Time", `${ms}ms`);
+    ctx.response.headers.set('X-Response-Time', `${ms}ms`);
     ctx.response.body = {
       success: true,
       data: ctx.response.body,
@@ -151,8 +161,8 @@ In this case, when a user calls `GET /cats` again, besides seeing the result in 
 
 ```json
 {
-	"success": true,
-	"data": "Hello World!"
+  "success": true,
+  "data": "Hello World!"
 }
 ```
 
@@ -171,7 +181,7 @@ export class ErrorsInterceptor implements NestInterceptor {
     try {
       await next();
     } catch (error) {
-      throw new BadGatewayException("");
+      throw new BadGatewayException('');
     }
   }
 }
@@ -179,15 +189,15 @@ export class ErrorsInterceptor implements NestInterceptor {
 
 We add a new endpoint `/err` to the `AppController`,
 
- which throws an error message and uses the `ErrorsInterceptor`:
+which throws an error message and uses the `ErrorsInterceptor`:
 
 ```typescript
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/err")
+  @Get('/err')
   @UseInterceptors(ErrorsInterceptor)
   err() {
-    throw new Error("error");
+    throw new Error('error');
   }
 }
 ```
@@ -224,7 +234,7 @@ export class CacheInterceptor implements NestInterceptor {
   map: Map<string, any> = new Map();
 
   async intercept(context: Context, next: Next) {
-    if (context.request.method !== "GET") {
+    if (context.request.method !== 'GET') {
       return next();
     }
     const url = context.request.url;
@@ -257,11 +267,11 @@ As the lifecycle of `Interceptor` is shorter than that of `Guard`, `Nest` inject
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
   async intercept(ctx: Context, next: Next) {
-    console.log("LoggingInterceptor", "Before...");
+    console.log('LoggingInterceptor', 'Before...');
     await next();
-    console.log("LoggingInterceptor", `After...`);
+    console.log('LoggingInterceptor', `After...`);
     const ms = Date.now() - ctx.request.startTime;
-    ctx.response.headers.set("X-Response-Time", `${ms}ms`);
+    ctx.response.headers.set('X-Response-Time', `${ms}ms`);
   }
 }
 ```

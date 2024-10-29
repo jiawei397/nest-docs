@@ -10,19 +10,20 @@ File uploads are typically handled by our interfaces receiving `FormData` submis
 `Nest` has built-in parameter decorators for `Form`, which can directly access the uploaded `FormData`:
 
 ```typescript
-import { Controller, Form, Post } from "@nest";
-import { UploadDto } from "./app.dto.ts";
+import { Controller, Form, Post } from '@nest/core';
+import { UploadDto } from './app.dto.ts';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Post("/upload")
+  @Post('/upload')
   upload(
     @Form({
       maxFileSize: 10 * 1024 * 1024,
-    }) result: UploadDto,
+    })
+    result: UploadDto,
   ) {
     console.log(result);
-    return "upload ok";
+    return 'upload ok';
   }
 }
 ```
@@ -30,8 +31,8 @@ export class AppController {
 Here, `UploadDto` is a `class`, consistent with our previous use of `class_validator` to validate normal `POST` parameters. One thing to note is the specificity of `Form`: its general parameters (excluding `File`) are received as strings by default. To convert them to numbers, use the `Property` decorator.
 
 ```typescript
-import { IsNumber, IsString, Max } from "class_validator";
-import { Property } from "@nest";
+import { IsNumber, IsString, Max } from 'class_validator';
+import { Property } from '@nest/core';
 
 export class UploadDto {
   @IsString()
@@ -54,9 +55,9 @@ When the file size exceeds the set `maxFileSize`, a similar error is reported:
 
 ```json
 {
-    "statusCode": 400,
-    "message": "file size too large",
-    "error": "params not valid"
+  "statusCode": 400,
+  "message": "file size too large",
+  "error": "params not valid"
 }
 ```
 

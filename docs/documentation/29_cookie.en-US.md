@@ -21,24 +21,24 @@ import {
   Request,
   Res,
   Response,
-} from "@nest";
+} from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/req")
+  @Get('/req')
   req(@Req() req: Request) {
     return req.cookies.getAll();
   }
 
-  @Get("/")
+  @Get('/')
   getAllCookies(@Cookies() cookies: ICookies) {
     return cookies.getAll();
   }
 
-  @Get("/res")
+  @Get('/res')
   res(@Res() res: Response) {
-    res.cookies.set("DENO_COOKIE_TEST", "abc", { path: "/" });
-    return "ok";
+    res.cookies.set('DENO_COOKIE_TEST', 'abc', { path: '/' });
+    return 'ok';
   }
 }
 ```
@@ -52,14 +52,14 @@ import {
   Injectable,
   NestInterceptor,
   Next,
-} from "@nest";
+} from '@nest/core';
 
 @Injectable()
 export class CookieInterceptor implements NestInterceptor {
   async intercept(ctx: Context, next: Next) {
-    console.log("DENO_COOKIE_TEST", await ctx.cookies.get("DENO_COOKIE_TEST"));
+    console.log('DENO_COOKIE_TEST', await ctx.cookies.get('DENO_COOKIE_TEST'));
     await next();
-    await ctx.cookies.set("DENO_COOKIE_TEST", "abc", { path: "/" });
+    await ctx.cookies.set('DENO_COOKIE_TEST', 'abc', { path: '/' });
   }
 }
 
@@ -75,26 +75,26 @@ export class AuthGuard implements CanActivate {
 ## Cookie Type Conversion
 
 ```typescript
-import { Controller, Cookie, Get } from "@nest";
+import { Controller, Cookie, Get } from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/id")
-  getId(@Cookie("DENO_COOKIE_USER_ID") id: string) {
+  @Get('/id')
+  getId(@Cookie('DENO_COOKIE_USER_ID') id: string) {
     return {
       DENO_COOKIE_USER_ID: id,
     };
   }
 
-  @Get("/id2")
-  getId(@Cookie("DENO_COOKIE_USER_ID") id: number) {
+  @Get('/id2')
+  getId(@Cookie('DENO_COOKIE_USER_ID') id: number) {
     return {
       DENO_COOKIE_USER_ID: id,
     };
   }
 
-  @Get("/id3")
-  getId(@Cookie("DENO_COOKIE_USER_ID") id: boolean) {
+  @Get('/id3')
+  getId(@Cookie('DENO_COOKIE_USER_ID') id: boolean) {
     return {
       DENO_COOKIE_USER_ID: id,
     };
@@ -114,15 +114,15 @@ In `oak`, you must pass the `keys` when creating the application:
 
 ```typescript
 const app = await NestFactory.create(AppModule, Router, {
-  keys: ["nest"],
+  keys: ['nest'],
 });
 ```
 
 Then you can use it like this:
 
 ```typescript
-await cookies.set("DENO_COOKIE_USER_ID", "123", {
-  path: "/",
+await cookies.set('DENO_COOKIE_USER_ID', '123', {
+  path: '/',
   signed: true,
   // signedSecret: "abcd",
 });
@@ -136,17 +136,17 @@ In `hono`, you can pass the `keys` when creating the application as a global con
 
 ```typescript
 const app = await NestFactory.create(AppModule, Router, {
-  keys: ["nest"],
+  keys: ['nest'],
 });
 ```
 
 You can override this configuration with `signedSecret` when using it specifically:
 
 ```typescript
-await cookies.set("DENO_COOKIE_USER_ID", "123", {
-  path: "/",
+await cookies.set('DENO_COOKIE_USER_ID', '123', {
+  path: '/',
   signed: true,
-  signedSecret: "abcd",
+  signedSecret: 'abcd',
 });
 ```
 

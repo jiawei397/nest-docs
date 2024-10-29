@@ -18,21 +18,21 @@ Nevertheless, you usually don't need to write low-level decorators directly. If 
 
 Nest provides a set of useful parameter decorators that you can use with HTTP route handlers. Here is a list of the provided decorators.
 
-| Decorator | Description |
-| --- | --- |
-| `@Req()` | Request |
-| `@Res()` | Response |
-| `@Body(key?: string)` | The body of the request object. Nest has built-in parameter validation using `deno_class_validator`. If a key is passed, it represents a specific value; otherwise, the response is an object. |
-| `@Params(key?: string)` | Parameters in the URL path, such as `id` in `/user/:id`. |
-| `@Query(key?: string)` | Parameters after the URL, which are URLSearchParams, such as `id` in `?id=123`. |
-| `@Cookies()` | The `Nest Cookies` Object of the request object. |
-| `@Cookie(name: string)` | Get One `cookie` of the request object. |
-| `@Headers(name?: string)` | Headers of the request object. If no name is passed, it refers to all headers. |
-| `@Ip()` | IP address from the `x-real-ip` or `x-forwarded-for` header of the request object. |
-| `@Host()` | Host from the `host` header of the request object. |
-| `@MethodName()` | The name of the current request method, in the example above, it would be `findAll`. |
-| `@ControllerName()` | The name of the current request controller, in the example above, it would be `CatsController`. |
-| `@Form()` | When the parameter is a form or FormData, you can perform parameter validation similar to `Body` and return an object. |
+| Decorator                 | Description                                                                                                                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@Req()`                  | Request                                                                                                                                                                                        |
+| `@Res()`                  | Response                                                                                                                                                                                       |
+| `@Body(key?: string)`     | The body of the request object. Nest has built-in parameter validation using `deno_class_validator`. If a key is passed, it represents a specific value; otherwise, the response is an object. |
+| `@Params(key?: string)`   | Parameters in the URL path, such as `id` in `/user/:id`.                                                                                                                                       |
+| `@Query(key?: string)`    | Parameters after the URL, which are URLSearchParams, such as `id` in `?id=123`.                                                                                                                |
+| `@Cookies()`              | The `Nest Cookies` Object of the request object.                                                                                                                                               |
+| `@Cookie(name: string)`   | Get One `cookie` of the request object.                                                                                                                                                        |
+| `@Headers(name?: string)` | Headers of the request object. If no name is passed, it refers to all headers.                                                                                                                 |
+| `@Ip()`                   | IP address from the `x-real-ip` or `x-forwarded-for` header of the request object.                                                                                                             |
+| `@Host()`                 | Host from the `host` header of the request object.                                                                                                                                             |
+| `@MethodName()`           | The name of the current request method, in the example above, it would be `findAll`.                                                                                                           |
+| `@ControllerName()`       | The name of the current request controller, in the example above, it would be `CatsController`.                                                                                                |
+| `@Form()`                 | When the parameter is a form or FormData, you can perform parameter validation similar to `Body` and return an object.                                                                         |
 
 ## Custom Decorators
 
@@ -47,7 +47,7 @@ const user = req.states.userInfo;
 To make the code more readable and transparent, you can create a `@User()` decorator and reuse it in all controllers.
 
 ```typescript
-import { type Context, createParamDecorator } from "@nest";
+import { type Context, createParamDecorator } from '@nest/core';
 
 export interface UserInfo {
   id: string;

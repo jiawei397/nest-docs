@@ -16,24 +16,24 @@ import {
   DateFileLogConfig,
   getLogger,
   initLog,
-} from "https://deno.land/x/date_log@v1.1.1/mod.ts";
+} from 'https://deno.land/x/date_log@v1.1.1/mod.ts';
 
 const config: DateFileLogConfig = {
-  "appenders": {
-    "dateFile": {
-      "filename": "logs/deno",
-      "daysToKeep": 10,
-      "pattern": "yyyy-MM-dd.log",
+  appenders: {
+    dateFile: {
+      filename: 'logs/deno',
+      daysToKeep: 10,
+      pattern: 'yyyy-MM-dd.log',
     },
   },
-  "categories": {
-    "default": {
-      "appenders": ["console", "dateFile"],
-      "level": "DEBUG",
+  categories: {
+    default: {
+      appenders: ['console', 'dateFile'],
+      level: 'DEBUG',
     },
-    "task": {
-      "appenders": ["console", "dateFile"],
-      "level": "WARNING",
+    task: {
+      appenders: ['console', 'dateFile'],
+      level: 'WARNING',
     },
   },
 };
@@ -41,16 +41,16 @@ const config: DateFileLogConfig = {
 await initLog(config);
 
 const logger = getLogger();
-logger.warning("warning");
+logger.warning('warning');
 logger.warning(1);
-logger.info("info");
-logger.error("error");
+logger.info('info');
+logger.error('error');
 
-const logger2 = getLogger("task");
-logger2.warning("warning2");
+const logger2 = getLogger('task');
+logger2.warning('warning2');
 logger2.warning(2);
-logger2.info("info2");
-logger2.error("error2");
+logger2.info('info2');
+logger2.error('error2');
 ```
 
 When configuring `dateFile`, you can determine whether to enable it in the `categories`. It creates corresponding logs in the root directory by date and deletes previous files after the specified days:
@@ -78,8 +78,8 @@ First, let's add our `date_log` to the `importMap`:
 Add a `src/globals.ts`:
 
 ```typescript
-import { type DateFileLogConfig } from "date_log";
-import { parse as parseYaml } from "std/yaml/mod.ts";
+import { type DateFileLogConfig } from 'date_log';
+import { parse as parseYaml } from 'std/yaml/mod.ts';
 
 async function loadYaml<T = unknown>(path: string) {
   const str = await Deno.readTextFile(path);
@@ -90,7 +90,7 @@ interface Config {
   log: DateFileLogConfig;
 }
 
-const config: Config = await loadYaml<Config>("config.yaml");
+const config: Config = await loadYaml<Config>('config.yaml');
 
 export default config;
 ```
@@ -99,9 +99,15 @@ Then add a `log.ts`:
 
 ```typescript
 // deno-lint-ignore-file no-explicit-any
-import { type Constructor, Inject, Injectable, INQUIRER, Scope } from "@nest";
-import { getLogger, initLog } from "date_log";
-import globals from "./globals.ts";
+import {
+  type Constructor,
+  Inject,
+  Injectable,
+  INQUIRER,
+  Scope,
+} from '@nest/core';
+import { getLogger, initLog } from 'date_log';
+import globals from './globals.ts';
 
 initLog(globals.log);
 
@@ -118,7 +124,7 @@ export class Logger {
   }
 
   private write(
-    methodName: "warning" | "info" | "debug" | "error",
+    methodName: 'warning' | 'info' | 'debug' | 'error',
     ...messages: any[]
   ): void {
     if (this.parentName) {
@@ -130,19 +136,19 @@ export class Logger {
   }
 
   debug(...messages: any[]): void {
-    this.write("debug", ...messages);
+    this.write('debug', ...messages);
   }
 
   info(...messages: any[]): void {
-    this.write("info", ...messages);
+    this.write('info', ...messages);
   }
 
   warn(...messages: any[]): void {
-    this.write("warning", ...messages);
+    this.write('warning', ...messages);
   }
 
   error(...messages: any[]): void {
-    this.write("error", ...messages);
+    this.write('error', ...messages);
   }
 }
 ```
@@ -171,14 +177,14 @@ log:
 After that, in `main.ts`, you can use the logger to print:
 
 ```typescript
-import { NestFactory } from "@nest";
-import { Router } from "@nest/hono";
-import { AppModule } from "./app.module.ts";
-import { logger } from "./log.ts";
+import { NestFactory } from '@nest/core';
+import { Router } from '@nest/hono';
+import { AppModule } from './app.module.ts';
+import { logger } from './log.ts';
 
 const app = await NestFactory.create(AppModule, Router);
 
-const port = Number(Deno.env.get("PORT") || 2000);
+const port = Number(Deno.env.get('PORT') || 2000);
 app.listen({
   port,
   onListen: ({ hostname, port }) =>
@@ -195,17 +201,17 @@ Once the service is started, you will see a file `logs/deno.2023-11-09.log` crea
 The above Logger can be injected as a Provider, for example, in `AppController`:
 
 ```typescript
-import { Controller, Get } from "@nest";
-import { Logger } from "./log.ts";
+import { Controller, Get } from '@nest/core';
+import { Logger } from './log.ts';
 
-@Controller("")
+@Controller('')
 export class AppController {
   constructor(private logger: Logger) {}
 
-  @Get("/")
+  @Get('/')
   hello() {
-    this.logger.info("hello world");
-    return "Hello World!";
+    this.logger.info('hello world');
+    return 'Hello World!';
   }
 }
 ```

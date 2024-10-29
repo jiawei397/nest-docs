@@ -14,9 +14,9 @@ By default, we recommend using the `Hono` engine, as its performance is superior
 Here is an example of using the `Hono` engine:
 
 ```typescript
-import { NestFactory } from "@nest";
-import { Router } from "@nest/hono";
-import { AppModule } from "./app.module.ts";
+import { NestFactory } from '@nest/core';
+import { Router } from '@nest/hono';
+import { AppModule } from './app.module.ts';
 
 const app = await NestFactory.create(AppModule, Router);
 await app.listen({
@@ -27,7 +27,7 @@ await app.listen({
 And here is an example using the `oak` engine:
 
 ```diff
-import { NestFactory } from "@nest";
+import { NestFactory } from "@nest/core";
 - import { Router } from "@nest/hono";
 + import { Router } from "@nest/oak";
 import { AppModule } from "./app.module.ts";
@@ -51,13 +51,13 @@ The only exception is with `app.get`.
 Let's describe a situation using a unit test case from Nest.
 
 ```typescript
-await t.step("middleware with app.get", async (it) => {
+await t.step('middleware with app.get', async (it) => {
   const app = await NestFactory.create(AppModule, Router);
   const callStack: number[] = [];
 
-  app.get("/", () => {
+  app.get('/', () => {
     callStack.push(3);
-    return "hello world";
+    return 'hello world';
   });
 
   app.use(async (req, res, next) => {
@@ -69,13 +69,13 @@ await t.step("middleware with app.get", async (it) => {
   const port = await getPort();
   await app.listen({ port });
 
-  await it.step("fetch /", async () => {
+  await it.step('fetch /', async () => {
     const res = await fetch(`http://localhost:${port}`);
     assertEquals(res.status, 200);
-    assertEquals(await res.text(), "hello world");
-    if (type === "hono") {
+    assertEquals(await res.text(), 'hello world');
+    if (type === 'hono') {
       assertEquals(callStack, [3]);
-    } else if (type === "oak") {
+    } else if (type === 'oak') {
       assertEquals(callStack, [1, 3, 2]);
     }
 
@@ -107,16 +107,16 @@ Both `Hono` and `oak` have very comprehensive middleware systems. See [Middlewar
 While `Nest` functionality covers most cases, if you ever need to use the native `Context`, you can find and use it in the `response` corresponding to it. Here is an example using `Hono`:
 
 ```typescript
-import { Controller, Get, Res, type Response } from "@nest";
-import { HonoContext } from "@nest/hono";
+import { Controller, Get, Res, type Response } from '@nest/core';
+import { HonoContext } from '@nest/hono';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/originContext")
+  @Get('/originContext')
   originContext(@Res() res: Response) {
     const context = res.getOriginalContext<HonoContext>();
     return context.json({
-      data: "from origin context",
+      data: 'from origin context',
     });
   }
 }
@@ -125,16 +125,16 @@ export class AppController {
 And here is a similar example using `oak`:
 
 ```typescript
-import { Controller, Get, Res, type Response } from "@nest";
-import { OakContext } from "@nest/oak";
+import { Controller, Get, Res, type Response } from '@nest/core';
+import { OakContext } from '@nest/oak';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/originContext")
+  @Get('/originContext')
   originContext(@Res() res: Response) {
     const context = res.getOriginalContext<OakContext>();
     context.response.body = {
-      data: "from origin context",
+      data: 'from origin context',
     };
   }
 }

@@ -5,14 +5,14 @@ order: 2
 
 # CORS
 
-跨域资源共享 (`CORS`) 是一种允许从另一个域请求资源的机制。在底层，Nest提供了一个通用的`@nest/cors`包来帮助你进行自定义。
+跨域资源共享 (`CORS`) 是一种允许从另一个域请求资源的机制。在底层，Nest 提供了一个通用的`@nest/cors`包来帮助你进行自定义。
 
 首先添加`importMap`：
 
 ```json
 {
   "imports": {
-    "@nest": "https://deno.land/x/deno_nest/mod.ts",
+    "@nest/core": "https://deno.land/x/deno_nest/mod.ts",
     "@nest/hono": "https://deno.land/x/deno_nest/modules/hono/mod.ts",
     "@nest/cors": "https://deno.land/x/deno_nest/modules/cors/mod.ts",
     "hono/": "https://deno.land/x/hono@v3.9.1/"
@@ -23,10 +23,10 @@ order: 2
 开始使用：
 
 ```typescript
-import { NestFactory } from "@nest";
-import { Router } from "@nest/hono";
-import { CORS } from "@nest/cors";
-import { AppModule } from "./app.module.ts";
+import { NestFactory } from '@nest/core';
+import { Router } from '@nest/hono';
+import { CORS } from '@nest/cors';
+import { AppModule } from './app.module.ts';
 
 const app = await NestFactory.create(AppModule, Router);
 app.use(CORS());
@@ -40,7 +40,7 @@ await app.listen({
 
 ```typescript
 export function CORS(options?: boolean | CorsOptions) {}
-  
+
 export interface CorsOptions {
   /**
    * 配置 `Access-Control-Allow-Origin` CORS 标头。

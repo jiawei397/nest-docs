@@ -12,11 +12,11 @@ Server-Sent Events (SSE) is a server push technology that allows clients to rece
 To enable Server-Sent Events on a route (registered in a controller class), use the `@Sse()` decorator and the `getSSEStream` handler. This handler needs to respond with a `ReadableStream`, as shown in the example below using the `body` parameter.
 
 ```typescript
-import { Controller, Get, getSSEStream, Sse } from "@nest";
+import { Controller, Get, getSSEStream, Sse } from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/sse")
+  @Get('/sse')
   @Sse()
   sse() {
     const { write, body } = getSSEStream({
@@ -27,7 +27,7 @@ export class AppController {
 
     const st = setInterval(() => {
       write({
-        data: { hello: "world" },
+        data: { hello: 'world' },
       });
     }, 1000);
 
@@ -66,7 +66,7 @@ The `EventSource` instance opens a persistent connection with the HTTP server, a
 To stop receiving messages, simply execute the following in the console:
 
 ```javascript
-eventSource.close()
+eventSource.close();
 ```
 
 This will trigger the `cancel` method in the code above.
@@ -122,7 +122,7 @@ eventSource.onmessage = ({ data }) => {
 You need to use `addEventListener` to listen for custom events:
 
 ```typescript
-eventSource.addEventListener('myEvent', console.log)
+eventSource.addEventListener('myEvent', console.log);
 ```
 
 ![image.png](./images/sse4.png)

@@ -5,7 +5,7 @@ order: 12
 
 # Model-View-Controller
 
-`Nest`目前支持两种模板引擎来渲染HTML视图：[ejs](https://github.com/mde/ejs) 和 [hbs](https://handlebarsjs.com/)。由于二者在使用上大同小异，所以本文以`ejs`为例。
+`Nest`目前支持两种模板引擎来渲染 HTML 视图：[ejs](https://github.com/mde/ejs) 和 [hbs](https://handlebarsjs.com/)。由于二者在使用上大同小异，所以本文以`ejs`为例。
 
 ## 使用
 
@@ -19,20 +19,20 @@ order: 12
 }
 ```
 
-在`main.ts`中设置ejs文件所在的文件夹路径：
+在`main.ts`中设置 ejs 文件所在的文件夹路径：
 
 ```typescript
-import { NestFactory } from "@nest";
-import { Router } from "@nest/hono";
-import { AppModule } from "./app.module.ts";
-import { setBaseViewsDir } from "@nest/ejs";
+import { NestFactory } from '@nest/core';
+import { Router } from '@nest/hono';
+import { AppModule } from './app.module.ts';
+import { setBaseViewsDir } from '@nest/ejs';
 
 const app = await NestFactory.create(AppModule, Router);
-setBaseViewsDir("views");
+setBaseViewsDir('views');
 // setBaseViewsDir("views/");
 ```
 
-我们在views下新建一个`index.ejs`文件，里面有个参数`message`需要在渲染前传入：
+我们在 views 下新建一个`index.ejs`文件，里面有个参数`message`需要在渲染前传入：
 
 ```html
 <!DOCTYPE html>
@@ -51,27 +51,27 @@ setBaseViewsDir("views");
 下一步，在`app.controller.ts`中，使用`@Render`装饰器，其参数是`index.ejs`的文件路径，可以忽略`.ejs`后缀：
 
 ```typescript
-import { Controller, Get } from "@nest";
-import { Render } from "@nest/ejs";
+import { Controller, Get } from '@nest/core';
+import { Render } from '@nest/ejs';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/")
-  @Render("index")
+  @Get('/')
+  @Render('index')
   hello() {
     return {
-      message: "Hello ejs",
+      message: 'Hello ejs',
     };
   }
 }
 ```
 
 :::warning
-必须在方法中直接返回ejs文件所需的参数。
+必须在方法中直接返回 ejs 文件所需的参数。
 :::
 
 ## 样例
 
-1. ejs的样例在[这里](https://deno.land/x/deno_nest/modules/ejs/example?source)。
-2. hbs的样例在[这里](https://deno.land/x/deno_nest/modules/hbs/example?source)。
+1. ejs 的样例在[这里](https://deno.land/x/deno_nest/modules/ejs/example?source)。
+2. hbs 的样例在[这里](https://deno.land/x/deno_nest/modules/hbs/example?source)。
 3. 如果需要其它模板引擎，可以参考相应的模块代码，自行实现`setBaseViewsDir`函数和`@Render`装饰器即可。

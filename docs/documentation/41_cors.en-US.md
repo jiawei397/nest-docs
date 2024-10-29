@@ -12,7 +12,7 @@ First, add the `importMap`:
 ```json
 {
   "imports": {
-    "@nest": "https://deno.land/x/deno_nest/mod.ts",
+    "@nest/core": "https://deno.land/x/deno_nest/mod.ts",
     "@nest/hono": "https://deno.land/x/deno_nest/modules/hono/mod.ts",
     "@nest/cors": "https://deno.land/x/deno_nest/modules/cors/mod.ts",
     "hono/": "https://deno.land/x/hono@v3.9.1/"
@@ -23,10 +23,10 @@ First, add the `importMap`:
 Start using it:
 
 ```typescript
-import { NestFactory } from "@nest";
-import { Router } from "@nest/hono";
-import { CORS } from "@nest/cors";
-import { AppModule } from "./app.module.ts";
+import { NestFactory } from '@nest/core';
+import { Router } from '@nest/hono';
+import { CORS } from '@nest/cors';
+import { AppModule } from './app.module.ts';
 
 const app = await NestFactory.create(AppModule, Router);
 app.use(CORS());
@@ -40,7 +40,7 @@ The `CORS` method takes an optional configuration object parameter:
 
 ```typescript
 export function CORS(options?: boolean | CorsOptions) {}
-  
+
 export interface CorsOptions {
   /**
    * Configures the `Access-Control-Allow-Origins` CORS header.

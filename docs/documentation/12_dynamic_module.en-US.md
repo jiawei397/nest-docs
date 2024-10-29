@@ -204,25 +204,23 @@ But this `envConfig` is related to the options object mentioned above, and it sh
 We find `std/dotenv` in the Deno standard library:
 
 ```typescript
-import { load } from "https://deno.land/std@0.205.0/dotenv/mod.ts";
+import { load } from 'https://deno.land/std@0.205.0/dotenv/mod.ts';
 
 console.log(await load({ export: true })); // { GREETING: "hello world" }
-console.log(Deno.env.get("GREETING")); // hello world
+console.log(Deno.env.get('GREETING')); // hello world
 ```
 
 The `load` it provides is an asynchronous function, which means we can't use it in the constructor (because we can't guarantee when it will complete). So our final `ConfigService` should look like this:
 
 ```typescript
-import { Inject, Injectable } from "@nest";
-import type { EnvConfig } from "./config.interface.ts";
-import { CONFIG_KEY } from "./config.constant.ts";
+import { Inject, Injectable } from '@nest/core';
+import type { EnvConfig } from './config.interface.ts';
+import { CONFIG_KEY } from './config.constant.ts';
 
 @Injectable()
 export class ConfigService {
-  constructor(
-    @Inject(CONFIG_KEY) private readonly envConfig: EnvConfig,
-  ) {
-    console.log("ConfigService.constructor()", envConfig);
+  constructor(@Inject(CONFIG_KEY) private readonly envConfig: EnvConfig) {
+    console.log('ConfigService.constructor()', envConfig);
   }
 
   get(key: string): string {
@@ -234,7 +232,7 @@ export class ConfigService {
 And `config.constant.ts` looks like this:
 
 ```typescript
-export const CONFIG_KEY = Symbol("config");
+export const CONFIG_KEY = Symbol('config');
 ```
 
 `config.interface.ts` contains two interfaces:
@@ -253,12 +251,12 @@ export interface ConfigOptions {
 In the previous "[Custom Provider](./11_custom_provider.en-US.md)" section, we mentioned the `useFactory` pattern, which helps us provide the `ConfigService` in the `ConfigModule`. Please pay attention to the `providers` array in the code below:
 
 ```typescript
-import { DynamicModule, Module } from "@nest";
-import { ConfigService } from "./config.service.ts";
-import { ConfigOptions, EnvConfig } from "./config.interface.ts";
-import { CONFIG_KEY } from "./config.constant.ts";
-import { load } from "std/dotenv/mod.ts";
-import { join } from "std/path/join.ts";
+import { DynamicModule, Module } from '@nest/core';
+import { ConfigService } from './config.service.ts';
+import { ConfigOptions, EnvConfig } from './config.interface.ts';
+import { CONFIG_KEY } from './config.constant.ts';
+import { load } from 'std/dotenv/mod.ts';
+import { join } from 'std/path/join.ts';
 
 @Module({})
 export class ConfigModule {
@@ -270,10 +268,10 @@ export class ConfigModule {
           provide: CONFIG_KEY,
           useFactory: async () => {
             const folder = options.folder;
-            const filePath = `${Deno.env.get("DENO_ENV") || "development"}.env`;
-            return await load({
+            const filePath = `${Deno.env.get('DENO_ENV') || 'development'}.env`;
+            return (await load({
               envPath: join(folder, filePath),
-            }) as EnvConfig;
+            })) as EnvConfig;
           },
         },
         ConfigService,

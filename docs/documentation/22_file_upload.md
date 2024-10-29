@@ -5,24 +5,25 @@ order: 2
 
 # 文件上传
 
-文件上传通常来说是我们的接口接收H5的`FormData`提交，而传统的Form表单提交是不包含文件的。
+文件上传通常来说是我们的接口接收 H5 的`FormData`提交，而传统的 Form 表单提交是不包含文件的。
 
 `Nest`内置了`Form`的参数装饰器，可以直接获取到上传的`FormData`数据：
 
 ```typescript
-import { Controller, Form, Post } from "@nest";
-import { UploadDto } from "./app.dto.ts";
+import { Controller, Form, Post } from '@nest/core';
+import { UploadDto } from './app.dto.ts';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Post("/upload")
+  @Post('/upload')
   upload(
     @Form({
       maxFileSize: 10 * 1024 * 1024,
-    }) result: UploadDto,
+    })
+    result: UploadDto,
   ) {
     console.log(result);
-    return "upload ok";
+    return 'upload ok';
   }
 }
 ```
@@ -30,8 +31,8 @@ export class AppController {
 其中`UploadDto`是个`class`，与我们之前使用`class_validator`校验普通`POST`参数是一致的。值得注意的一点是，`Form`的特殊性，它的一般参数（除`File`外）默认得到的是字符串，要转换为数字需要使用`Property`装饰器。
 
 ```typescript
-import { IsNumber, IsString, Max } from "class_validator";
-import { Property } from "@nest";
+import { IsNumber, IsString, Max } from 'class_validator';
+import { Property } from '@nest/core';
 
 export class UploadDto {
   @IsString()
@@ -46,7 +47,7 @@ export class UploadDto {
 }
 ```
 
-参数错误时接口会抛出状态码为400的异常：
+参数错误时接口会抛出状态码为 400 的异常：
 
 ![file upload error](./images/file_upload.png)
 
@@ -54,9 +55,9 @@ export class UploadDto {
 
 ```json
 {
-    "statusCode": 400,
-    "message": "file size too large",
-    "error": "params not valid"
+  "statusCode": 400,
+  "message": "file size too large",
+  "error": "params not valid"
 }
 ```
 

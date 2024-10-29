@@ -27,7 +27,7 @@ import { Controller, Get } from '@nest';
 
 @Controller('cats')
 export class CatsController {
-  @Get("/")
+  @Get('/')
   findAll(): string {
     return 'This action returns all cats';
   }
@@ -50,10 +50,10 @@ In the example above, when a GET request is made to this endpoint, Nest routes i
 
 This method returns a 200 status code and an associated response, which is just a string in this case. Why is that? To explain this, we first introduce the concept that Nest uses two different options to manipulate responses:
 
-| Type | Description |
-| --- | --- |
+| Type                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Standard (Recommended) | When the request handler returns a JavaScript object, array, number, or boolean, Nest automatically serializes it to JSON. However, when it returns a string, Nest sends only that value without attempting to serialize it, and sets the `Content-Type` header of the response to `text/html`. Additionally, by default, the status code of the response is always 200 unless the `etag` middleware is explicitly enabled to enable cache negotiation. We can easily change this behavior at the handler level by adding the `@HttpCode` decorator. |
-| Decorator (`@Res`) | Injected in the method handler signature using the `@Res()` decorator (e.g., `findAll(@Res() response)`). With this approach, you can use methods exposed by the object, such as `response.status = 201` and `response.body = "Hello world"`, to modify the response's status code and content. The content of the body follows the same rules as the standard approach mentioned above. |
+| Decorator (`@Res`)     | Injected in the method handler signature using the `@Res()` decorator (e.g., `findAll(@Res() response)`). With this approach, you can use methods exposed by the object, such as `response.status = 201` and `response.body = "Hello world"`, to modify the response's status code and content. The content of the body follows the same rules as the standard approach mentioned above.                                                                                                                                                             |
 
 ## Request Object
 
@@ -77,28 +77,28 @@ The `Request` type needs to be exported from the `@nest` library, and the `type`
 
 The `Request` object represents an HTTP request and has properties for the request query string, parameters, HTTP headers, and body. In most cases, it is not necessary to manually retrieve these properties. We can use dedicated decorators such as `@Body()` or `@Query()`, which are readily available. The following lists the provided decorators and the common platform-specific objects they represent.
 
-| Decorator | Description |
-| --- | --- |
-| `@Req()` | Request |
-| `@Res()` | Response |
-| `@Body(key?: string)` | Body of the request object, Nest has built-in parameter validation using `deno_class_validator`. If a key is passed, it represents a specific value; otherwise, the response is an Object. |
-| `@Params(key?: string)` | Parameters in the URL path, such as `id` in `/user/:id`. |
-| `@Query(key?: string)` | Parameters in the URL after the path, i.e., URLSearchParams, such as `id` in `?id=123`. |
-| `@Cookies()` | The `Nest Cookies` Object of the request object. |
-| `@Cookie(name: string)` | Get One `cookie` of the request object. |
-| `@Headers(name?: string)` | Headers in the request object. If no name is passed, it represents the entire Headers. |
-| `@Ip()` | The `x-real-ip` or `x-forwarded-for` header in the request object. |
-| `@Host()` | The `host` header in the request object. |
-| `@MethodName()` | The method name of the current request, which is `findAll` in the above example. |
-| `@ControllerName()` | The name of the current request's controller, which is `CatsController` in the above example. |
-| `@Form()` | When the parameter is a form or FormData, parameter validation can be performed similar to `Body`, returning an Object. |
+| Decorator                 | Description                                                                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `@Req()`                  | Request                                                                                                                                                                                    |
+| `@Res()`                  | Response                                                                                                                                                                                   |
+| `@Body(key?: string)`     | Body of the request object, Nest has built-in parameter validation using `deno_class_validator`. If a key is passed, it represents a specific value; otherwise, the response is an Object. |
+| `@Params(key?: string)`   | Parameters in the URL path, such as `id` in `/user/:id`.                                                                                                                                   |
+| `@Query(key?: string)`    | Parameters in the URL after the path, i.e., URLSearchParams, such as `id` in `?id=123`.                                                                                                    |
+| `@Cookies()`              | The `Nest Cookies` Object of the request object.                                                                                                                                           |
+| `@Cookie(name: string)`   | Get One `cookie` of the request object.                                                                                                                                                    |
+| `@Headers(name?: string)` | Headers in the request object. If no name is passed, it represents the entire Headers.                                                                                                     |
+| `@Ip()`                   | The `x-real-ip` or `x-forwarded-for` header in the request object.                                                                                                                         |
+| `@Host()`                 | The `host` header in the request object.                                                                                                                                                   |
+| `@MethodName()`           | The method name of the current request, which is `findAll` in the above example.                                                                                                           |
+| `@ControllerName()`       | The name of the current request's controller, which is `CatsController` in the above example.                                                                                              |
+| `@Form()`                 | When the parameter is a form or FormData, parameter validation can be performed similar to `Body`, returning an Object.                                                                    |
 
 ## Status code
 
 As mentioned earlier, the response status code is always 200 by default. We can easily change this behavior at the handler level by adding the `@HttpCode` decorator.
 
 ```typescript
-import { HttpCode } from "@nest";
+import { HttpCode } from "@nest/core";
 
 @Post("")
 @HttpCode(204)
@@ -110,7 +110,7 @@ create() {
 Another way is to use the `@Res` decorator:
 
 ```typescript
-import { Res, type Response } from "@nest";
+import { Res, type Response } from "@nest/core";
 
 @Post("")
 create(@Res() res: Response) {
@@ -128,7 +128,7 @@ The `Response` type needs to be exported from the `@nest` library, and the `type
 To specify custom response headers, you can use the `@Header` decorator:
 
 ```typescript
-import { Header } from "@nest";
+import { Header } from "@nest/core";
 
 @Post("")
 @Header('Cache-Control', 'none')
@@ -140,7 +140,7 @@ create() {
 Or directly use the `@Res` decorator to modify headers:
 
 ```typescript
-import { Res, type Response } from "@nest";
+import { Res, type Response } from "@nest/core";
 
 @Post("")
 create(@Res() res: Response) {
@@ -154,7 +154,7 @@ create(@Res() res: Response) {
 To redirect the response to a specific URL, you can use the `@Redirect()` decorator. `@Redirect()` accepts two parameters, `url` and `statusCode`, the latter being optional and defaulting to 302.
 
 ```typescript
-import { Redirect } from "@nest";
+import { Redirect } from "@nest/core";
 
 @Get("")
 @Redirect('https://nests.deno.dev', 301)
@@ -163,7 +163,7 @@ import { Redirect } from "@nest";
 To redirect the response to a specific URL, you can use the `@Redirect()` decorator. `@Redirect()` accepts two parameters, `url` and `statusCode`, the latter being optional and defaulting to 302.
 
 ```typescript
-import { Res, type Response } from "@nest";
+import { Res, type Response } from "@nest/core";
 
 @Post("")
 create(@Res() res: Response) {
@@ -180,7 +180,7 @@ When you need to accept **dynamic data** as part of the request, routes with sta
 The route parameter tokens in the example with the `@Get()` decorator demonstrate this usage. Route parameters declared in this way can be accessed using the `@Param()` decorator, which should be added to the method signature.
 
 ```typescript
-import { Params } from "@nest";
+import { Params } from "@nest/core";
 
 @Get(":id")
 findOne(@Params() params: any): string {
@@ -242,7 +242,7 @@ async create(@Body() createCatDto: CreateCatDto) {
 However, generally speaking, we should not trust any parameters coming from the client and usually need additional validation. Fortunately, Nest has built-in support for validation. You only need to modify the DTO's `interface` to a `class` and use [class_validator](https://deno.land/x/deno_class_validator@v1.0.0/mod.ts):
 
 ```typescript
-import { IsNumber, IsString, Max, MaxLength, Min } from "class_validator";
+import { IsNumber, IsString, Max, MaxLength, Min } from 'class_validator';
 
 export class CreateCatDto {
   @IsString()
@@ -282,7 +282,7 @@ Interestingly, `class_validator` only works with `class`. Why?
 Unlike POST parameters, the parameters for GET requests are all in the URL, and their types are all strings. If you want to convert bool, number, or even arrays into the respective formats, an additional decorator `@Property()` can help:
 
 ```typescript
-import { Property } from "@nest";
+import { Property } from '@nest/core';
 
 export class Dto {
   @Property()
@@ -291,7 +291,7 @@ export class Dto {
   @Property()
   sex: boolean;
 
-  @Property("number")
+  @Property('number')
   ages: number[];
 }
 ```
@@ -318,12 +318,12 @@ import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto.ts';
 
 @Controller('cats')
 export class CatsController {
-  @Post("")
+  @Post('')
   create(@Body() createCatDto: CreateCatDto) {
     return 'This action adds a new cat';
   }
 
-  @Get("")
+  @Get('')
   findAll(@Query() query: ListAllEntities) {
     return `This action returns all cats (limit: ${query.limit} items)`;
   }

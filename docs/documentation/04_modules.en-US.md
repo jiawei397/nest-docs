@@ -14,12 +14,12 @@ Every application has at least one module, known as the **root module**. The roo
 
 The `@Module()` decorator takes a single object that describes the module properties.
 
-| Key          | Description                                                |
-| ------------ | ---------------------------------------------------------- |
-| `providers`  | These providers will be instantiated by the Nest injector and can be shared at least among the modules. |
-| `controllers`| A set of controllers that must be instantiated within this module. |
-| `imports`    | A list of modules that are imported and export the providers required in this module. |
-| `exports`    | A subset of providers provided by this module, making them available in other modules that import this one. You can use either the providers themselves or just their tokens (`provide` values). |
+| Key           | Description                                                                                                                                                                                      |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `providers`   | These providers will be instantiated by the Nest injector and can be shared at least among the modules.                                                                                          |
+| `controllers` | A set of controllers that must be instantiated within this module.                                                                                                                               |
+| `imports`     | A list of modules that are imported and export the providers required in this module.                                                                                                            |
+| `exports`     | A subset of providers provided by this module, making them available in other modules that import this one. You can use either the providers themselves or just their tokens (`provide` values). |
 
 The module encapsulates providers by default. This means that providers that don't directly belong to the current module or are not exported from the imported modules cannot be injected. Therefore, providers exported by the module can be seen as the public interface or API of the module.
 
@@ -48,7 +48,6 @@ To create a module using the CLI, simply run `nests g` and choose `Module`.
 :::
 
 Above, we defined the `CatsModule` in the `cats.module.ts` file and moved all content related to this module into the `cats` directory. The last thing we need to do is to import this module into the root module (`AppModule`, defined in the `app.module.ts` file).
-
 
 ```bash
 src
@@ -80,7 +79,7 @@ import { CatsService } from './cats.service.ts';
 @Module({
   controllers: [CatsController],
   providers: [CatsService],
-  exports: [CatsService]
+  exports: [CatsService],
 })
 export class CatsModule {}
 ```
@@ -120,19 +119,22 @@ The Nest module system includes a powerful feature called Dynamic Modules. This 
 Here's an example definition of a Dynamic Module for `DatabaseModule`:
 
 ```typescript
-import { type DynamicModule } from "@nest";
-import { ES_KEY } from "./es.constant.ts";
-import { ElasticsearchService } from "./es.service.ts";
-import type { ElasticSearchOptions } from "./types.ts";
+import { type DynamicModule } from '@nest/core';
+import { ES_KEY } from './es.constant.ts';
+import { ElasticsearchService } from './es.service.ts';
+import type { ElasticSearchOptions } from './types.ts';
 
 export class ElasticsearchModule {
   static forRoot(options: ElasticSearchOptions): DynamicModule {
     return {
       module: ElasticsearchModule,
-      providers: [{
-        provide: ES_KEY,
-        useValue: options,
-      }, ElasticsearchService],
+      providers: [
+        {
+          provide: ES_KEY,
+          useValue: options,
+        },
+        ElasticsearchService,
+      ],
       global: true,
     };
   }
@@ -146,14 +148,14 @@ If you want to register a dynamic module at the global level, set the `global` p
 You can import and configure the `ElasticsearchModule` as follows:
 
 ```typescript
-import { Module } from "@nest";
-import { ElasticsearchModule } from "@nest/elasticsearch";
-import { AppController } from "./app.controller.ts";
+import { Module } from '@nest/core';
+import { ElasticsearchModule } from '@nest/elasticsearch';
+import { AppController } from './app.controller.ts';
 
 @Module({
   imports: [
     ElasticsearchModule.forRoot({
-      db: "http://10.100.30.65:9200",
+      db: 'http://10.100.30.65:9200',
     }),
   ],
   controllers: [AppController],

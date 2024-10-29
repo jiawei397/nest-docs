@@ -26,7 +26,7 @@ By default, this operation is carried out by the built-in global exception filte
 For example, in the `CatsController`, we have a `findAll()` method (a `GET` route handler). Let's assume that this route handler throws an exception for some reason. To illustrate this, we hardcode it as follows:
 
 ```typescript
-import { ForbiddenException } from "@nest";
+import { ForbiddenException } from "@nest/core";
 
 @Get("/")
 findAll() {
@@ -68,7 +68,7 @@ Here is an example that overrides the entire response body and provides an error
 async findAll() {
   try {
     await this.service.findAll()
-  } catch (error) { 
+  } catch (error) {
     throw new HttpException({
       status: HttpStatus.FORBIDDEN,
       error: 'This is a custom message',
@@ -120,9 +120,9 @@ All built-in exceptions can also provide error causes and descriptions using opt
 
 ```typescript
 throw new BadRequestException(
-  "Something bad happened",
-  "Some error description",
-  new Error("this is an error"),
+  'Something bad happened',
+  'Some error description',
+  new Error('this is an error'),
 );
 ```
 
@@ -143,7 +143,7 @@ While basic (built-in) exception filters can automatically handle many cases, yo
 Let's create an exception filter responsible for catching exceptions belonging to the `HttpException` class and implementing custom response logic for them.
 
 ```typescript
-import { Catch, Context, ExceptionFilter, HttpException } from "@nest";
+import { Catch, Context, ExceptionFilter, HttpException } from '@nest/core';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -153,7 +153,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       statusCode: exception.status,
       timestamp: new Date().toISOString(),
       path: context.request.url,
-      type: "HttpExceptionFilter",
+      type: 'HttpExceptionFilter',
       message: exception.message,
     };
   }
@@ -169,7 +169,7 @@ The `@Catch(HttpException)` decorator binds the required metadata to the excepti
 Let's bind our new `HttpExceptionFilter` to the `create()` method of the `CatsController`.
 
 ```typescript
-import { UseFilters } from "@nest";
+import { UseFilters } from "@nest/core";
 
 @Post('')
 @UseFilters(new HttpExceptionFilter())
@@ -242,7 +242,7 @@ You can use this technique to add any number of filters; just add each filter to
 To catch every unhandled exception, regardless of the exception type, leave the parameter list of the `@Catch()` decorator empty, like `@Catch()`.
 
 ```typescript
-import { Catch, Context, ExceptionFilter, HttpException } from "@nest";
+import { Catch, Context, ExceptionFilter, HttpException } from '@nest/core';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -251,7 +251,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       statusCode: (exception as HttpException).status || 500,
       timestamp: new Date().toISOString(),
       path: context.request.url,
-      type: "AllExceptionsFilter",
+      type: 'AllExceptionsFilter',
       error: (exception as Error).message,
     };
   }

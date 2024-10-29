@@ -46,7 +46,13 @@ Singleton scope is used by default and does not need to be declared. If you do w
 If you want to get the class of the provider being constructed, for example, in logging, you can inject the `INQUIRER` token.
 
 ```typescript
-import { type Constructor, Inject, Injectable, INQUIRER, Scope } from "@nest";
+import {
+  type Constructor,
+  Inject,
+  Injectable,
+  INQUIRER,
+  Scope,
+} from '@nest/core';
 
 @Injectable({
   scope: Scope.TRANSIENT,
@@ -67,19 +73,17 @@ export class LogService {
 Then use it like this:
 
 ```typescript
-import { Controller, Get } from "@nest";
-import { LogService } from "./log.service.ts";
+import { Controller, Get } from '@nest/core';
+import { LogService } from './log.service.ts';
 
-@Controller("/cats")
+@Controller('/cats')
 export class CatsController {
-  constructor(
-    private logService: LogService,
-  ) {}
+  constructor(private logService: LogService) {}
 
-  @Get("/")
+  @Get('/')
   async hello() {
-    this.logService.info("hello");
-    return "hello world";
+    this.logService.info('hello');
+    return 'hello world';
   }
 }
 ```
@@ -89,16 +93,15 @@ When `hello` is called, the console will print: `[CatsController] hello`.
 Similarly, if the `LogService` is imported by `CatsService`, it will print `[CatsService] findAll`:
 
 ```typescript
-import { Injectable } from "@nest";
-import { LogService } from "./log.service.ts";
+import { Injectable } from '@nest/core';
+import { LogService } from './log.service.ts';
 
 @Injectable()
 export class CatsService {
-  constructor(private readonly logService: LogService) {
-  }
+  constructor(private readonly logService: LogService) {}
 
   findAll() {
-    this.logService.info("findAll");
+    this.logService.info('findAll');
     return [];
   }
 }

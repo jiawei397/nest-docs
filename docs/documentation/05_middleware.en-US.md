@@ -24,7 +24,7 @@ If the current middleware function does not end the request-response cycle, it m
 You can implement the `NestMiddleware` interface using a function. Here is a simple example:
 
 ```typescript
-import { type NestMiddleware } from "@nest";
+import { type NestMiddleware } from '@nest/core';
 
 export const middleware: NestMiddleware = async (req, res, next) => {
   const start = Date.now();
@@ -32,7 +32,7 @@ export const middleware: NestMiddleware = async (req, res, next) => {
   const time = Date.now() - start;
   const msg = `${req.method} ${req.url} [${res.status}] - ${time}ms`;
   console.info(msg);
-  res.headers.set("X-Response-Time", `${time}ms`);
+  res.headers.set('X-Response-Time', `${time}ms`);
 };
 ```
 
@@ -55,8 +55,8 @@ app.use(async (req, res, next) => {
   const start = Date.now();
   await next();
   const ms = Date.now() - start;
-  res.headers.set("X-Response-Time", `${ms}ms`);
-  return res.render(); 
+  res.headers.set('X-Response-Time', `${ms}ms`);
+  return res.render();
 });
 ```
 
@@ -71,15 +71,17 @@ To address this, `Nest` provides a special method called `useOriginMiddleware` t
 Taking `hono` as an example:
 
 ```typescript
-import { NestFactory } from "@nest";
-import { HonoRouter as Router } from "@nest/hono";
-import { etag } from "https://deno.land/x/hono@v3.8.1/middleware.ts";
-import { AppModule } from "./app.module.ts";
+import { NestFactory } from '@nest/core';
+import { HonoRouter as Router } from '@nest/hono';
+import { etag } from 'https://deno.land/x/hono@v3.8.1/middleware.ts';
+import { AppModule } from './app.module.ts';
 
 const app = await NestFactory.create(AppModule, Router);
-app.useOriginMiddleware(etag({
-  weak: true,
-}));
+app.useOriginMiddleware(
+  etag({
+    weak: true,
+  }),
+);
 ```
 
 To avoid bugs, it is recommended to keep the `hono` version as consistent as possible with the `Hono` version recommended by `Nest`. The same applies to `oak`.
@@ -87,10 +89,10 @@ To avoid bugs, it is recommended to keep the `hono` version as consistent as pos
 Here is an example of using the CORS middleware:
 
 ```ts
-import { NestFactory } from "@nest";
-import { Router } from "@nest/oak";
-import { CORS } from "https://deno.land/x/oak_cors@v0.1.1/mod.ts";
-import { AppModule } from "./app.module.ts";
+import { NestFactory } from '@nest/core';
+import { Router } from '@nest/oak';
+import { CORS } from 'https://deno.land/x/oak_cors@v0.1.1/mod.ts';
+import { AppModule } from './app.module.ts';
 
 const app = await NestFactory.create(AppModule, Router);
 app.useOriginMiddleware(CORS());

@@ -22,14 +22,14 @@ In the example below, we demonstrate how to test the `CatsController`.
 Assuming our `CatsController` looks like this:
 
 ```typescript
-import { Controller, Get } from "@nest";
-import { CatsService } from "./cats.service.ts";
+import { Controller, Get } from '@nest/core';
+import { CatsService } from './cats.service.ts';
 
-@Controller("/cats")
+@Controller('/cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
-  @Get("/")
+  @Get('/')
   findAll() {
     return this.catsService.findAll();
   }
@@ -39,7 +39,7 @@ export class CatsController {
 And `cats.service.ts` is:
 
 ```typescript
-import { Injectable } from "@nest";
+import { Injectable } from '@nest/core';
 
 @Injectable()
 export class CatsService {
@@ -54,16 +54,16 @@ We create a new file `cats.controller_test.ts`. In Nest, the recommended naming 
 The test case is as follows:
 
 ```typescript
-import { assert, assertEquals, createTestingModule } from "@nest/tests";
-import { CatsController } from "./cats.controller.ts";
-import { CatsService } from "./cats.service.ts";
+import { assert, assertEquals, createTestingModule } from '@nest/tests';
+import { CatsController } from './cats.controller.ts';
+import { CatsService } from './cats.service.ts';
 
-Deno.test("CatsController", async () => {
+Deno.test('CatsController', async () => {
   const callStacks: number[] = [];
   const catsService = {
     findAll() {
       callStacks.push(1);
-      return ["test"];
+      return ['test'];
     },
   };
   const moduleRef = await createTestingModule({
@@ -73,7 +73,7 @@ Deno.test("CatsController", async () => {
     .compile();
   const catsController = await moduleRef.get(CatsController);
   assert(catsController);
-  assertEquals(catsController.findAll(), ["test"]);
+  assertEquals(catsController.findAll(), ['test']);
   assertEquals(callStacks, [1]);
 
   callStacks.length = 0;
@@ -91,7 +91,13 @@ In the section on "[Injection Scopes](./13_scope.en-US.md)," we mentioned that, 
 Taking this `service` as an example:
 
 ```typescript
-import { type Constructor, Inject, Injectable, INQUIRER, Scope } from "@nest";
+import {
+  type Constructor,
+  Inject,
+  Injectable,
+  INQUIRER,
+  Scope,
+} from '@nest/core';
 
 @Injectable({
   scope: Scope.TRANSIENT,
@@ -112,17 +118,17 @@ export class LogService {
 Here are the tests for it:
 
 ```typescript
-import { Controller } from "@nest";
-import { assert, createTestingModule } from "@nest/tests";
-import { LoggerService } from "./logger.service.ts";
+import { Controller } from '@nest/core';
+import { assert, createTestingModule } from '@nest/tests';
+import { LoggerService } from './logger.service.ts';
 
-Deno.test("logger service test", async () => {
-  @Controller("")
+Deno.test('logger service test', async () => {
+  @Controller('')
   class A {
     constructor(private loggerService: LoggerService) {}
   }
 
-  @Controller("")
+  @Controller('')
   class B {
     constructor(private loggerService: LoggerService) {}
   }
@@ -137,9 +143,9 @@ Deno.test("logger service test", async () => {
   assert(loggerService2);
   assert(loggerService instanceof LoggerService);
   assert(loggerService2 instanceof LoggerService);
-  assertEquals(loggerService.parentName, "A");
-  assertEquals(loggerService2.parentName, "B");
-  assert(loggerService !== loggerService2, "service is not singleton");
+  assertEquals(loggerService.parentName, 'A');
+  assertEquals(loggerService2.parentName, 'B');
+  assert(loggerService !== loggerService2, 'service is not singleton');
 });
 ```
 
@@ -152,18 +158,17 @@ Unlike unit testing, which focuses on individual modules and classes, end-to-end
 To perform `E2E` testing, we use a configuration similar to what was introduced in unit testing. Create a new file `cats.e2e_test.ts`:
 
 ```typescript
-import { assertEquals, createTestingModule } from "@nest/tests";
-import { CatsController } from "./cats.controller.ts";
+import { assertEquals, createTestingModule } from '@nest/tests';
+import { CatsController } from './cats.controller.ts';
 
-Deno.test("e2e test cats", async (t) => {
+Deno.test('e2e test cats', async (t) => {
   const moduleRef = await createTestingModule({
     controllers: [CatsController],
-  })
-    .compile();
+  }).compile();
   const app = moduleRef.createNestApplication();
   await app.init();
 
-  await t.step("findAll", async () => {
+  await t.step('findAll', async () => {
     const res = await fetch(`http://localhost:${app.port}/cats`);
     assertEquals(res.status, 200);
     assertEquals(await res.json(), []);
@@ -184,21 +189,20 @@ import {
   createTestingModule,
   describe,
   it,
-} from "@nest/tests";
-import { CatsController } from "./cats.controller.ts";
+} from '@nest/tests';
+import { CatsController } from './cats.controller.ts';
 
-describe("e2e test cats", () => {
+describe('e2e test cats', () => {
   let app: App;
   beforeEach(async () => {
     const moduleRef = await createTestingModule({
       controllers: [CatsController],
-    })
-      .compile();
+    }).compile();
     app = moduleRef.createNestApplication();
     await app.init();
   });
 
-  it("findAll", async () => {
+  it('findAll', async () => {
     const res = await fetch(`http://localhost:${app.port}/cats`);
     assertEquals(res.status, 200);
     assertEquals(await res.json(), []);

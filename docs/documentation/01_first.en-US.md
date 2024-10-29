@@ -9,14 +9,14 @@ order: 1
 
 ## Prerequisites
 
-Make sure [Deno](https://deno.com/) is installed on your operating system (version >= v1.37.0).
+Make sure [Deno](https://deno.com/) is installed on your operating system (version >= v2.0.0).
 
 ## Setup
 
 The easiest way to set up a Nest project is to initialize a project using our CLI:
 
 ```bash
-deno run --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json https://deno.land/x/deno_nest/cli/main.ts
+deno run --allow-env --allow-run --allow-net --allow-read --allow-write jsr:@nest/cli
 ```
 
 :::warning
@@ -28,7 +28,7 @@ Currently, our CLI functionality, in addition to creating projects, includes a `
 Therefore, it is more appropriate to install it globally:
 
 ```bash
-deno install --allow-env --allow-run --allow-net --allow-read --allow-write --import-map https://deno.land/x/deno_nest/cli/import_map.json  -n nests -f https://deno.land/x/deno_nest/cli/main.ts
+deno install -g --allow-env --allow-run --allow-net --allow-read --allow-write -n nest  -f  jsr:@nest/cli
 ```
 
 It should be noted that `-n nests` indicates that the name of the installed global command is `nests`, which is to avoid conflicts with the `NestJS` command. However, if you do not plan to use `NestJS`, you can modify it to `-n nest`.
@@ -70,20 +70,20 @@ The directory structure of our project is roughly as follows:
 
 Here is a brief overview of these core files:
 
-| Path | Description |
-| --- | --- |
-| app.controller.ts | Basic controller with a single route. |
-| app.module.ts | Root module of the application. |
-| app.service.ts | Basic service with a single method. |
-| main.ts | Entry file for the application where the Nest application instance is created using the core function NestFactory. |
+| Path              | Description                                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------ |
+| app.controller.ts | Basic controller with a single route.                                                                              |
+| app.module.ts     | Root module of the application.                                                                                    |
+| app.service.ts    | Basic service with a single method.                                                                                |
+| main.ts           | Entry file for the application where the Nest application instance is created using the core function NestFactory. |
 
 The `main.ts` file includes an asynchronous function that will bootstrap our application:
 
 ```typescript
-import { NestFactory } from "@nest";
-import { Router } from "@nest/hono";
-import { AppModule } from "./app.module.ts";
-import { HttpExceptionFilter } from "./exception.ts";
+import { NestFactory } from '@nest/core';
+import { Router } from '@nest/hono';
+import { AppModule } from './app.module.ts';
+import { HttpExceptionFilter } from './exception.ts';
 
 const app = await NestFactory.create(AppModule, Router);
 app.useGlobalFilters(HttpExceptionFilter);

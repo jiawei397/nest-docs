@@ -18,18 +18,19 @@ First, import it in the `importMap`:
 ```
 
 :::warning
+
 1. In actual development, please add a specific version number and keep it consistent with the `Nest` version.
 2. `@nest/cache` only supports `GET` requests.
-:::
+   :::
 
 ## Usage
 
 Then use it in the module:
 
 ```typescript
-import { Module } from "@nest";
-import { CacheModule } from "@nest/cache";
-import { AppController } from "./app.controller.ts";
+import { Module } from '@nest/core';
+import { CacheModule } from '@nest/cache';
+import { AppController } from './app.controller.ts';
 
 @Module({
   imports: [
@@ -48,28 +49,28 @@ export class AppModule {}
 
 Here are the parameters for the `register` method:
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| store | "memory" &#124; "LRU" &#124; "localStorage" &#124; "KVStore" &#124; CacheStoreMap &#124; CacheFactory | Cache storage manager. Defaults to memory. |
-| ttl | number | Time-to-live for the cache in seconds. Defaults to 5 seconds. |
-| isCacheableValue | (value: any) => boolean | Function to determine if the value is cacheable. |
-| getCacheKey | (params: { constructorName: string; methodName: string; methodType: string; args: any[]; }) => string | Function to determine the cache key. Defaults to MD5 of the parameter information as a string. |
-| policy | "public" &#124; "private" &#124; "no-cache" | Options for configuring the `cache-control` header of the cache response. |
-| isDebug | boolean | Enable debug mode for additional development information printing. |
-| max | number | Maximum number of responses stored in the cache. Defaults to 1000. Only valid for LRU storage. |
-| maxSize | number | Maximum size of the cache. Defaults to 1,000,000. Only valid for LRU storage. |
-| kvStoreBaseKey | string | Base key for KV storage. Only used when the store is set to KVStore. |
+| Parameter        | Type                                                                                                  | Description                                                                                    |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| store            | "memory" &#124; "LRU" &#124; "localStorage" &#124; "KVStore" &#124; CacheStoreMap &#124; CacheFactory | Cache storage manager. Defaults to memory.                                                     |
+| ttl              | number                                                                                                | Time-to-live for the cache in seconds. Defaults to 5 seconds.                                  |
+| isCacheableValue | (value: any) => boolean                                                                               | Function to determine if the value is cacheable.                                               |
+| getCacheKey      | (params: { constructorName: string; methodName: string; methodType: string; args: any[]; }) => string | Function to determine the cache key. Defaults to MD5 of the parameter information as a string. |
+| policy           | "public" &#124; "private" &#124; "no-cache"                                                           | Options for configuring the `cache-control` header of the cache response.                      |
+| isDebug          | boolean                                                                                               | Enable debug mode for additional development information printing.                             |
+| max              | number                                                                                                | Maximum number of responses stored in the cache. Defaults to 1000. Only valid for LRU storage. |
+| maxSize          | number                                                                                                | Maximum size of the cache. Defaults to 1,000,000. Only valid for LRU storage.                  |
+| kvStoreBaseKey   | string                                                                                                | Base key for KV storage. Only used when the store is set to KVStore.                           |
 
 Now you can use it in the controller:
 
 ```typescript
-import { Controller, Get, Params, Query, UseInterceptors } from "@nest";
-import { CacheInterceptor } from "@nest/cache";
+import { Controller, Get, Params, Query, UseInterceptors } from '@nest/core';
+import { CacheInterceptor } from '@nest/cache';
 
-@Controller("")
+@Controller('')
 @UseInterceptors(CacheInterceptor)
 export class AppController {
-  @Get("/")
+  @Get('/')
   hello() {}
 }
 ```
@@ -84,12 +85,12 @@ delay(@Query("id") id: string) {}
 
 `Nest` also provides three decorators to modify values during global registration:
 
-| Decorator | Modified Value |
-| --- | --- |
-| `@CacheTTL(ttl: number)` | `ttl` |
-| `@CacheKey(key: string)` | Specifies a specific string as the cache key for a method, higher priority than `getCacheKey`, but you need to ensure the uniqueness of the KEY yourself. |
-| `@SetCacheStore(key: CacheStoreName)` | `store` |
-| `@SetCachePolicy(policy: "public" &#124; "private" &#124; "no-cache") ` | `policy` |
+| Decorator                                                               | Modified Value                                                                                                                                            |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@CacheTTL(ttl: number)`                                                | `ttl`                                                                                                                                                     |
+| `@CacheKey(key: string)`                                                | Specifies a specific string as the cache key for a method, higher priority than `getCacheKey`, but you need to ensure the uniqueness of the KEY yourself. |
+| `@SetCacheStore(key: CacheStoreName)`                                   | `store`                                                                                                                                                   |
+| `@SetCachePolicy(policy: "public" &#124; "private" &#124; "no-cache") ` | `policy`                                                                                                                                                  |
 
 For example, you can use them as follows:
 
@@ -117,16 +118,16 @@ delay2(@Params("id") id: string) {
 In addition to these four storage options, `@nest/cache` can also cache data to `Redis`, which needs to be combined with `@nest/redis`:
 
 ```typescript
-import { Module } from "@nest";
-import { createStore, RedisModule } from "@nest/redis";
-import { CacheModule } from "@nest/cache";
-import { AppController } from "./app.controller.ts";
+import { Module } from '@nest/core';
+import { createStore, RedisModule } from '@nest/redis';
+import { CacheModule } from '@nest/cache';
+import { AppController } from './app.controller.ts';
 
 @Module({
   imports: [
     RedisModule.forRoot({
       port: 6379,
-      hostname: "192.168.21.176",
+      hostname: '192.168.21.176',
       db: 1,
       // password: "123456",
     }),

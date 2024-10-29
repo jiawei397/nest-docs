@@ -12,29 +12,25 @@ order: 8
 `Nest`提供了一个`getReadableStream`的函数，帮助你快速响应流。
 
 ```typescript
-import {
-  Controller,
-  Get,
-  getReadableStream,
-} from "@nest";
+import { Controller, Get, getReadableStream } from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
   /**
    * response an stream, can test by `curl http://localhost:2000/stream`
    */
-  @Get("/stream")
+  @Get('/stream')
   stream() {
     const { body, write, end } = getReadableStream();
     let num = 0;
     const timer = setInterval(() => {
       if (num === 10) {
         clearInterval(timer);
-        console.info("end");
+        console.info('end');
         try {
-          end("Task successfully end");
+          end('Task successfully end');
         } catch (error) {
-          console.error("end", error); // TypeError: The stream controller cannot close or enqueue
+          console.error('end', error); // TypeError: The stream controller cannot close or enqueue
         }
         return;
       }
@@ -44,7 +40,7 @@ export class AppController {
       try {
         write(message);
       } catch (error) {
-        console.error("write", error); // TypeError: The stream controller cannot close or enqueue
+        console.error('write', error); // TypeError: The stream controller cannot close or enqueue
         clearInterval(timer);
       }
     }, 1000);
@@ -57,7 +53,7 @@ export class AppController {
 在`Nest`中，响应内容，除了文本外，可以直接响应一个`ReadableStream`。本例中的`body`就是一个`ReadableStream`。
 :::
 
-当你使用在控制台输入`curl http://localhost:2000/stream`时，会看到每隔一秒就有一条信息打印，直到10次后结束：
+当你使用在控制台输入`curl http://localhost:2000/stream`时，会看到每隔一秒就有一条信息打印，直到 10 次后结束：
 
 ```bash
 $ curl http://localhost:2000/stream
@@ -81,32 +77,26 @@ Task successfully end
 如果你对网络熟悉，应该知道只需要将响应头的`Content-Type`设置为`application/octet-stream`即可。
 
 ```typescript
-import {
-  Controller,
-  Get,
-  Header,
-  Res,
-  type Response,
-} from "@nest";
+import { Controller, Get, Header, Res, type Response } from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/file")
-  @Header("Content-Type", "application/octet-stream")
-  @Header("Content-Disposition", 'attachment; filename="README.md"')
+  @Get('/file')
+  @Header('Content-Type', 'application/octet-stream')
+  @Header('Content-Disposition', 'attachment; filename="README.md"')
   async file() {
-    const input = await Deno.open("README.md", { read: true });
+    const input = await Deno.open('README.md', { read: true });
     return input.readable;
   }
 
-  @Get("/file2")
+  @Get('/file2')
   async file2(@Res() res: Response) {
-    const input = await Deno.open("README.md", { read: true });
-    res.headers.set("Content-Type", "application/octet-stream");
-    res.headers.set("Content-Disposition", 'attachment; filename="README.md"');
+    const input = await Deno.open('README.md', { read: true });
+    res.headers.set('Content-Type', 'application/octet-stream');
+    res.headers.set('Content-Disposition', 'attachment; filename="README.md"');
     return input.readable;
   }
 }
 ```
 
-以上样例中两个接口是等价的，当用户请求API时，会收到一个媒体文件，如果客户端是浏览器，会进行下载。
+以上样例中两个接口是等价的，当用户请求 API 时，会收到一个媒体文件，如果客户端是浏览器，会进行下载。

@@ -21,24 +21,24 @@ import {
   type Request,
   Res,
   type Response,
-} from "@nest";
+} from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/req")
+  @Get('/req')
   req(@Req() req: Request) {
     return req.cookies.getAll();
   }
 
-  @Get("/")
+  @Get('/')
   getAllCookies(@Cookies() cookies: ICookies) {
     return cookies.getAll();
   }
 
-  @Get("/res")
+  @Get('/res')
   res(@Res() res: Response) {
-    res.cookies.set("DENO_COOKIE_TEST", "abc", { path: "/" });
-    return "ok";
+    res.cookies.set('DENO_COOKIE_TEST', 'abc', { path: '/' });
+    return 'ok';
   }
 }
 ```
@@ -52,14 +52,14 @@ import {
   Injectable,
   type NestInterceptor,
   Next,
-} from "@nest";
+} from '@nest/core';
 
 @Injectable()
 export class CookieInterceptor implements NestInterceptor {
   async intercept(ctx: Context, next: Next) {
-    console.log("DENO_COOKIE_TEST", await ctx.cookies.get("DENO_COOKIE_TEST"));
+    console.log('DENO_COOKIE_TEST', await ctx.cookies.get('DENO_COOKIE_TEST'));
     await next();
-    await ctx.cookies.set("DENO_COOKIE_TEST", "abc", { path: "/" });
+    await ctx.cookies.set('DENO_COOKIE_TEST', 'abc', { path: '/' });
   }
 }
 
@@ -72,29 +72,29 @@ export class AuthGuard implements CanActivate {
 }
 ```
 
-## Cookie类型转换
+## Cookie 类型转换
 
 ```typescript
-import { Controller, Cookie, Get } from "@nest";
+import { Controller, Cookie, Get } from '@nest/core';
 
-@Controller("")
+@Controller('')
 export class AppController {
-  @Get("/id")
-  getId(@Cookie("DENO_COOKIE_USER_ID") id: string) {
+  @Get('/id')
+  getId(@Cookie('DENO_COOKIE_USER_ID') id: string) {
     return {
       DENO_COOKIE_USER_ID: id,
     };
   }
 
-  @Get("/id2")
-  getId(@Cookie("DENO_COOKIE_USER_ID") id: number) {
+  @Get('/id2')
+  getId(@Cookie('DENO_COOKIE_USER_ID') id: number) {
     return {
       DENO_COOKIE_USER_ID: id,
     };
   }
 
-  @Get("/id3")
-  getId(@Cookie("DENO_COOKIE_USER_ID") id: bool) {
+  @Get('/id3')
+  getId(@Cookie('DENO_COOKIE_USER_ID') id: bool) {
     return {
       DENO_COOKIE_USER_ID: id,
     };
@@ -104,10 +104,10 @@ export class AppController {
 
 当使用`@Cookie`装饰器时，`Nest`会根据后面的类型自动转换`id`的类型。
 
-## Sign签名
+## Sign 签名
 
 由于底层实现不同，`oak`和`hono`在`Cookies`的使用在使用`sign`签名时，会有一些显著的差异。
-比如，此时设置Cookie时，`oak`会生成两个`cookie`，而`hono`只有一个，但值被加密过了。这个对上层使用时并不重要，所以读者简单了解即可。
+比如，此时设置 Cookie 时，`oak`会生成两个`cookie`，而`hono`只有一个，但值被加密过了。这个对上层使用时并不重要，所以读者简单了解即可。
 
 ### oak
 
@@ -115,15 +115,15 @@ export class AppController {
 
 ```typescript
 const app = await NestFactory.create(AppModule, Router, {
-  keys: ["nest"],
+  keys: ['nest'],
 });
 ```
 
 然后使用：
 
 ```typescript
-await cookies.set("DENO_COOKIE_USER_ID", "123", {
-  path: "/",
+await cookies.set('DENO_COOKIE_USER_ID', '123', {
+  path: '/',
   signed: true,
   // signedSecret: "abcd",
 });
@@ -137,17 +137,17 @@ await cookies.set("DENO_COOKIE_USER_ID", "123", {
 
 ```typescript
 const app = await NestFactory.create(AppModule, Router, {
-  keys: ["nest"],
+  keys: ['nest'],
 });
 ```
 
 在具体使用时可以用`signedSecret`覆盖这个配置：
 
 ```typescript
-await cookies.set("DENO_COOKIE_USER_ID", "123", {
-  path: "/",
+await cookies.set('DENO_COOKIE_USER_ID', '123', {
+  path: '/',
   signed: true,
-  signedSecret: "abcd",
+  signedSecret: 'abcd',
 });
 ```
 
@@ -155,4 +155,4 @@ await cookies.set("DENO_COOKIE_USER_ID", "123", {
 
 ## 样例
 
-关于Cookie的样例，参见[deno_nest/example/cookie](https://deno.land/x/deno_nest/example/cookie?source)。
+关于 Cookie 的样例，参见[deno_nest/example/cookie](https://deno.land/x/deno_nest/example/cookie?source)。
