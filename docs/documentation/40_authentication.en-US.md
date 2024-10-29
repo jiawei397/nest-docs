@@ -81,7 +81,7 @@ export class UsersModule {}
 The role of our `AuthService` is to retrieve users and verify passwords. We've created a `signIn()` method to accomplish this. In the code below, we use the convenient ES6 spread operator to remove the password property from the user object before returning it. This is a common practice when returning user objects, as you don't want to expose sensitive fields such as passwords or other security keys.
 
 ```typescript
-import { Injectable, UnauthorizedException } from '@nest';
+import { Injectable, UnauthorizedException } from '@nest/core';
 import { UsersService } from '../users/users.service.ts';
 
 @Injectable()
@@ -108,7 +108,7 @@ Of course in a real application, you wouldn't store a password in plain text. Yo
 Now, we update our `AuthModule` to import the `UsersModule`.
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AuthService } from './auth.service.ts';
 import { AuthController } from './auth.controller.ts';
 import { UsersModule } from '../users/users.module.ts';
@@ -168,7 +168,7 @@ We need to include the `@nest/jwt` package in the importMap to assist us in hand
 ```json
 {
   "imports": {
-    "@nest/jwt": "https://deno.land/x/deno_nest/modules/jwt/mod.ts"
+    "@nest/jwt": "jsr:@nest/jwt@^0.0.2"
   }
 }
 ```
@@ -452,4 +452,4 @@ export class AuthGuard implements CanActivate {
 
 ## Example
 
-You can find the complete example code [here](https://deno.land/x/deno_nest/example/authentication/src?source).
+You can find the complete example code [here](https://github.com/jiawei397/deno-nest/tree/main/example/authentication).

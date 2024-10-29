@@ -23,7 +23,7 @@ Providers can have the following two scopes:
 Specify the scope as the `scope` property of the options object in the `@Injectable()` decorator.
 
 ```typescript
-import { Injectable, Scope } from '@nest';
+import { Injectable, Scope } from '@nest/core';
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class LogService {}

@@ -70,7 +70,7 @@ app.useGlobalGuards(RolesGuard);
 全局守卫在整个应用程序中使用，用于每个控制器和每个路由处理程序。在依赖注入方面，从任何模块外部注册的全局守卫（如上面的示例中的`useGlobalGuards()`）无法注入依赖项，因为这是在任何模块的上下文之外进行的。为了解决这个问题，你可以使用以下结构从任何模块直接设置守卫：
 
 ```typescript
-import { Module, APP_GUARD } from '@nest';
+import { Module, APP_GUARD } from '@nest/core';
 
 @Module({
   providers: [

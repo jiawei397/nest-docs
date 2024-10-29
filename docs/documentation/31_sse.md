@@ -144,4 +144,4 @@ eventSource.addEventListener('myEvent', console.log);
 
 ## 样例
 
-样例代码详见[这里](https://deno.land/x/deno_nest/example/sse/app.controller.ts?source)。
+样例代码详见[这里](https://github.com/jiawei397/deno-nest/tree/main/example/sse)。

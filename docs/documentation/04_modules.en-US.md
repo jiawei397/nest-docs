@@ -32,7 +32,7 @@ Feature modules are simply a way to organize code related to a specific feature,
 To illustrate this, we will create a `CatsModule`.
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { CatsController } from './cats.controller.ts';
 import { CatsService } from './cats.service.ts';
 
@@ -72,7 +72,7 @@ In `Nest`, modules are singleton by default, so you can easily share the same in
 Each module automatically becomes a shared module. Once created, it can be reused by any other module. Suppose we want to share the instance of `CatsService` between several other modules. To achieve this, we first need to add the `CatsService` provider to the `exports` array of the module, as shown below:
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { CatsController } from './cats.controller.ts';
 import { CatsService } from './cats.service.ts';
 
@@ -93,7 +93,7 @@ It can become tedious if you have to import the same set of modules everywhere. 
 When you want to provide a set of providers that should be available anywhere and anytime (e.g., helpers, database connections), use the `@Global` decorator to make the module global.
 
 ```typescript
-import { Module, Global } from '@nest';
+import { Module, Global } from '@nest/core';
 import { CatsController } from './cats.controller.ts';
 import { CatsService } from './cats.service.ts';
 

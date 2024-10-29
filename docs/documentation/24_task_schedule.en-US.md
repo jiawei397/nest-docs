@@ -12,7 +12,7 @@ First, add `@nest/schedule` to the `importMap`:
 ```json
 {
   "imports": {
-    "@nest/schedule": "https://deno.land/x/deno_nest/modules/schedule/mod.ts"
+    "@nest/schedule": "jsr:@nest/schedule@^0.0.2"
   }
 }
 ```
@@ -20,13 +20,11 @@ First, add `@nest/schedule` to the `importMap`:
 To activate job scheduling, import the `ScheduleModule` into the root `AppModule` and run the `forRoot()` static method as follows:
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { ScheduleModule } from '@nest/schedule';
 
 @Module({
-  imports: [
-    ScheduleModule.forRoot()
-  ],
+  imports: [ScheduleModule.forRoot()],
 })
 export class AppModule {}
 ```
@@ -53,7 +51,7 @@ export class UserModule {}
 Use the `@Cron()` decorator to declare `cron` jobs before the method definition containing the code to be executed, as shown below:
 
 ```typescript
-import { Injectable } from '@nest';
+import { Injectable } from '@nest/core';
 import { Cron } from '@nest/schedule';
 
 @Injectable()
@@ -81,19 +79,19 @@ The `@Cron()` decorator supports all standard `cron` patterns:
 └───────────────────────── second (0 - 59) - [Optional 01 as default]
 ```
 
-| Field | Required | Allowed Values | Allowed Special Characters |
-|:---:|:---:|:---:|:---:|
-| Seconds | No | 0-59 | / - , * |
-| Minute | Yes | 0-59 | / - , * |
-| Hour | Yes | 0-23 | / - , * |
-| Day of Month | Yes | 1-31 | / - , * |
-| Month | Yes | 1-12 | / - , * |
-| Day of Week | Yes | 0-6 (0 is Sunday) | / - , * |
+|    Field     | Required |  Allowed Values   | Allowed Special Characters |
+| :----------: | :------: | :---------------: | :------------------------: |
+|   Seconds    |    No    |       0-59        |          / - , \*          |
+|    Minute    |   Yes    |       0-59        |          / - , \*          |
+|     Hour     |   Yes    |       0-23        |          / - , \*          |
+| Day of Month |   Yes    |       1-31        |          / - , \*          |
+|    Month     |   Yes    |       1-12        |          / - , \*          |
+| Day of Week  |   Yes    | 0-6 (0 is Sunday) |          / - , \*          |
 
 The `@nest/schedule` package provides a convenient enum containing common `cron` patterns. You can use this enum as follows:
 
 ```typescript
-import { Injectable } from '@nest';
+import { Injectable } from '@nest/core';
 import { Cron, CronExpression } from '@nest/schedule';
 
 @Injectable()
@@ -134,9 +132,9 @@ async intervalJob() {
 You can cancel it at an appropriate time:
 
 ```typescript
-import { schedulerRegistry } from "@nest/schedule";
+import { schedulerRegistry } from '@nest/schedule';
 
-schedulerRegistry.clearInterval("intervalJob");
+schedulerRegistry.clearInterval('intervalJob');
 ```
 
 ## Declarative Timeouts
@@ -168,11 +166,11 @@ async handleTimeout() {
 You can cancel it at an appropriate time:
 
 ```typescript
-import { schedulerRegistry } from "@nest/schedule";
+import { schedulerRegistry } from '@nest/schedule';
 
-schedulerRegistry.clearTimeout("intervalJob");
+schedulerRegistry.clearTimeout('intervalJob');
 ```
 
 ## Example
 
-The complete example can be found [here](https://deno.land/x/deno_nest/modules/schedule/example?source).
+The complete example can be found [here](https://github.com/jiawei397/deno-nest/tree/main/modules/schedule/example).

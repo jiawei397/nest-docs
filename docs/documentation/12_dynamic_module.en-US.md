@@ -18,7 +18,7 @@ Let's look at a familiar example.
 First, we define a `UsersModule` to provide and export `UsersService`. The `UsersModule` is the host module for `UsersService`.
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { UsersService } from './users.service.ts';
 
 @Module({
@@ -31,7 +31,7 @@ export class UsersModule {}
 Next, we define an `AuthModule` that imports `UsersModule`, making the providers exported by `UsersModule` available internally within `AuthModule`:
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AuthService } from './auth.service.ts';
 import { UsersModule } from '../users/users.module.ts';
 
@@ -46,7 +46,7 @@ export class AuthModule {}
 This allows us to inject `UsersService` into the `AuthService` constructor, for example, hosted within the `AuthModule`:
 
 ```typescript
-import { Injectable } from '@nest';
+import { Injectable } from '@nest/core';
 import { UsersService } from '../users/users.service.ts';
 
 @Injectable()
@@ -85,7 +85,7 @@ Dynamic modules allow us to pass parameters into the imported module, so that we
 First, let's quickly review the static import of `ConfigModule` (i.e., a way that cannot influence the behavior of the imported module). Note the `imports` array in the `@Module()` decorator:
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AppController } from './app.controller.ts';
 import { AppService } from './app.service.ts';
 import { ConfigModule } from './config/config.module.ts';
@@ -101,7 +101,7 @@ export class AppModule {}
 Let's consider dynamic module imports, where we pass a configuration object. Compare the difference in the `imports` array between these two examples:
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AppController } from './app.controller.ts';
 import { AppService } from './app.service.ts';
 import { ConfigModule } from './config/config.module.ts';
@@ -149,7 +149,7 @@ There are some details to fill in to better understand the whole process:
 With this understanding, let's now see what our dynamic `ConfigModule` declaration should look like. Let's give it a try.
 
 ```typescript
-import { DynamicModule, Module } from '@nest';
+import { DynamicModule, Module } from '@nest/core';
 import { ConfigService } from './config.service.ts';
 
 @Module({})
@@ -173,7 +173,7 @@ However, our dynamic module is not very interesting yet, as we haven't introduce
 The obvious solution to customize the behavior of the `ConfigModule` is to pass an options object in the static `register` method. Let's take another look at the `imports` property in the consuming module:
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AppController } from './app.controller.ts';
 import { AppService } from './app.service.ts';
 import { ConfigModule } from './config/config.module.ts';
@@ -295,11 +295,11 @@ If you need different configurations in different modules, you can comment out `
 
 ## Example Code
 
-The complete example code above can be found [here](https://deno.land/x/deno_nest/example/dynamicModule?source).
+The complete example code above can be found [here](https://github.com/jiawei397/deno-nest/tree/main/example/dynamicModule).
 
 ## Community Guidelines
 
-You may have seen the usage of methods like `forRoot`, `register`, and `forFeature` in some `@nest` packages and wondered about the differences between these methods. While there are no strict rules, the `@nest` packages attempt to follow the following guidelines:
+You may have seen the usage of methods like `forRoot`, `register`, and `forFeature` in some `@nest/core` packages and wondered about the differences between these methods. While there are no strict rules, the `@nest/core` packages attempt to follow the following guidelines:
 
 - When using `register` to create a module, you expect to configure a dynamic module with specific settings for the calling module. For example, in the configuration module above, you use `ConfigModule.register({ folder: './config' })` in one module. If you use `ConfigModule.register({ folder: './config2' })` in another module, it will have a different configuration.
 

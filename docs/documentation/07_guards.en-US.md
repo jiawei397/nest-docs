@@ -71,7 +71,7 @@ A globally scoped Guard will be used throughout the entire application, applying
 To address this issue, you can directly set up Guards globally from any module using the following structure:
 
 ```typescript
-import { Module, APP_GUARD } from '@nest';
+import { Module, APP_GUARD } from '@nest/core';
 
 @Module({
   providers: [

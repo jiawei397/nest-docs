@@ -12,7 +12,7 @@ order: 13
 ```json
 {
   "imports": {
-    "@nest/cache": "https://deno.land/x/deno_nest/modules/cache/mod.ts"
+    "@nest/cache": "jsr:@nest/cache@^0.0.2"
   }
 }
 ```
@@ -21,7 +21,8 @@ order: 13
 
 1. 实际开发中请添加具体版本号，且与`Nest`版本保持一致。
 2. `@nest/cache`只支持`GET`请求。
-   :::
+
+:::
 
 ## 使用
 

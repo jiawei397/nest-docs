@@ -50,7 +50,7 @@ export class LoggingInterceptor implements NestInterceptor {
 
 ## 绑定拦截器
 
-为了设置拦截器，我们使用从`@nest`包导入的`@UseInterceptors()`装饰器。与 Guard、Exception Filter 一样，拦截器可以是控制器范围、方法范围或全局范围的。
+为了设置拦截器，我们使用从`@nest/core`包导入的`@UseInterceptors()`装饰器。与 Guard、Exception Filter 一样，拦截器可以是控制器范围、方法范围或全局范围的。
 
 ### 控制器范围
 

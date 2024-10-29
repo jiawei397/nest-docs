@@ -143,4 +143,4 @@ Once the server restarts successfully, there will be print messages again:
 
 ## Example
 
-For sample code, refer to [here](https://deno.land/x/deno_nest/example/sse/app.controller.ts?source).
+For sample code, refer to [here](https://github.com/jiawei397/deno-nest/tree/main/example/sse).

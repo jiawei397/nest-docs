@@ -13,14 +13,14 @@ Make sure [Deno](https://deno.com/) is installed on your operating system (versi
 
 ## Setup
 
-The easiest way to set up a Nest project is to initialize a project using our CLI:
+The easiest way to set up a Nest project is to initialize a project using our [CLI](https://jsr.io/@nest/cli):
 
 ```bash
 deno run --allow-env --allow-run --allow-net --allow-read --allow-write jsr:@nest/cli
 ```
 
 :::warning
-For the convenience of writing, all CDN addresses in this document (such as `https://deno.land/x/deno_nest`) do not carry version numbers. Readers must lock the specific version, especially in `importMap`, when using it. This will not be reminded in later text.
+For the convenience of writing, all JSR addresses in this document (such as `jsr:@nest/cli` or `jsr:@nest/core`) do not carry version numbers. Readers must lock the specific version, especially in `imports`, when using it. This will not be reminded in later text.
 :::
 
 Currently, our CLI functionality, in addition to creating projects, includes a `generate` command to assist in generating different types of files.
@@ -28,7 +28,7 @@ Currently, our CLI functionality, in addition to creating projects, includes a `
 Therefore, it is more appropriate to install it globally:
 
 ```bash
-deno install -g --allow-env --allow-run --allow-net --allow-read --allow-write -n nest  -f  jsr:@nest/cli
+deno install -g --allow-env --allow-run --allow-net --allow-read --allow-write -n nests  -f  jsr:@nest/cli
 ```
 
 It should be noted that `-n nests` indicates that the name of the installed global command is `nests`, which is to avoid conflicts with the `NestJS` command. However, if you do not plan to use `NestJS`, you can modify it to `-n nest`.
@@ -56,7 +56,6 @@ The directory structure of our project is roughly as follows:
 ```bash
 ├── README.md
 ├── deno.jsonc
-├── import_map.json
 └── src
     ├── app.controller.ts
     ├── app.dto.ts
@@ -65,7 +64,7 @@ The directory structure of our project is roughly as follows:
     ├── exception.ts
     └── main.ts
 
-1 directory, 9 files
+1 directory, 8 files
 ```
 
 Here is a brief overview of these core files:
@@ -118,13 +117,13 @@ For example, to switch to `oak`, you only need to change the router:
 As indicated in the console printout, the command to run the program is:
 
 ```bash
-deno task dev
+deno run dev
 ```
 
 It automatically monitors file changes and restarts the service. You can also use:
 
 ```bash
-deno task start
+deno run start
 ```
 
 ## Code Validation and Formatting

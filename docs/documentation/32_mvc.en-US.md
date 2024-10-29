@@ -14,7 +14,7 @@ First, we need to add `@nest/ejs` to the `importMap`:
 ```json
 {
   "imports": {
-    "@nest/ejs": "https://deno.land/x/deno_nest/modules/ejs/mod.ts"
+    "@nest/ejs": "jsr:@nest/ejs@^0.0.2"
   }
 }
 ```
@@ -72,6 +72,6 @@ Note that you must return the parameters required by the ejs file directly in th
 
 ## Examples
 
-1. The example of ejs can be found [here](https://deno.land/x/deno_nest/modules/ejs/example?source).
-2. The example of hbs can be found [here](https://deno.land/x/deno_nest/modules/hbs/example?source).
+1. The example of `ejs` can be found [here](https://github.com/jiawei397/deno-nest/tree/main/modules/ejs/example).
+2. The example of `hbs` can be found [here](https://github.com/jiawei397/deno-nest/tree/main/modules/hbs/example).
 3. If you need other template engines, you can refer to the corresponding module code and implement the `setBaseViewsDir` function and `@Render` decorator on your own.

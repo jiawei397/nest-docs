@@ -32,7 +32,7 @@ order: 4
 为了演示这一点，我们将创建`CatsModule`。
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { CatsController } from './cats.controller.ts';
 import { CatsService } from './cats.service.ts';
 
@@ -72,7 +72,7 @@ src
 每个模块都会自动成为共享模块。一旦创建，它可以被任何模块重用。假设我们想在几个其他模块之间共享`CatsService`的实例。为了实现这一点，我们首先需要将`CatsService`提供者添加到模块的`exports`数组中，如下所示：
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { CatsController } from './cats.controller.ts';
 import { CatsService } from './cats.service.ts';
 
@@ -93,7 +93,7 @@ export class CatsModule {}
 当你希望提供一组`providers`，这些`providers`应该可以随时随地使用（例如，`helpers`、数据库连接等）时，使用`@Global`装饰器使模块成为全局的。
 
 ```typescript
-import { Module, Global } from '@nest';
+import { Module, Global } from '@nest/core';
 import { CatsController } from './cats.controller.ts';
 import { CatsService } from './cats.service.ts';
 

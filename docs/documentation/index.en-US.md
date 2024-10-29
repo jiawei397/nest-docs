@@ -8,7 +8,7 @@ Externally, NestJS provides an out-of-the-box application architecture, allowing
 
 If you are solely developing Web APIs, then NestJS with TypeScript support is an excellent choice.
 
-However, NestJS currently does not support Deno and is unlikely to do so in the future. This is where the [deno_nest](https://deno.land/x/deno_nest) project comes in. Thanks to Deno's native first-class support for TypeScript, we can skip the TSC compilation step of NestJS, providing a better development experience.
+However, NestJS currently does not support Deno and is unlikely to do so in the future. This is where the [deno_nest](https://github.com/jiawei397/deno-nest) project comes in. Thanks to Deno's native first-class support for TypeScript, we can skip the TSC compilation step of NestJS, providing a better development experience.
 
 :::warning
 For the sake of convenience in this book, we will refer to `deno_nest` as simply `Nest`. Readers, please take note of the distinction from `NestJS`.
@@ -23,14 +23,14 @@ As for Hono, the term means "flame" in Japanese (indicating the developer may be
 
 Its core selling point is speed. The following is a performance comparison of several frameworks under Deno, as listed by the Hono official website: [Deno Frameworks Performance Comparison](https://hono.dev/concepts/benchmarks#deno):
 
-| **Framework** | **Version** | **Results** |
-|:---:|:---:|:---:|
-| **Hono** | 3.0.0 | **Requests/sec: 136112** |
-| Fast | 4.0.0-beta.1 | Requests/sec: 103214 |
-| Megalo | 0.3.0 | Requests/sec: 64597 |
-| Faster | 5.7 | Requests/sec: 54801 |
-| oak | 10.5.1 | Requests/sec: 43326 |
-| opine | 2.2.0 | Requests/sec: 30700 |
+| **Framework** | **Version**  |       **Results**        |
+| :-----------: | :----------: | :----------------------: |
+|   **Hono**    |    3.0.0     | **Requests/sec: 136112** |
+|     Fast      | 4.0.0-beta.1 |   Requests/sec: 103214   |
+|    Megalo     |    0.3.0     |   Requests/sec: 64597    |
+|    Faster     |     5.7      |   Requests/sec: 54801    |
+|      oak      |    10.5.1    |   Requests/sec: 43326    |
+|     opine     |    2.2.0     |   Requests/sec: 30700    |
 
 In the same testing benchmarks, Hono does indeed outperform Oak by a significant margin.
 

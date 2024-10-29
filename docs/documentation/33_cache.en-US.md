@@ -12,7 +12,7 @@ First, import it in the `importMap`:
 ```json
 {
   "imports": {
-    "@nest/cache": "https://deno.land/x/deno_nest/modules/cache/mod.ts"
+    "@nest/cache": "jsr:@nest/cache@^0.0.2"
   }
 }
 ```

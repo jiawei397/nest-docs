@@ -155,4 +155,4 @@ await cookies.set('DENO_COOKIE_USER_ID', '123', {
 
 ## 样例
 
-关于 Cookie 的样例，参见[deno_nest/example/cookie](https://deno.land/x/deno_nest/example/cookie?source)。
+关于 Cookie 的样例，参见[deno_nest/example/cookie](https://github.com/jiawei397/deno-nest/tree/main/example/cookie)。

@@ -14,13 +14,13 @@ Sometimes we need to manage the versions of APIs, and `Nest` provides an "alias"
 For example, if you have a `user.controller.ts` file, you can add an `alias` parameter:
 
 ```typescript
-@Controller("user", {
-  alias: "/v1/user/",
+@Controller('user', {
+  alias: '/v1/user/',
 })
 export class UserController {
-  @Get("/info")
+  @Get('/info')
   info() {
-    return "info";
+    return 'info';
   }
 }
 ```
@@ -35,7 +35,7 @@ If you set a global API prefix:
 
 ```typescript
 const app = await NestFactory.create(AppModule);
-app.setGlobalPrefix("/api");
+app.setGlobalPrefix('/api');
 ```
 
 The APIs in the previous example will become: `/api/user/info` and `/v1/user/info`.
@@ -84,10 +84,10 @@ It is equivalent to the following code:
 ## Method Alias
 
 ```typescript
-@Controller("/user")
+@Controller('/user')
 export class UserController {
-  @Get("/info", {
-    alias: "/v1/user/info",
+  @Get('/info', {
+    alias: '/v1/user/info',
   })
   info() {}
 }
@@ -102,10 +102,10 @@ Now you will get two APIs: `/user/info` and `/v1/user/info`.
 The `${prefix}` and `${controller}` template strings work in methods as well, and there is also a method name `${method}`:
 
 ```typescript
-@Controller("/user")
+@Controller('/user')
 export class UserController {
-  @Get("/info", {
-    alias: "${prefix}/v3/${controller}/${method}",
+  @Get('/info', {
+    alias: '${prefix}/v3/${controller}/${method}',
   })
   info() {}
 }
@@ -118,9 +118,9 @@ export class UserController {
 `isAliasOnly` also works:
 
 ```typescript
-@Controller("/user")
+@Controller('/user')
 export class UserController {
-  @Get("/v2/user/info", {
+  @Get('/v2/user/info', {
     isAliasOnly: true,
   })
   info() {}
@@ -132,9 +132,9 @@ export class UserController {
 Now only one API `/v2/user/info` is generated, even if the `Controller` also has an alias set:
 
 ```typescript
-@Controller("/user", { alias: "/v1/users" })
+@Controller('/user', { alias: '/v1/users' })
 export class UserController {
-  @Get("/v2/user/info", {
+  @Get('/v2/user/info', {
     isAliasOnly: true,
   })
   info() {}
@@ -144,12 +144,12 @@ export class UserController {
 If it is as follows:
 
 ```typescript
-@Controller("/user", { alias: "/v1/users" })
+@Controller('/user', { alias: '/v1/users' })
 export class UserController {
-  @Get("info")
+  @Get('info')
   info() {}
 
-  @Get("/v2/user/info", {
+  @Get('/v2/user/info', {
     isAliasOnly: true,
   })
   info2() {}
@@ -162,4 +162,4 @@ There will be three APIs:
 
 ## Example
 
-For examples of aliases, see [deno_nest/example/alias](https://deno.land/x/deno_nest/example/alias?source).
+For examples of aliases, see [deno_nest/example/alias](https://github.com/jiawei397/deno-nest/tree/main/example/alias).

@@ -21,7 +21,7 @@ Since Nest allows designing and organizing dependencies in a more object-oriente
 Let's start by creating a simple `CatsService`. This service will be responsible for data storage and retrieval and is designed for use in `CatsController`, making it a good candidate for a provider.
 
 ```typescript
-import { Injectable } from '@nest';
+import { Injectable } from '@nest/core';
 import { Cat } from './interfaces/cat.interface.ts';
 
 @Injectable()
@@ -57,7 +57,7 @@ export interface Cat {
 Now that we have a service class for retrieving cats, let's use it in the `CatsController`:
 
 ```typescript
-import { Controller, Get, Post, Body } from '@nest';
+import { Controller, Get, Post, Body } from '@nest/core';
 import { CreateCatDto } from './dto/create-cat.dto.ts';
 import { CatsService } from './cats.service.ts';
 import { Cat } from './interfaces/cat.interface.ts';
@@ -103,7 +103,7 @@ Now that we have defined a provider (`CatsService`) and a consumer of that servi
 In NestJS, to accomplish this, we have to edit our module file (`app.module.ts`) and add the service to the providers array of the `@Module()` decorator.
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { CatsController } from './cats/cats.controller.ts';
 import { CatsService } from './cats/cats.service.ts';
 

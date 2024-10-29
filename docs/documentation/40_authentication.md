@@ -81,7 +81,7 @@ export class UsersModule {}
 我们的`AuthService`的工作是检索用户并验证密码。我们创建了一个`signIn()`方法来实现这个目的。在下面的代码中，我们使用了方便的 ES6 扩展运算符来从用户对象中删除密码属性，然后返回它。这是返回用户对象时的常见做法，因为您不希望暴露敏感字段，如密码或其他安全密钥。
 
 ```typescript
-import { Injectable, UnauthorizedException } from '@nest';
+import { Injectable, UnauthorizedException } from '@nest/core';
 import { UsersService } from '../users/users.service.ts';
 
 @Injectable()
@@ -108,7 +108,7 @@ export class AuthService {
 现在，我们更新我们的`AuthModule`以导入`UsersModule`。
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AuthService } from './auth.service.ts';
 import { AuthController } from './auth.controller.ts';
 import { UsersModule } from '../users/users.module.ts';
@@ -168,7 +168,7 @@ export class SignInDto {
 ```json
 {
   "imports": {
-    "@nest/jwt": "https://deno.land/x/deno_nest/modules/jwt/mod.ts"
+    "@nest/jwt": "jsr:@nest/jwt@^0.0.2"
   }
 }
 ```
@@ -451,4 +451,4 @@ export class AuthGuard implements CanActivate {
 
 ## 样例
 
-你可以在[这里](https://deno.land/x/deno_nest/example/authentication/src?source)看到完整的样例代码。
+你可以在[这里](https://github.com/jiawei397/deno-nest/tree/main/example/authentication)看到完整的样例代码。

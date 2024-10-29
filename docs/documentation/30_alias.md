@@ -5,40 +5,40 @@ order: 10
 
 # 别名
 
-有时候我们需要管理API的版本，`Nest`提供了一个『别名』的功能。
+有时候我们需要管理 API 的版本，`Nest`提供了一个『别名』的功能。
 
-## Controller别名
+## Controller 别名
 
-### 没有prefix
+### 没有 prefix
 
 比如有个`user.controller.ts`文件，添加一个`alias`参数：
 
 ```typescript
-@Controller("user", {
-  alias: "/v1/user/",
+@Controller('user', {
+  alias: '/v1/user/',
 })
 export class UserController {
-  @Get("/info")
+  @Get('/info')
   info() {
-    return "info";
+    return 'info';
   }
 }
 ```
 
-这时你就有了两个API：`/user/info` 和 `/v1/user/info`。每个方法都会多一个孪生兄弟。
+这时你就有了两个 API：`/user/info` 和 `/v1/user/info`。每个方法都会多一个孪生兄弟。
 
 ![image.png](./images/alias-1.png)
 
-### 有全局的prefix
+### 有全局的 prefix
 
-如果你设置了全局的API前缀：
+如果你设置了全局的 API 前缀：
 
 ```typescript
 const app = await NestFactory.create(AppModule);
-app.setGlobalPrefix("/api");
+app.setGlobalPrefix('/api');
 ```
 
-这时上例的API就变成了：`/api/user/info`和`/v1/user/info`。
+这时上例的 API 就变成了：`/api/user/info`和`/v1/user/info`。
 
 ![image.png](./images/alias-2.png)
 
@@ -62,7 +62,7 @@ app.setGlobalPrefix("/api");
 
 ### 只使用别名
 
-上面的情况会生成两套API，但你可能会有这样的需求，只有这个`Controller`的API不以全局`prefix`开头，只有一套API。这时你可以使用选项`isAliasOnly`：
+上面的情况会生成两套 API，但你可能会有这样的需求，只有这个`Controller`的 API 不以全局`prefix`开头，只有一套 API。这时你可以使用选项`isAliasOnly`：
 
 ```typescript
 @Controller("/v1/user", {
@@ -84,16 +84,16 @@ app.setGlobalPrefix("/api");
 ## 方法别名
 
 ```typescript
-@Controller("/user")
+@Controller('/user')
 export class UserController {
-  @Get("/info", {
-    alias: "/v1/user/info",
+  @Get('/info', {
+    alias: '/v1/user/info',
   })
   info() {}
 }
 ```
 
-这时，你会得到两个API： `/user/info` 和`/v1/user/info`。
+这时，你会得到两个 API： `/user/info` 和`/v1/user/info`。
 
 ![image.png](./images/alias-5.png)
 
@@ -102,10 +102,10 @@ export class UserController {
 上面的模板字符串`${prefix}`和`${controller}`在方法中同样工作，而且还多了一个方法名`${method}`：
 
 ```typescript
-@Controller("/user")
+@Controller('/user')
 export class UserController {
-  @Get("/info", {
-    alias: "${prefix}/v3/${controller}/${method}",
+  @Get('/info', {
+    alias: '${prefix}/v3/${controller}/${method}',
   })
   info() {}
 }
@@ -118,9 +118,9 @@ export class UserController {
 `isAliasOnly` 同样工作：
 
 ```typescript
-@Controller("/user")
+@Controller('/user')
 export class UserController {
-  @Get("/v2/user/info", {
+  @Get('/v2/user/info', {
     isAliasOnly: true,
   })
   info() {}
@@ -129,12 +129,12 @@ export class UserController {
 
 ![image.png](./images/alias-7.png)
 
-这时只会生成一个API `/v2/user/info`，即使`Controller`也设置了别名：
+这时只会生成一个 API `/v2/user/info`，即使`Controller`也设置了别名：
 
 ```typescript
-@Controller("/user", { alias: "/v1/users" })
+@Controller('/user', { alias: '/v1/users' })
 export class UserController {
-  @Get("/v2/user/info", {
+  @Get('/v2/user/info', {
     isAliasOnly: true,
   })
   info() {}
@@ -144,22 +144,22 @@ export class UserController {
 如果是下面的样例：
 
 ```typescript
-@Controller("/user", { alias: "/v1/users" })
+@Controller('/user', { alias: '/v1/users' })
 export class UserController {
-  @Get("info")
+  @Get('info')
   info() {}
 
-  @Get("/v2/user/info", {
+  @Get('/v2/user/info', {
     isAliasOnly: true,
   })
   info2() {}
 }
 ```
 
-会有3个API：
+会有 3 个 API：
 
 ![image.png](./images/alias-8.png)
 
 ## 样例
 
-关于别名的样例，参见[deno_nest/example/alias](https://deno.land/x/deno_nest/example/alias?source)。
+关于别名的样例，参见[deno_nest/example/alias](https://github.com/jiawei397/deno-nest/tree/main/example/alias)。

@@ -23,7 +23,7 @@ Provider 可以具有以下 2 种范围：
 将作用域指定为 `@Injectable()`装饰器选项对象的 scope 属性。
 
 ```typescript
-import { Injectable, Scope } from '@nest';
+import { Injectable, Scope } from '@nest/core';
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class LogService {}

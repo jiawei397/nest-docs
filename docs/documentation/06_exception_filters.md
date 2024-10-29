@@ -21,7 +21,7 @@ Nest 提供了一个内置的异常层，该层负责处理应用程序中所有
 
 ## 抛出异常
 
-`Nest`提供了一个内置的`HttpException`类，从`@nest`包中公开。对于典型的基于`HTTP REST API`的应用程序，在某些错误条件发生时发送标准 HTTP 响应对象是最佳实践。
+`Nest`提供了一个内置的`HttpException`类，从`@nest/core`包中公开。对于典型的基于`HTTP REST API`的应用程序，在某些错误条件发生时发送标准 HTTP 响应对象是最佳实践。
 
 例如，在`CatsController`中，我们有一个`findAll()`方法（一个`GET`路由处理程序）。假设这个路由处理程序由于某些原因抛出异常。为了演示这一点，我们将硬编码如下：
 
@@ -57,7 +57,7 @@ findAll() {
 
 要仅覆盖 JSON 响应正文的消息部分，请在 response 参数中提供一个字符串。要覆盖整个 JSON 响应正文，请在 response 参数中传递一个对象。Nest 将序列化该对象并将其作为 JSON 响应正文返回。
 
-第二个构造函数参数（`status`）应该是有效的 HTTP 状态代码。最佳实践是直接使用`@nest`导出的标准异常类，比如上面的`ForbiddenException`。
+第二个构造函数参数（`status`）应该是有效的 HTTP 状态代码。最佳实践是直接使用`@nest/core`导出的标准异常类，比如上面的`ForbiddenException`。
 
 还有第三个构造函数参数（可选，`cause`）可用于提供错误[原因](https://nodejs.org/en/blog/release/v16.9.0/#error-cause)。该 cause 对象不会序列化到响应对象中，但它可用于日志记录目的，提供有关导致抛出的内部错误的有价值的信息 HttpException。
 
@@ -90,7 +90,7 @@ async findAll() {
 
 ## 内置的 HTTP 异常类
 
-Nest 提供了一组从基本`HttpException`继承的标准异常。它们来自于`@nest`包，并且代表了许多常见的 HTTP 异常。
+Nest 提供了一组从基本`HttpException`继承的标准异常。它们来自于`@nest/core`包，并且代表了许多常见的 HTTP 异常。
 
 - `BadRequestException`
 - `BodyParamValidationException`（与 `BadRequestException` 一样，状态码同为 400）
@@ -214,7 +214,7 @@ app.listen({ port: 8000 });
 为了解决这个问题，你可以使用以下结构直接从任何模块注册全局作用域过滤器：
 
 ```typescript
-import { Module, APP_FILTER } from '@nest';
+import { Module, APP_FILTER } from '@nest/core';
 
 @Module({
   providers: [

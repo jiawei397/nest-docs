@@ -21,7 +21,7 @@ By default, this operation is carried out by the built-in global exception filte
 
 ## Throwing Exceptions
 
-`Nest` provides a built-in `HttpException` class, exposed from the `@nest` package. For typical HTTP REST API-based applications, it is considered best practice to send standard HTTP response objects when certain error conditions occur.
+`Nest` provides a built-in `HttpException` class, exposed from the `@nest/core` package. For typical HTTP REST API-based applications, it is considered best practice to send standard HTTP response objects when certain error conditions occur.
 
 For example, in the `CatsController`, we have a `findAll()` method (a `GET` route handler). Let's assume that this route handler throws an exception for some reason. To illustrate this, we hardcode it as follows:
 
@@ -57,7 +57,7 @@ By default, the JSON response body contains two properties:
 
 To only override the message part of the JSON response body, provide a string in the `response` parameter. To override the entire JSON response body, pass an object in the `response` parameter. Nest will serialize that object and return it as the JSON response body.
 
-The second constructor parameter (`status`) should be a valid HTTP status code. It is considered best practice to use standard exception classes exported by `@nest`, such as the `ForbiddenException` mentioned above.
+The second constructor parameter (`status`) should be a valid HTTP status code. It is considered best practice to use standard exception classes exported by `@nest/core`, such as the `ForbiddenException` mentioned above.
 
 There is also a third constructor parameter (optional, `cause`) available to provide an [error cause](https://nodejs.org/en/blog/release/v16.9.0/#error-cause). The `cause` object will not be serialized into the response object, but it can be useful for logging purposes, providing valuable information about the internal error that caused the exception.
 
@@ -92,7 +92,7 @@ The obtained response looks like this:
 
 ## Built-in HTTP Exception Classes
 
-Nest provides a set of standard exceptions that inherit from the base `HttpException`. They come from the `@nest` package and represent many common HTTP exceptions.
+Nest provides a set of standard exceptions that inherit from the base `HttpException`. They come from the `@nest/core` package and represent many common HTTP exceptions.
 
 - `BadRequestException`
 - `BodyParamValidationException` (similar to `BadRequestException`, with a status code of 400)
@@ -216,7 +216,7 @@ A globally scoped filter will be used throughout the entire application, applyin
 To address this issue, you can directly register globally scoped filters from any module using the following structure:
 
 ```typescript
-import { Module, APP_FILTER } from '@nest';
+import { Module, APP_FILTER } from '@nest/core';
 
 @Module({
   providers: [

@@ -18,7 +18,7 @@ order: 2
 首先，我们将定义 `UsersModule`来提供和导出 `UsersService`。`UsersModule`是`UsersService`的宿主模块。
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { UsersService } from './users.service.ts';
 
 @Module({
@@ -31,7 +31,7 @@ export class UsersModule {}
 接下来，我们将定义一个`AuthModule`，它导入`UsersModule`，使`UsersModule`导出的`Providers`在`AuthModule`内部可用：
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AuthService } from './auth.service.ts';
 import { UsersModule } from '../users/users.module.ts';
 
@@ -46,7 +46,7 @@ export class AuthModule {}
 这将允许我们在构造函数中注入`UsersService`，例如，`AuthService`托管在`AuthModule`：
 
 ```typescript
-import { Injectable } from '@nest';
+import { Injectable } from '@nest/core';
 import { UsersService } from '../users/users.service.ts';
 
 @Injectable()
@@ -87,7 +87,7 @@ export class AuthService {
 首先，让我们快速回顾一下静态导入`ConfigModule`的示例（即一种无法影响导入模块行为的方法）。请注意`@Module()`装饰器中的`imports`数组：
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AppController } from './app.controller.ts';
 import { AppService } from './app.service.ts';
 import { ConfigModule } from './config/config.module.ts';
@@ -103,7 +103,7 @@ export class AppModule {}
 让我们考虑一下动态模块导入，其中我们传递了一个配置对象，可能会是什么样子。比较这两个示例之间的导入数组的差异：
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AppController } from './app.controller.ts';
 import { AppService } from './app.service.ts';
 import { ConfigModule } from './config/config.module.ts';
@@ -151,7 +151,7 @@ export class AppModule {}
 有了这个理解，我们现在可以看看我们的动态`ConfigModule`声明应该是什么样子的。让我们试试。
 
 ```typescript
-import { DynamicModule, Module } from '@nest';
+import { DynamicModule, Module } from '@nest/core';
 import { ConfigService } from './config.service.ts';
 
 @Module({})
@@ -175,7 +175,7 @@ export class ConfigModule {
 自定义`ConfigModule`行为的明显解决方案是在静态`register()`方法中传递一个选项对象。让我们再次看一下消费模块的`imports`属性：
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { AppController } from './app.controller.ts';
 import { AppService } from './app.service.ts';
 import { ConfigModule } from './config/config.module.ts';
@@ -297,11 +297,11 @@ export class ConfigModule {
 
 ## 样例代码
 
-以上完整的样例代码可以在[这里](https://deno.land/x/deno_nest/example/dynamicModule?source)找到。
+以上完整的样例代码可以在[这里](https://github.com/jiawei397/deno-nest/tree/main/example/dynamicModule)找到。
 
 ## 社区准则
 
-您可能已经看到了一些 `@nest`包中的 `forRoot`、`register` 和 `forFeature` 等方法的用法，并且可能想知道所有这些方法的区别是什么。对此没有硬性规定，但 `@nest` 包试图遵循以下准则：
+您可能已经看到了一些 `@nest/core`包中的 `forRoot`、`register` 和 `forFeature` 等方法的用法，并且可能想知道所有这些方法的区别是什么。对此没有硬性规定，但 `@nest/core` 包试图遵循以下准则：
 
 - 当使用 `register` 创建一个模块时，你期望为调用模块配置一个具有特定配置的动态模块。例如，上面的配置模块，你在一个模块中使用`ConfigModule.register({ folder: './config' })`。如果在另一个模块中使用 `ConfigModule.register({ folder: './config2' })`，它将具有不同的配置。
 - 当使用 `forRoot` 创建一个模块时，你期望配置一个动态模块，并在多个位置重用该配置（尽管可能不知情，因为它被抽象化了）。从这个意义上讲，所有的`forRoot`都应该设置`global`为`true`。

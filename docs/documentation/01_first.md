@@ -13,14 +13,14 @@ order: 1
 
 ## 设置
 
-设置 Nest 项目的最简单方法是使用我们的 CLI 来初始化一个工程：
+设置 Nest 项目的最简单方法是使用我们的 [CLI](https://jsr.io/@nest/cli) 来初始化一个工程：
 
 ```bash
 deno run --allow-env --allow-run --allow-net --allow-read --allow-write jsr:@nest/cli
 ```
 
 :::warning
-为行文方便，本文档中所有的 CDN 地址（比如`https://deno.land/x/deno_nest`）并不携带版本号，读者在具体使用中尤其是在`importMap`中将务必锁定具体版本，后文不再提示。
+为行文方便，本文档中所有的`jsr`地址（比如`jsr:@nest/cli`、`jsr:@nest/core`）并不携带版本号，读者在具体使用中尤其是在`imports`中将务必锁定具体版本，后文不再提示。
 :::
 
 目前我们的 CLI 功能，除了创建项目外，还包含 generate 命令，可以辅助后续生成不同类型的文件。
@@ -28,7 +28,7 @@ deno run --allow-env --allow-run --allow-net --allow-read --allow-write jsr:@nes
 所以，更合适的是全局安装：
 
 ```bash
-deno install -g --allow-env --allow-run --allow-net --allow-read --allow-write -n nest  -f  jsr:@nest/cli
+deno install -g --allow-env --allow-run --allow-net --allow-read --allow-write -n nests  -f  jsr:@nest/cli
 ```
 
 需要注意的是，`-n nests` 表示安装的全局命令的名称是`nests`，这是为了避免与`NestJS`的命令冲突。当然，如果你并不准备使用`NestJS`，可以将它修改为`-n nest`。
@@ -56,7 +56,6 @@ $ deno task dev
 ```bash
 ├── README.md
 ├── deno.jsonc
-├── import_map.json
 └── src
     ├── app.controller.ts
     ├── app.dto.ts
@@ -65,7 +64,7 @@ $ deno task dev
     ├── exception.ts
     └── main.ts
 
-1 directory, 9 files
+1 directory, 8 files
 ```
 
 以下是这些核心文件的简要概述：
@@ -119,16 +118,20 @@ app.listen({ port });
 
 ```bash
 deno task dev
+# or
+deno run dev
 ```
 
 它默认监听了文件的变化重启服务，你也可以使用：
 
 ```bash
 deno task start
+# or
+deno run start
 ```
 
 ## 代码校验与格式化
 
-得益于 Deno 的一揽子工具，不必额外安装任何工具包就可以直接使用 deno lint、deno fmt 进行代码校验与格式化。
+得益于 Deno 的一揽子工具，不必额外安装任何工具包就可以直接使用`deno lint`、`deno fmt` 进行代码校验与格式化。
 
 工程内置了 VSCode 的插件推荐（也就是 Deno 的官方插件`denoland.vscode-deno`），只需要安装并启用就可以愉快地编码了！

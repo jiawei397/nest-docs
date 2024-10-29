@@ -1,6 +1,6 @@
 {
   "name": "nest-docs",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "deno_nest docs",
   "scripts": {
     "start": "npm run dev",

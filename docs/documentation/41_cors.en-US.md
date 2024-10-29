@@ -12,10 +12,9 @@ First, add the `importMap`:
 ```json
 {
   "imports": {
-    "@nest/core": "https://deno.land/x/deno_nest/mod.ts",
-    "@nest/hono": "https://deno.land/x/deno_nest/modules/hono/mod.ts",
-    "@nest/cors": "https://deno.land/x/deno_nest/modules/cors/mod.ts",
-    "hono/": "https://deno.land/x/hono@v3.9.1/"
+    "@nest/core": "jsr:@nest/core@^0.0.2",
+    "@nest/hono": "jsr:@nest/hono@^0.0.2",
+    "@nest/cors": "jsr:@nest/cors@^0.0.2"
   }
 }
 ```

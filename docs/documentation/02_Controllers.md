@@ -23,7 +23,7 @@ Controllers（控制器）负责处理传入的请求并向客户端返回响应
 例如，我们可以选择将管理与猫实体的交互的一组路由分组到路由`/cats`下。在这种情况下，我们可以在`@Controller()`装饰器中指定路径前缀`cats`，以便我们不必在文件中为每个路由重复该部分路径。
 
 ```typescript
-import { Controller, Get } from '@nest';
+import { Controller, Get } from '@nest/core';
 
 @Controller('cats')
 export class CatsController {
@@ -60,7 +60,7 @@ export class CatsController {
 处理程序通常需要访问客户端请求的详细信息。Nest 提供对请求对象的访问，它是有别于 hono 与 oak 的上层抽象，目前暴露了常用的方法。我们可以通过在处理程序的签名中添加`@Req()`装饰器来指示 Nest 注入请求对象，从而访问请求对象。
 
 ```typescript
-import { Controller, Get, Req, type Request } from '@nest';
+import { Controller, Get, Req, type Request } from '@nest/core';
 
 @Controller('cats')
 export class CatsController {
@@ -72,7 +72,7 @@ export class CatsController {
 ```
 
 :::warning{title=注意}
-`Request`的类型需要从`@nest`核心库中导出，并添加`type`关键字标识。
+`Request`的类型需要从`@nest/core`核心库中导出，并添加`type`关键字标识。
 :::
 
 request 对象表示 HTTP 请求，并具有请求查询字符串、参数、HTTP 头和正文的属性。在大多数情况下，没有必要手动获取这些属性。我们可以使用专用的装饰器，例如`@Body()`或`@Query()`，它们是现成的。下面列出了所提供的装饰器以及它们所代表的普通平台特定对象。
@@ -120,7 +120,7 @@ create(@Res() res: Response) {
 ```
 
 :::warning{title=注意}
-`Response`的类型需要从`@nest`核心库中导出，并添加`type`关键字标识。
+`Response`的类型需要从`@nest/core`核心库中导出，并添加`type`关键字标识。
 :::
 
 ## Headers
@@ -313,7 +313,16 @@ export class Dto {
 下面的示例使用了几个可用的装饰器来创建一个基本控制器。这个控制器公开了几种访问和操作内部数据的方法。
 
 ```typescript
-import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nest';
+import {
+  Controller,
+  Get,
+  Query,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nest/core';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto.ts';
 
 @Controller('cats')
@@ -352,7 +361,7 @@ export class CatsController {
 控制器总是属于一个模块，这就是为什么我们在`@Module()`装饰器中包含控制器数组的原因。因为我们还没有定义除了根 AppModule 之外的任何其他模块，所以我们将使用它来引入 CatsController:
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { CatsController } from './cats/cats.controller.ts';
 
 @Module({

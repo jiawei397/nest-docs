@@ -12,8 +12,7 @@ order: 5
 ```json
 {
   "imports": {
-    "@nest/mongo": "https://deno.land/x/deno_nest/modules/mongo/mod.ts",
-    "deno_mongo_schema": "https://deno.land/x/deno_mongo_schema@v1.0.3/mod.ts"
+    "@nest/mongo": "jsr:@nest/mongo@^0.0.3"
   }
 }
 ```
@@ -44,7 +43,7 @@ export class AppModule {}
 Create a `user/user.schema.ts` file to define a `UserSchema`, representing the fields in a traditional table:
 
 ```typescript
-import { BaseSchema, Prop, Schema } from 'deno_mongo_schema';
+import { BaseSchema, Prop, Schema } from '@nest/mongo';
 
 @Schema()
 export class User extends BaseSchema {
@@ -70,7 +69,7 @@ In the `UserService`, use the `InjectModel` decorator:
 
 ```typescript
 import { Injectable } from '@nest/core';
-import { InjectModel, Model } from 'deno_mongo_schema';
+import { InjectModel, Model } from '@nest/mongo';
 import { User } from './user.schema.ts';
 import { AddUserDto } from './user.dto.ts';
 
@@ -164,7 +163,7 @@ export class UserController {
 For more usage, I recommend checking the relevant chapters in the book [Learning Deno 3.2 Use MongoDB](https://www.yuque.com/jiqingyun-begup/ewktxz/rwadc6?view=doc_embed).
 
 :::info
-The complete example can be found [here](https://deno.land/x/deno_nest/modules/mongo/example?source).
+The complete example can be found [here](https://github.com/jiawei397/deno-nest/tree/main/modules/mongo/example).
 :::
 
 ## MySQL
@@ -174,8 +173,7 @@ Similarly, `Nest` comes with a built-in toolkit for `MySQL`. First, import it in
 ```json
 {
   "imports": {
-    "@nest/mysql": "https://deno.land/x/deno_nest/modules/mysql/mod.ts",
-    "mysql": "https://deno.land/x/mysql@v2.11.0/mod.ts"
+    "@nest/mysql": "jsr:@nest/mysql@^0.0.2"
   }
 }
 ```
@@ -255,7 +253,7 @@ export class AppController {
 ```
 
 :::info
-The complete example can be found [here](https://deno.land/x/deno_nest/modules/mysql/example?source).
+The complete example can be found [here](https://github.com/jiawei397/deno-nest/tree/main/modules/mysql/example).
 :::
 
 ## Postgres
@@ -265,8 +263,7 @@ Similarly, `Nest` comes with a built-in toolkit for `Postgres`. First, import it
 ```json
 {
   "imports": {
-    "@nest/postgres": "https://deno.land/x/deno_nest/modules/postgres/mod.ts",
-    "postgres/": "https://deno.land/x/postgres@v0.17.0/"
+    "@nest/postgres": "jsr:@nest/postgres@^0.0.2"
   }
 }
 ```
@@ -368,7 +365,7 @@ export class AppController {
 ```
 
 :::info
-The complete example can be found [here](https://deno.land/x/deno_nest/modules/postgres/example?source).
+The complete example can be found [here](https://github.com/jiawei397/deno-nest/tree/main/modules/postgres/example).
 :::
 
 ## Redis
@@ -378,8 +375,7 @@ Similarly, `Nest` comes with a built-in toolkit for `Redis`. First, import it in
 ```json
 {
   "imports": {
-    "@nest/redis": "https://deno.land/x/deno_nest/modules/redis/mod.ts",
-    "redis": "https://deno.land/x/redis@v0.29.3/mod.ts"
+    "@nest/redis": "jsr:@nest/redis@^0.0.2"
   }
 }
 ```
@@ -446,7 +442,7 @@ export class AppController {
 ```
 
 :::info
-The complete example can be found [here](https://deno.land/x/deno_nest/modules/redis/example?source).
+The complete example can be found [here](https://github.com/jiawei397/deno-nest/tree/main/modules/schedule/example).
 :::
 
 ## ElasticSearch
@@ -456,7 +452,7 @@ Similarly, `Nest` comes with a built-in toolkit for `ElasticSearch`. First, impo
 ```json
 {
   "imports": {
-    "@nest/elasticsearch": "https://deno.land/x/deno_nest/modules/elasticsearch/mod.ts"
+    "@nest/elasticsearch": "jsr:@nest/elasticsearch@^0.0.2"
   }
 }
 ```
@@ -521,7 +517,7 @@ export class AppController {
 ```
 
 :::info
-The complete example can be found [here](https://deno.land/x/deno_nest/modules/elasticsearch/example?source).
+The complete example can be found [here](https://github.com/jiawei397/deno-nest/tree/main/modules/elasticsearch/example).
 :::
 
 ## Other databases

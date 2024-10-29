@@ -50,7 +50,7 @@ export class LoggingInterceptor implements NestInterceptor {
 
 ## Applying Interceptors
 
-To set up an interceptor, we use the `@UseInterceptors()` decorator imported from the `@nest` package. Like Guards and Exception Filters, interceptors can be controller-scoped, method-scoped, or globally scoped.
+To set up an interceptor, we use the `@UseInterceptors()` decorator imported from the `@nest/core` package. Like Guards and Exception Filters, interceptors can be controller-scoped, method-scoped, or globally scoped.
 
 ### Controller Scope
 

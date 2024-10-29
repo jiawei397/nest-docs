@@ -12,8 +12,7 @@ order: 5
 ```json
 {
   "imports": {
-    "@nest/mongo": "https://deno.land/x/deno_nest/modules/mongo/mod.ts",
-    "deno_mongo_schema": "https://deno.land/x/deno_mongo_schema@v1.0.3/mod.ts"
+    "@nest/mongo": "jsr:@nest/mongo@^0.0.3"
   }
 }
 ```
@@ -44,7 +43,7 @@ export class AppModule {}
 新建`user/user.schema.ts`文件，定义一个`UserSchema`，也就是传统表格中的字段：
 
 ```typescript
-import { BaseSchema, Prop, Schema } from 'deno_mongo_schema';
+import { BaseSchema, Prop, Schema } from '@nest/mongo';
 
 @Schema()
 export class User extends BaseSchema {
@@ -70,7 +69,7 @@ export type UserKeys = UserKey[];
 
 ```typescript
 import { Injectable } from '@nest/core';
-import { InjectModel, Model } from 'deno_mongo_schema';
+import { InjectModel, Model } from '@nest/mongo';
 import { User } from './user.schema.ts';
 import { AddUserDto } from './user.dto.ts';
 
@@ -165,7 +164,7 @@ export class UserController {
 [3.2 使用 MongoDB 重构](https://www.yuque.com/jiqingyun-begup/ewktxz/rwadc6?view=doc_embed)
 
 :::info
-完整样例在[这里](https://deno.land/x/deno_nest/modules/mongo/example?source)。
+完整样例在[这里](https://github.com/jiawei397/deno-nest/tree/main/modules/mongo/example)。
 :::
 
 ## MySQL
@@ -175,8 +174,7 @@ export class UserController {
 ```json
 {
   "imports": {
-    "@nest/mysql": "https://deno.land/x/deno_nest/modules/mysql/mod.ts",
-    "mysql": "https://deno.land/x/mysql@v2.11.0/mod.ts"
+    "@nest/mysql": "jsr:@nest/mysql@^0.0.2"
   }
 }
 ```
@@ -256,7 +254,7 @@ export class AppController {
 ```
 
 :::info
-完整样例在[这里](https://deno.land/x/deno_nest/modules/mysql/example?source)。
+完整样例在[这里](https://github.com/jiawei397/deno-nest/tree/main/modules/mysql/example)。
 :::
 
 ## Postgres
@@ -266,8 +264,7 @@ export class AppController {
 ```json
 {
   "imports": {
-    "@nest/postgres": "https://deno.land/x/deno_nest/modules/postgres/mod.ts",
-    "postgres/": "https://deno.land/x/postgres@v0.17.0/"
+    "@nest/postgres": "jsr:@nest/postgres@^0.0.2"
   }
 }
 ```
@@ -346,7 +343,7 @@ export class AppController {
 ```
 
 :::info
-完整样例在[这里](https://deno.land/x/deno_nest/modules/postgres/example?source)。
+完整样例在[这里](https://github.com/jiawei397/deno-nest/tree/main/modules/postgres/example)。
 :::
 
 ## Redis
@@ -356,8 +353,7 @@ export class AppController {
 ```json
 {
   "imports": {
-    "@nest/redis": "https://deno.land/x/deno_nest/modules/redis/mod.ts",
-    "redis": "https://deno.land/x/redis@v0.29.3/mod.ts"
+    "@nest/redis": "jsr:@nest/redis@^0.0.2"
   }
 }
 ```
@@ -404,7 +400,7 @@ export class AppController {
 ```
 
 :::info
-完整样例在[这里](https://deno.land/x/deno_nest/modules/redis/example?source)。
+完整样例在[这里](https://github.com/jiawei397/deno-nest/tree/main/modules/schedule/example)。
 :::
 
 ## ElasticSearch
@@ -414,7 +410,7 @@ export class AppController {
 ```json
 {
   "imports": {
-    "@nest/elasticsearch": "https://deno.land/x/deno_nest/modules/elasticsearch/mod.ts"
+    "@nest/elasticsearch": "jsr:@nest/elasticsearch@^0.0.2"
   }
 }
 ```
@@ -457,7 +453,7 @@ export class AppController {
 ```
 
 :::info
-完整样例在[这里](https://deno.land/x/deno_nest/modules/elasticsearch/example?source)。
+完整样例在[这里](https://github.com/jiawei397/deno-nest/tree/main/modules/elasticsearch/example)。
 :::
 
 ## 其它数据库

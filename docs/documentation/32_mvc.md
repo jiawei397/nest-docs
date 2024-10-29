@@ -14,7 +14,7 @@ order: 12
 ```json
 {
   "imports": {
-    "@nest/ejs": "https://deno.land/x/deno_nest/modules/ejs/mod.ts"
+    "@nest/ejs": "jsr:@nest/ejs@^0.0.2"
   }
 }
 ```
@@ -72,6 +72,6 @@ export class AppController {
 
 ## 样例
 
-1. ejs 的样例在[这里](https://deno.land/x/deno_nest/modules/ejs/example?source)。
-2. hbs 的样例在[这里](https://deno.land/x/deno_nest/modules/hbs/example?source)。
+1. ejs 的样例在[这里](https://github.com/jiawei397/deno-nest/tree/main/modules/ejs/example)。
+2. hbs 的样例在[这里](https://github.com/jiawei397/deno-nest/tree/main/modules/hbs/example)。
 3. 如果需要其它模板引擎，可以参考相应的模块代码，自行实现`setBaseViewsDir`函数和`@Render`装饰器即可。

@@ -10,7 +10,16 @@ Nest is built on a language feature called decorators. Decorators are a well-kno
 
 > ES2016 decorators are expressions that return a function, which can take the target, name, and property descriptor as parameters. You can apply them by placing the @ character before the decorator and placing it on top of the content you want to decorate. Decorators can be used for classes, methods, or properties.
 
-It's worth noting that decorators underwent changes at the end of 2022, but a significant issue is that parameter decorators are not yet supported. This is a big problem for Nest. Fortunately, TypeScript is not going to abandon the old version of decorators for a long time. Deno still defaults to the old version of decorators (i.e., `experimentalDecorators` is enabled by default) as of version 1.37. This default behavior may change in the future to support the new version of decorators, and I will provide a reminder when that happens.
+It is worth mentioning that decorators underwent new changes at the end of 2022, but a major issue is that parameter decorators are not yet supported, which is a significant disruption for our Nest. Fortunately, TypeScript will not abandon the old decorators for a long time to come. Deno has enabled the new decorators by default in `v2`, so you need to enable `experimentalDecorators` and `emitDecoratorMetadata` in `deno.json`. As for the IDE warning messages, please ignore them.
+
+```json
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
+```
 
 Nevertheless, you usually don't need to write low-level decorators directly. If Deno or TypeScript supports parameter decorators, Nest's underlying implementation will switch without breaking upper-level code.
 

@@ -21,13 +21,13 @@ Lifecycle events occur during the startup and shutdown processes of the applicat
 
 In the table below, only `onModuleDestroy`, `beforeApplicationShutdown`, and `onApplicationShutdown` are triggered if `app.close()` is explicitly called or if the process receives a special system signal (such as `SIGTERM`), and `enableShutdownHooks` was correctly called during application startup.
 
-| Lifecycle Hook Method | When the Hook Method is Called in the Lifecycle Event |
-| --- | --- |
-| `onModuleInit` | Called once after the dependencies of the hosting module have been resolved. |
-| `onApplicationBootstrap` | Called once after all modules are initialized but before listening for connections. |
-| `onModuleDestroy`* | Called after receiving a termination signal (e.g., `SIGTERM`). |
-| `beforeApplicationShutdown`* | Called after all `onModuleDestroy()` handlers have completed (Promises resolved or rejected); once complete (Promises resolved or rejected), all existing connections will be closed (calling `app.close()`). |
-| `onApplicationShutdown`* | Called after connections are closed (`app.close()` resolved). |
+| Lifecycle Hook Method         | When the Hook Method is Called in the Lifecycle Event                                                                                                                                                         |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `onModuleInit`                | Called once after the dependencies of the hosting module have been resolved.                                                                                                                                  |
+| `onApplicationBootstrap`      | Called once after all modules are initialized but before listening for connections.                                                                                                                           |
+| `onModuleDestroy`\*           | Called after receiving a termination signal (e.g., `SIGTERM`).                                                                                                                                                |
+| `beforeApplicationShutdown`\* | Called after all `onModuleDestroy()` handlers have completed (Promises resolved or rejected); once complete (Promises resolved or rejected), all existing connections will be closed (calling `app.close()`). |
+| `onApplicationShutdown`\*     | Called after connections are closed (`app.close()` resolved).                                                                                                                                                 |
 
 :::warning
 `*` For these events to work with system signals (such as `SIGTERM`), you must explicitly call `app.close()` or choose to join them. See the Application Shutdown section below.
@@ -42,7 +42,7 @@ Each lifecycle hook is represented by an interface. The interfaces are technical
 To register a lifecycle hook, implement the corresponding interface. For example, to register a method during the module initialization phase of a specific class (e.g., Controller, Provider, or Module), implement the `OnModuleInit` interface and provide an `onModuleInit()` method, as shown below:
 
 ```typescript
-import { Injectable, OnModuleInit } from '@nest';
+import { Injectable, OnModuleInit } from '@nest/core';
 
 @Injectable()
 export class UsersService implements OnModuleInit {

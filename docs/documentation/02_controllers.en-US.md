@@ -23,7 +23,7 @@ We will specify an optional route path prefix, `cats`. Using a path prefix in th
 For instance, we might choose to group a set of routes that handle interactions with the entity of cats under the route `/cats`. In this case, we can specify the path prefix `cats` in the `@Controller()` decorator, so we don't have to repeat that portion of the path for each route in the file.
 
 ```typescript
-import { Controller, Get } from '@nest';
+import { Controller, Get } from '@nest/core';
 
 @Controller('cats')
 export class CatsController {
@@ -60,7 +60,7 @@ This method returns a 200 status code and an associated response, which is just 
 Handlers often need access to detailed information about the client's request. Nest provides access to the request object, which is a higher-level abstraction distinct from Hono and Oak, and currently exposes commonly used methods. We can indicate to Nest to inject the request object by adding the `@Req()` decorator to the handler's signature, allowing access to the request object.
 
 ```typescript
-import { Controller, Get, Req, type Request } from '@nest';
+import { Controller, Get, Req, type Request } from '@nest/core';
 
 @Controller('cats')
 export class CatsController {
@@ -72,7 +72,7 @@ export class CatsController {
 ```
 
 :::warning
-The `Request` type needs to be exported from the `@nest` library, and the `type` keyword should be added to its definition.
+The `Request` type needs to be exported from the `@nest/core` library, and the `type` keyword should be added to its definition.
 :::
 
 The `Request` object represents an HTTP request and has properties for the request query string, parameters, HTTP headers, and body. In most cases, it is not necessary to manually retrieve these properties. We can use dedicated decorators such as `@Body()` or `@Query()`, which are readily available. The following lists the provided decorators and the common platform-specific objects they represent.
@@ -120,7 +120,7 @@ create(@Res() res: Response) {
 ```
 
 :::warning
-The `Response` type needs to be exported from the `@nest` library, and the `type` keyword should be added to its definition.
+The `Response` type needs to be exported from the `@nest/core` library, and the `type` keyword should be added to its definition.
 :::
 
 ## Headers
@@ -313,7 +313,16 @@ You can still use `class_validator` to validate parameters.
 The following example uses several available decorators to create a basic controller. This controller exposes methods for accessing and manipulating internal data.
 
 ```typescript
-import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nest';
+import {
+  Controller,
+  Get,
+  Query,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nest/core';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto.ts';
 
 @Controller('cats')
@@ -352,7 +361,7 @@ After fully defining the controller above, Nest is still unaware of the existenc
 Controllers always belong to a module, which is why we include an array of controllers in the `@Module()` decorator. Since we haven't defined any other module except the root `AppModule`, we'll use it to import `CatsController`:
 
 ```typescript
-import { Module } from '@nest';
+import { Module } from '@nest/core';
 import { CatsController } from './cats/cats.controller.ts';
 
 @Module({

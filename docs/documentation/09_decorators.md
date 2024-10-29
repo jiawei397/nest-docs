@@ -10,7 +10,16 @@ Nest 基于一种称为装饰器（decorator）的语言特性构建。装饰器
 
 > ES2016 装饰器是一个返回函数的表达式，它可以接受目标（target）、名称（name）和属性描述符（property descriptor）作为参数。你可以通过在装饰器前加上@字符并将其放置在要装饰的内容的顶部来应用它。装饰器可以为类、方法或属性定义。
 
-值得一提的是，装饰器在 2022 年底有了新的变化，但有个大的问题是尚未支持参数装饰器，这对我们的 Nest 的破坏是巨大的。幸运的是，在未来很长一段时间里，TypeScript 并不会放弃旧版装饰器。Deno 在 1.37 时仍然是默认启动了旧版装饰器（即默认开启了`experimentalDecorators`），这个默认行为未来可能会有变化以支持新版装饰器，到时候我会作出提醒的。
+值得一提的是，装饰器在 2022 年底有了新的变化，但有个大的问题是尚未支持参数装饰器，这对我们的 Nest 的破坏是巨大的。幸运的是，在未来很长一段时间里，TypeScript 并不会放弃旧版装饰器。Deno 在 `v2` 默认启动了新版装饰器，所以需要在`deno.json`里开启`experimentalDecorators`和`emitDecoratorMetadata`，至于 IDE 的警告信息，敬请忽略。
+
+```json
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
+```
 
 尽管如此，你通常没有必要直接手写底层的装饰器。如果 Deno 或 TypeScript 支持了参数装饰器，Nest 底层会进行切换，不会破坏上层代码的使用。
 
