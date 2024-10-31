@@ -5,7 +5,7 @@ order: 3
 
 # Logging
 
-We use the [date_log](https://deno.land/x/date_log/mod.ts) logging package to implement a fully customizable production-grade logging system.
+We use the [date_log](https://jsr.io/@jw397/date-log) logging package to implement a fully customizable production-grade logging system.
 
 ## Using date_log
 
@@ -13,10 +13,10 @@ Here's a simple usage of `date_log`:
 
 ```typescript
 import {
-  DateFileLogConfig,
+  type DateFileLogConfig,
   getLogger,
   initLog,
-} from 'https://deno.land/x/date_log@v1.1.1/mod.ts';
+} from 'jsr:@jw397/date-log';
 
 const config: DateFileLogConfig = {
   appenders: {
@@ -69,8 +69,8 @@ First, let's add our `date_log` to the `importMap`:
 ```json
 {
   "imports": {
-    "std/": "https://deno.land/std@0.202.0/",
-    "date_log": "https://deno.land/x/date_log@v1.1.1/mod.ts"
+    "@std/yaml": "jsr:@std/yaml@^1.0.5",
+    "date_log": "jsr:@jw397/date-log@^2.0.0"
   }
 }
 ```
@@ -79,7 +79,7 @@ Add a `src/globals.ts`:
 
 ```typescript
 import { type DateFileLogConfig } from 'date_log';
-import { parse as parseYaml } from 'std/yaml/mod.ts';
+import { parse as parseYaml } from '@std/yaml';
 
 async function loadYaml<T = unknown>(path: string) {
   const str = await Deno.readTextFile(path);
@@ -124,7 +124,7 @@ export class Logger {
   }
 
   private write(
-    methodName: 'warning' | 'info' | 'debug' | 'error',
+    methodName: 'warn' | 'info' | 'debug' | 'error',
     ...messages: any[]
   ): void {
     if (this.parentName) {
@@ -144,7 +144,7 @@ export class Logger {
   }
 
   warn(...messages: any[]): void {
-    this.write('warning', ...messages);
+    this.write('warn', ...messages);
   }
 
   error(...messages: any[]): void {

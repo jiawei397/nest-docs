@@ -5,7 +5,7 @@ order: 3
 
 # 日志
 
-我们使用[date_log](https://deno.land/x/date_log/mod.ts)这个日志记录包来实现完全我肯定义的生产级日志记录系统。
+我们使用[date_log](https://jsr.io/@jw397/date-log)这个日志记录包来实现完全我肯定义的生产级日志记录系统。
 
 ## date_log 使用
 
@@ -13,10 +13,10 @@ order: 3
 
 ```typescript
 import {
-  DateFileLogConfig,
+  type DateFileLogConfig,
   getLogger,
   initLog,
-} from 'https://deno.land/x/date_log@v1.1.1/mod.ts';
+} from 'jsr:@jw397/date-log';
 
 const config: DateFileLogConfig = {
   appenders: {
@@ -64,13 +64,13 @@ logs
 
 ## 与 Nest 集成
 
-首先，让我们添加我们的`date_log`到`importMap`：
+首先，让我们添加`importMap`：
 
 ```json
 {
   "imports": {
-    "std/": "https://deno.land/std@0.202.0/",
-    "date_log": "https://deno.land/x/date_log@v1.1.1/mod.ts"
+    "@std/yaml": "jsr:@std/yaml@^1.0.5",
+    "date_log": "jsr:@jw397/date-log@^2.0.0"
   }
 }
 ```
@@ -79,7 +79,7 @@ logs
 
 ```typescript
 import { type DateFileLogConfig } from 'date_log';
-import { parse as parseYaml } from 'std/yaml/mod.ts';
+import { parse as parseYaml } from '@std/yaml';
 
 async function loadYaml<T = unknown>(path: string) {
   const str = await Deno.readTextFile(path);
@@ -124,7 +124,7 @@ export class Logger {
   }
 
   private write(
-    methodName: 'warning' | 'info' | 'debug' | 'error',
+    methodName: 'warn' | 'info' | 'debug' | 'error',
     ...messages: any[]
   ): void {
     if (this.parentName) {
@@ -144,7 +144,7 @@ export class Logger {
   }
 
   warn(...messages: any[]): void {
-    this.write('warning', ...messages);
+    this.write('warn', ...messages);
   }
 
   error(...messages: any[]): void {
