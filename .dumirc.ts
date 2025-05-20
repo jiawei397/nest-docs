@@ -5,7 +5,7 @@ export default defineConfig({
     name: 'deno_nest',
     showLineNum: true,
     socialLinks: {
-      github: 'https://github.com/jiawei397/deno-oak-nest',
+      github: 'https://github.com/jiawei397/deno-nest',
       yuque: 'https://www.yuque.com/jiqingyun-begup/ewktxz',
     },
     footer: false,
